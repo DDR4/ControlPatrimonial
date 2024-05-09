@@ -28,11 +28,11 @@
             <a href="@Url.Action("Index", "Home")" class="logo">
                 <!-- mini logo for sidebar mini 50x50 pixels -->
                 <span class="logo-mini">
-                    GP
+                    CP
                 </span>
                 <!-- logo for regular state and mobile devices -->
                 <span class="logo-lg">
-                    GestionPlanilla
+                    ControlPatrimonial
                 </span>
             </a>
             <!-- Header Navbar -->
@@ -69,81 +69,26 @@
                                 <i class="fa fa-th"></i> <span>Inicio</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="@Url.Action("Index", "Marcacion")">
-                                <i class="fa fa-fw fa-book"></i> <span>Marcación</span>
-                            </a>
-                        </li>
                         @if (User.Identity.GetUserId().Equals("1"))
                         {
                             <li>
-                                <a href="@Url.Action("Index", "HorasTrabajadas")">
-                                    <i class="fa fa-clock-o"></i> <span>Horas Trabajadas</span>
+                                <a href="@Url.Action("Index", "Usuario")">
+                                    <i class="fa fa-user"></i> <span>Gesti&oacute;n de Usuario</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="@Url.Action("Index", "Vacaciones")">
-                                    <i class="fa fa-calendar-check-o"></i> <span>Vacaciones</span>
+                                <a href="@Url.Action("Index", "Bien")">
+                                    <i class="fa fa-laptop"></i> <span>Gesti&oacute;n de Bienes</span>
                                 </a>
-                            </li>
-                            <li class="treeview">
-                                <a href="#">
-                                    <i class="fa fa-calculator"></i> <span>Calculos</span>
-                                    <span class="pull-right-container">
-                                        <i class="fa fa-angle-left pull-right"></i>
-                                    </span>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li>
-                                        <a href="@Url.Action("Index", "Calculos")">
-                                            <i class="fa fa-calculator"></i> <span>Calculos</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="@Url.Action("Index", "TipoCalculos")">
-                                            <i class="fa fa-tags"></i> <span>Tipo Calculos</span>
-                                        </a>
-                                    </li>
-                                </ul>
                             </li>
                             <li>
-                                <a href="@Url.Action("Index", "BoletaPago")">
-                                    <i class="fa fa-file-pdf-o"></i> <span>Boleta de Pago</span>
+                                <a href="@Url.Action("Index", "Transferencia")">
+                                    <i class="fa fa-exchange"></i> <span>Gesti&oacute;n de Transferencia</span>
                                 </a>
-                            </li>
-                            <li class="treeview">
-                                <a href="#">
-                                    <i class="fa fa-wrench"></i> <span>Mantenimientos</span>
-                                    <span class="pull-right-container">
-                                        <i class="fa fa-angle-left pull-right"></i>
-                                    </span>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li>
-                                        <a href="@Url.Action("Index", "Trabajador")">
-                                            <i class="fa fa-user"></i> <span>Trabajador</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="@Url.Action("Index", "Area")">
-                                            <i class="fa fa-users"></i> <span>Area</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="@Url.Action("Index", "Cargo")">
-                                            <i class="fa fa-briefcase"></i> <span>Cargo</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="@Url.Action("Index", "Turno")">
-                                            <i class="fa fa-hourglass"></i> <span>Turno</span>
-                                        </a>
-                                    </li>
-                                </ul>
                             </li>
                             <li>
-                                <a href="@Url.Action("Index", "Reporte")">
-                                    <i class="fa fa-file-excel-o"></i> <span>Reportes</span>
+                                <a href="@Url.Action("Index", "Salida")">
+                                    <i class="fa fa-check"></i> <span>Gesti&oacute;n de Salidas</span>
                                 </a>
                             </li>
 
@@ -173,16 +118,12 @@
         </div>
         <footer class="main-footer">
             <div class="pull-right hidden-xs">
-                <label>@(string.Format("{0} {1}", "GestionPlanilla", "V1"))</label>
+                <label>@(string.Format("{0} {1}", "ControlPatrimonial", "V1"))</label>
             </div>
-            @*<label>@AppConfig.ApplicationCopyright</label>*@
         </footer>
     </div>
     @{ Html.RenderPartial("_LayoutModals"); }
 
-    @*@Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-        @RenderSection("scripts", required: false)*@
     <script src="~/Content/lib/jquery/js/jquery-3.3.1.min.js"></script>
     <script src="~/Content/lib/jquery/js/jquery.validate.min.js"></script>
     <script src="~/Content/lib/jquery/js/jquery.validate.unobtrusive.min.js"></script>

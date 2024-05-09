@@ -14,14 +14,14 @@ namespace WebControlPatrimonial.Core.Identity
         {
         }
 
-        public override Task<CustomApplicationUser> FindAsync(string userName, string password)
+        public override Task<CustomApplicationUser> FindAsync(string dni, string clave)
         {
             var taskInvoke = Task<CustomApplicationUser>.Factory.StartNew(() =>
             {
                 var credential = new CP.Entities.Usuario
                 {
-                    Dni = userName,
-                    Clave = password
+                    Dni = dni,
+                    Clave = clave
                 };
 
                 var authBL = new CP.BusinessLogic.BLAuthorization();

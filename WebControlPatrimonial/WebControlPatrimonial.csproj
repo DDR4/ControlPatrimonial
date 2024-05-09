@@ -142,7 +142,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CombosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Core\Filter\CustomAuthorizeAttribute.cs" />
     <Compile Include="Core\Identity\CustomApplicationUser.cs" />
     <Compile Include="Core\Identity\CustomUserManager.cs" />
@@ -163,22 +165,7 @@
     <Content Include="Content\css\_all-skins.css" />
     <Content Include="Content\img\user-256.png" />
     <Content Include="Content\js\app.js" />
-    <Content Include="Content\js\Area\area.js" />
-    <Content Include="Content\js\BoletaPago\boletapago.js" />
-    <Content Include="Content\js\Calculos\calculos.js" />
-    <Content Include="Content\js\Cargo\cargo.js" />
-    <Content Include="Content\js\HorasTrabajadas\horastrabajadas.js" />
-    <Content Include="Content\js\Marcacion\marcacion.js" />
-    <Content Include="Content\js\Marcacion\marcacion_release.js" />
-    <Content Include="Content\js\Producto\producto.js" />
-    <Content Include="Content\js\Reporte\reporte.js" />
-    <Content Include="Content\js\TipoCalculo\TipoCalculo.js" />
-    <Content Include="Content\js\Trabajador\trabajador.js" />
-    <Content Include="Content\js\Trabajador\trabajador_release.js" />
-    <Content Include="Content\js\Turno\turno.js" />
-    <Content Include="Content\js\Vacaciones\vacaciones.js" />
-    <Content Include="Content\js\Vacaciones\vacaciones_release.js" />
-    <Content Include="Content\js\Ventas\ventas.js" />
+    <Content Include="Content\js\Usuario\usuario.js" />
     <Content Include="Content\lib\adminLTE\css\adminLTE.min.css" />
     <Content Include="Content\lib\adminLTE\js\adminlte.js" />
     <Content Include="Content\lib\adminLTE\js\adminlte.min.js" />
@@ -303,6 +290,7 @@
     <Content Include="Views\Shared\_LayoutSideBar.cshtml" />
     <Content Include="Views\Shared\_LayoutSideBarControl.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Usuario\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

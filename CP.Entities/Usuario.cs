@@ -17,6 +17,8 @@ namespace CP.Entities
         public UnidadOrganica UnidadOrganica { get; set; }
         public Sede Sede { get; set; }
         public Estado Estado { get; set; }
+        public Auditoria Auditoria { get; set; }
+        public Operacion Operacion { get; set; }
 
     }
 }

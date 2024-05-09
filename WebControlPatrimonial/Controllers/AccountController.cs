@@ -45,7 +45,7 @@ namespace WebControlPatrimonial.Controllers
                 return View(modelView);
             }
 
-            var result = await CustomUserManager.FindAsync(modelView.UserName, modelView.Password);
+            var result = await CustomUserManager.FindAsync(modelView.Dni, modelView.Clave);
 
             if (result.Usuario.InternalStatus == ControlPatrimonial.Common.EnumTypes.InternalStatus.Success)
             {

@@ -45,6 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAAuthorization.cs" />
+    <Compile Include="DACombos.cs" />
+    <Compile Include="DAUsuario.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -9,12 +9,12 @@ namespace WebControlPatrimonial.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name ="Nombre de usuario")]
-        public string UserName { get; set; }
+        [Display(Name ="Dni")]
+        public string Dni { get; set; }
         
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
-        public string Password { get; set; }
+        [Display(Name = "Contraseña")]
+        public string Clave { get; set; }
     }
 }
