@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-    <title>@ViewBag.Title - Sistema de Ventas</title>
+    <title>@ViewBag.Title</title>
 
     <link href="~/Content/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
@@ -32,7 +32,8 @@
                 </span>
                 <!-- logo for regular state and mobile devices -->
                 <span class="logo-lg">
-                    ControlPatrimonial
+                    @*ControlPatrimonial*@
+                    <img src="~/Content/img/reniec.png" width="65%" />
                 </span>
             </a>
             <!-- Header Navbar -->
@@ -44,7 +45,7 @@
                 <!-- Application Name-->
                 <div class="navbar-brand pull-left">
                     <label class="hidden-xs">
-                        Inicio
+                        Sistema de Control Patrimonial
                         <i class="fa fa-angle-right" aria-hidden="true"></i>
                         <small>@ViewBag.Title</small>
                     </label>
@@ -75,7 +76,8 @@
                                 <a href="@Url.Action("Index", "Usuario")">
                                     <i class="fa fa-user"></i> <span>Gesti&oacute;n de Usuario</span>
                                 </a>
-                            </li>
+                            </li>  
+                        }
                             <li>
                                 <a href="@Url.Action("Index", "Bien")">
                                     <i class="fa fa-laptop"></i> <span>Gesti&oacute;n de Bienes</span>
@@ -91,8 +93,6 @@
                                     <i class="fa fa-check"></i> <span>Gesti&oacute;n de Salidas</span>
                                 </a>
                             </li>
-
-                        }
                     </ul>
                 </section>
             </aside>
@@ -117,12 +117,12 @@
             @RenderBody()
         </div>
         <footer class="main-footer">
+            <i class="fa fa-copyright"></i><label>&nbsp;Reniec - @DateTime.Now.Year</label>
             <div class="pull-right hidden-xs">
                 <label>@(string.Format("{0} {1}", "ControlPatrimonial", "V1"))</label>
             </div>
         </footer>
     </div>
-    @{ Html.RenderPartial("_LayoutModals"); }
 
     <script src="~/Content/lib/jquery/js/jquery-3.3.1.min.js"></script>
     <script src="~/Content/lib/jquery/js/jquery.validate.min.js"></script>

@@ -23,7 +23,6 @@ namespace WebControlPatrimonial.Controllers
             CustomUserManager = customUserManager;
         }
 
-        // GET: Account
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {

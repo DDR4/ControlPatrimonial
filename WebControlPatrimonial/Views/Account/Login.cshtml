@@ -9,7 +9,13 @@
 @model WebControlPatrimonial.Models.LoginViewModel
 
 <div class="row">
-    <div class="col-md-offset-4 col-sm-offset-4 col-sm-4 col-xs-12 bsp-box-login">
+    <div class="col-md-2"></div>
+    <div class="col-md-3 col-xs-12 titulo-inicio">
+        <h1 id="titulo-login">SISTEMA DE CONTROL PATRIMONIAL</h1>
+        <img src="~/Content/img/reniec.png" width="100%" />
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-4 col-xs-12 bsp-box-login">
         @if (errorSummary.Any())
         {
             <br />
@@ -26,7 +32,7 @@
         @using (Html.BeginForm("Login", "Account", new { returnURl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form", role = "role" }))
         {
             @Html.AntiForgeryToken()
-            <h3>Iniciar sesi&oacute;n</h3>
+            <h3>Iniciar Sesi&oacute;n</h3>
             <hr />
 
             <div class="form-group">
@@ -50,10 +56,12 @@
                 @Html.ValidationMessageFor(m => m.Clave, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
-                <input type="submit" value="Ingresar" class="btn btn-danger" style="width:100%;" />
+                <input type="submit" value="Ingresar" class="btn btn-primary" style="width:100%;" />
             </div>
         }
-     
+
     </div>
 </div>
-
+<footer class="main-footer-login">
+    <i class="fa fa-copyright"></i><label>&nbsp;Reniec - @DateTime.Now.Year</label>
+</footer>

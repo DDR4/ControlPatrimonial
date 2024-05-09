@@ -163,6 +163,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\main.css" />
     <Content Include="Content\css\_all-skins.css" />
+    <Content Include="Content\img\reniec.png" />
     <Content Include="Content\img\user-256.png" />
     <Content Include="Content\js\app.js" />
     <Content Include="Content\js\Usuario\usuario.js" />
@@ -285,12 +286,9 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutMenuUserAccount.cshtml" />
-    <Content Include="Views\Shared\_LayoutMinimal.cshtml" />
-    <Content Include="Views\Shared\_LayoutModals.cshtml" />
-    <Content Include="Views\Shared\_LayoutSideBar.cshtml" />
-    <Content Include="Views\Shared\_LayoutSideBarControl.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Usuario\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutMinimal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
