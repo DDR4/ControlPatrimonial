@@ -23,7 +23,11 @@ namespace CP.BusinessLogic
 
                 if (result == null)
                 {
-                    return new Common.Response<Usuario>("Dni o Clave incorrectos.");
+                    return new Common.Response<Usuario>("Dni o Contraseña Incorrectos.");
+                }
+                else if (result.Estado.Estado_Id == 2)
+                {
+                    return new Common.Response<Usuario>("Usuario Inactivo.");
                 }
 
                 return new Common.Response<Usuario>(result);

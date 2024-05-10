@@ -57,5 +57,18 @@ namespace CP.BusinessLogic
             }
         }
 
+        public Response<IEnumerable<TipoBien>> GetTipoBien()
+        {
+            try
+            {
+                var result = repository.GetTipoBien();
+                return new Response<IEnumerable<TipoBien>>(result);
+            }
+            catch (Exception ex)
+            {
+                return new Response<IEnumerable<TipoBien>>(ex);
+            }
+        }
+
     }
 }

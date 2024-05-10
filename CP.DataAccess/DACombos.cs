@@ -74,6 +74,27 @@ namespace CP.DataAccess
                 return result;
             }
         }
-        
+
+        public IEnumerable<TipoBien> GetTipoBien()
+        {
+            using (var connection = Factory.ConnectionFactory())
+            {
+                connection.Open();
+                var parm = new DynamicParameters();
+                var result = connection.Query(
+                     sql: "sp_Obtener_TipoBien",
+                     param: parm,
+                     commandType: CommandType.StoredProcedure)
+                     .Select(m => m as IDictionary<string, object>)
+                     .Select(n => new TipoBien
+                     {
+                         TipoBien_Id = n.Single(d => d.Key.Equals("TipoBien_Id")).Value.Parse<int>(),
+                         Descripcion = n.Single(d => d.Key.Equals("TipoBien_Descripcion")).Value.Parse<string>()
+                     });
+
+                return result;
+            }
+        }
+
     }
 }

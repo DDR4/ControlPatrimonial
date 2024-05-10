@@ -28,7 +28,6 @@
     var $cboModalRol = $('#cboModalRol');
 
     var Message = {
-        ObtenerTipoBusqueda: "Obteniendo los tipos de busqueda, Por favor espere...",
         GuardarSuccess: "Los datos se guardaron satisfactoriamente"
     };
 
@@ -54,10 +53,10 @@
     function $btnNuevoUsuario_click() {
         $modalUsuario.modal();
         Global.Usuario_Id = null;
-        $txtModalNombre.val(""),
-        $txtModalApellido.val(""),
-        $txtModalDni.val(""),
-        $txtModalClave.val(""),
+        $txtModalNombre.val("");
+        $txtModalApellido.val("");
+        $txtModalDni.val("");
+        $txtModalClave.val("");
         $cboModalRol.val(0);
         $cboModalUnidadOrganica.val(0);
         $cboModalSede.val(0);
@@ -209,7 +208,7 @@
             };
             app.CallAjax(method, url, rsdata, fnDoneCallback, null, null, null);
         };
-        app.Message.Confirm("Aviso", "Esta seguro que desea eliminar el usuario?", "Aceptar", "Cancelar", fnAceptarCallback, null);
+        app.Message.Confirm("Aviso", "Esta seguro que desea desactivar el usuario?", "Aceptar", "Cancelar", fnAceptarCallback, null);
     }
 
     function GetRol() {

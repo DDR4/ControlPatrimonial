@@ -85,6 +85,7 @@ namespace CP.DataAccess
                 parm.Add("@UnidadOrganica_Id", obj.UnidadOrganica.UnidadOrganica_Id);
                 parm.Add("@Sede_Id", obj.Sede.Sede_Id);
                 parm.Add("@Estado_Id", obj.Estado.Estado_Id);
+                parm.Add("@Usuario_Creacion", obj.Auditoria.UsuarioCreacion);
                 var result = connection.Execute(
                     sql: "sp_Insertar_Usuario",
                     param: parm,
@@ -101,6 +102,7 @@ namespace CP.DataAccess
                 connection.Open();
                 var parm = new DynamicParameters();
                 parm.Add("@Usuario_Id", obj.Usuario_Id);
+                parm.Add("@Usuario_Creacion", obj.Auditoria.UsuarioCreacion);
                 var result = connection.Execute(
                     sql: "sp_Eliminar_Usuario",
                     param: parm,

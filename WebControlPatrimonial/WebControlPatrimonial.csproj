@@ -142,8 +142,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BienController.cs" />
     <Compile Include="Controllers\CombosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SalidaController.cs" />
+    <Compile Include="Controllers\TransferenciaController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Core\Filter\CustomAuthorizeAttribute.cs" />
     <Compile Include="Core\Identity\CustomApplicationUser.cs" />
@@ -164,8 +167,10 @@
     <Content Include="Content\css\main.css" />
     <Content Include="Content\css\_all-skins.css" />
     <Content Include="Content\img\reniec.png" />
+    <Content Include="Content\img\ReniecGif.gif" />
     <Content Include="Content\img\user-256.png" />
     <Content Include="Content\js\app.js" />
+    <Content Include="Content\js\Bien\bien.js" />
     <Content Include="Content\js\Usuario\usuario.js" />
     <Content Include="Content\lib\adminLTE\css\adminLTE.min.css" />
     <Content Include="Content\lib\adminLTE\js\adminlte.js" />
@@ -289,6 +294,10 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Usuario\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutMinimal.cshtml" />
+    <Content Include="Views\Bien\Index.cshtml" />
+    <Content Include="Views\Transferencia\Index.cshtml" />
+    <Content Include="Views\Salida\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutModals.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

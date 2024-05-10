@@ -9,7 +9,6 @@ namespace CP.Entities
     public class Auditoria
     {
         public string UsuarioCreacion { get; set; }
-        public string UsuarioModificacion { get; set; }
         public string TipoUsuario { get; set; }
     }
 }

@@ -3,10 +3,8 @@
     ViewBag.Title = "Usuario";
 }
 
-
-
 <section class="content-header">
-    <h1>Usuario</h1>
+    <h1>@ViewBag.Title</h1>
 </section>
 <section class="content">
 
@@ -19,7 +17,7 @@
                     <div class="box-tools pull-right">
                         @if (User.Identity.GetUserId().Equals("1"))
                         {
-                            <button class="btn btn-success btn-sm-max" id="btnNuevoUsuario"><span class="fa fa-plus-square"></span> Nuevo Usuario</button>
+                        <button class="btn btn-success btn-sm-max" id="btnNuevoUsuario"><span class="fa fa-plus-square"></span> Nuevo @ViewBag.Title</button>
                         }
 
                         <button type="button" class="btn btn-box-tool" data-widget="collapse">
@@ -120,7 +118,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" aria-label="Close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="titleModalUsuario">Agregar Usuario</h4>
+                <h4 class="modal-title" id="titleModalUsuario">Agregar @ViewBag.Title</h4>
             </div>
             <div class="modal-body">
                 <form id="formModal" class="small" onkeypress="return event.keyCode != 13;">
@@ -150,7 +148,7 @@
                         <div class="col-md-5">
                             <div class="form-group">
                                 <label for="txtModalClave">Contraseña</label>
-                                <input class="form-control input-sm" type="password" id="txtModalClave" maxlength="255" />
+                                <input class="form-control input-sm" type="password" id="txtModalClave" maxlength="10" />
                             </div>
                         </div>
                     </div>

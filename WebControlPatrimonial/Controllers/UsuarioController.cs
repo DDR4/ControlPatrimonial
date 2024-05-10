@@ -55,6 +55,10 @@ namespace WebControlPatrimonial.Controllers
         public JsonResult InsertUpdateUsuario(Usuario obj)
         {
             var bussingLogic = new CP.BusinessLogic.BLUsuario();
+            obj.Auditoria = new Auditoria
+            {
+                UsuarioCreacion = User.Identity.Name,
+            };
             var response = bussingLogic.InsertUpdateUsuario(obj);
 
             return Json(response);
@@ -63,6 +67,10 @@ namespace WebControlPatrimonial.Controllers
         public JsonResult DeleteUsuario(Usuario obj)
         {
             var bussingLogic = new CP.BusinessLogic.BLUsuario();
+            obj.Auditoria = new Auditoria
+            {
+                UsuarioCreacion = User.Identity.Name,
+            };
             var response = bussingLogic.DeleteUsuario(obj);
 
             return Json(response);

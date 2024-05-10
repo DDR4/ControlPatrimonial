@@ -5,7 +5,8 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-    <title>@ViewBag.Title</title>
+    <title>Sistema de Control Patrimonial</title>
+    <link rel="icon" href="~/favicon.ico">
 
     <link href="~/Content/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
@@ -76,23 +77,24 @@
                                 <a href="@Url.Action("Index", "Usuario")">
                                     <i class="fa fa-user"></i> <span>Gesti&oacute;n de Usuario</span>
                                 </a>
-                            </li>  
+                            </li>
+
                         }
-                            <li>
-                                <a href="@Url.Action("Index", "Bien")">
-                                    <i class="fa fa-laptop"></i> <span>Gesti&oacute;n de Bienes</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="@Url.Action("Index", "Transferencia")">
-                                    <i class="fa fa-exchange"></i> <span>Gesti&oacute;n de Transferencia</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="@Url.Action("Index", "Salida")">
-                                    <i class="fa fa-check"></i> <span>Gesti&oacute;n de Salidas</span>
-                                </a>
-                            </li>
+                        <li>
+                            <a href="@Url.Action("Index", "Bien")">
+                                <i class="fa fa-laptop"></i> <span>Gesti&oacute;n de Bienes</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Index", "Transferencia")">
+                                <i class="fa fa-exchange"></i> <span>Gesti&oacute;n de Transferencia</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Index", "Salida")">
+                                <i class="fa fa-check"></i> <span>Gesti&oacute;n de Salidas</span>
+                            </a>
+                        </li>
                     </ul>
                 </section>
             </aside>
@@ -123,7 +125,7 @@
             </div>
         </footer>
     </div>
-
+    @{ Html.RenderPartial("_LayoutModals"); }
     <script src="~/Content/lib/jquery/js/jquery-3.3.1.min.js"></script>
     <script src="~/Content/lib/jquery/js/jquery.validate.min.js"></script>
     <script src="~/Content/lib/jquery/js/jquery.validate.unobtrusive.min.js"></script>

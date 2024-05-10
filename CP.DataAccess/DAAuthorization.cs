@@ -34,6 +34,10 @@ namespace CP.DataAccess
                         Rol = new Rol
                         {
                             Rol_Id = n.Single(d => d.Key.Equals("Rol_Id")).Value.Parse<int>(),
+                        },
+                        Estado = new Estado
+                        {
+                            Estado_Id = n.Single(d => d.Key.Equals("Estado_Id")).Value.Parse<int>(),
                         }
                     });
 

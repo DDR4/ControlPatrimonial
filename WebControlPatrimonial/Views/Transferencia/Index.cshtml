@@ -1,0 +1,201 @@
+﻿﻿@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "Transferencia";
+}
+
+<section class="content-header">
+    <h1>@ViewBag.Title</h1>
+</section>
+<section class="content">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">&nbsp;</h3>
+
+                    <div class="box-tools pull-right">
+                        @if (User.Identity.GetUserId().Equals("1"))
+                        {
+                            <button class="btn btn-success btn-sm-max" id="btnNuevoUsuario"><span class="fa fa-plus-square"></span> Nuevo @ViewBag.Title</button>
+                        }
+
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body ">
+                    <form id="form1">
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label for="cboTipoBusqueda">Tipo b&uacute;squeda</label>
+                                <select class="form-control input-sm" style="width:100%;" id="cboTipoBusqueda">
+                                    <option value="0">Todos</option>
+                                    <option value="1">Dni</option>
+                                    <option value="2">Nombre</option>
+                                    <option value="3">Estado</option>
+                                </select>
+                            </div>
+                            <div id="tipoDni" style="display:none;">
+                                <div class="form-group col-md-3">
+                                    <label for="txtDni">Dni</label>
+                                    <input type="text" class="form-control input-sm" id="txtDni">
+                                </div>
+                            </div>
+                            <div id="tipoNombre" style="display:none;">
+                                <div class="form-group col-md-3">
+                                    <label for="txtNombre">Nombre</label>
+                                    <input type="text" class="form-control input-sm" id="txtNombre">
+                                </div>
+                            </div>
+                            <div id="tipoEstado" style="display:none;">
+                                <div class="form-group col-md-3">
+                                    <label for="cboEstado">Estado</label>
+                                    <select class="form-control input-sm" id="cboEstado">
+                                        <option value="0" selected>Todos</option>
+                                        <option value="1">Activo</option>
+                                        <option value="2">Inactivo</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-1">
+                                <label for="btnBuscar"><font color="white">_</font></label>
+                                <button type="button" class="btn btn-primary btn-sm" id="btnBuscar">
+                                    <span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;Buscar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <br />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">&nbsp;</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <br />
+                <div class="box-body ">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="table-responsive">
+                                <table id="tblListadoUsuarios" class="table table-bordered table-striped table-hover table-condensed" style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <th width="12%;">Nombres</th>
+                                            <th width="10%;">Apellidos</th>
+                                            <th width="10%;">Dni</th>
+                                            <th width="10%;">Rol</th>
+                                            <th width="15%;">Unidad Org&aacute;nica</th>
+                                            <th width="10%;">Sede</th>
+                                            <th width="10%;">Estado</th>
+                                            <th width="8%;"></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+<div class="modal fade" id="modalUsuario" tabindex="-1" role="dialog" aria-labelledby="titleModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" aria-label="Close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="titleModalUsuario">Agregar @ViewBag.Title</h4>
+            </div>
+            <div class="modal-body">
+                <form id="formModal" class="small" onkeypress="return event.keyCode != 13;">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="txtModalDni">Dni</label>
+                                <input class="form-control input-sm" type="text" id="txtModalDni" maxlength="8" />
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="txtModalNombre">Nombres</label>
+                                <input class="form-control input-sm" type="text" id="txtModalNombre" maxlength="255" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="txtModalApellido">Apellido</label>
+                                <input class="form-control input-sm" type="text" id="txtModalApellido" maxlength="255" />
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="txtModalClave">Contraseña</label>
+                                <input class="form-control input-sm" type="password" id="txtModalClave" maxlength="255" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="form-group col-md-5">
+                            <label for="cboModalUnidadOrganica">Unidad Org&aacute;nica</label>
+                            <select class="form-control input-sm" id="cboModalUnidadOrganica">
+                                <option value="0" selected>Todos</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-5">
+                            <label for="cboModalSede">Sede</label>
+                            <select class="form-control input-sm" id="cboModalSede">
+                                <option value="0" selected>Todos</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="form-group col-md-5">
+                            <label for="cboModalRol">Rol</label>
+                            <select class="form-control input-sm" id="cboModalRol">
+                                <option value="0" selected>Todos</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-5">
+                            <label for="cboModalEstado">Estado</label>
+                            <select class="form-control input-sm" id="cboModalEstado">
+                                <option value="0" selected>Todos</option>
+                                <option value="1">Activo</option>
+                                <option value="2">Inactivo</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger btn-sm" type="button" id="btnGuardar">Guardar</button>
+                <button class="btn btn-default btn-sm" type="button" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*@section scripts{
+    <script src="~/Content/js/Usuario/usuario.js"></script>
+}*@

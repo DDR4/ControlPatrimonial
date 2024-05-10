@@ -36,5 +36,13 @@ namespace WebControlPatrimonial.Controllers
             return Json(response);
         }
 
+        public JsonResult GetTipoBien()
+        {
+            var bussingLogic = new CP.BusinessLogic.BLCombos();
+            var response = bussingLogic.GetTipoBien();
+
+            return Json(response);
+        }
+
     }
 }
