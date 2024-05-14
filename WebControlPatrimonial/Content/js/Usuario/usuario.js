@@ -20,7 +20,6 @@
     var $txtModalNombre = $('#txtModalNombre');
     var $txtModalApellido = $('#txtModalApellido');
     var $txtModalClave = $('#txtModalClave');
-    var $cboModalTipo = $('#cboModalTipo');
     var $cboModalEstado = $('#cboModalEstado');
     var $titleModalUsuario = $('#titleModalUsuario');
     var $cboModalUnidadOrganica = $('#cboModalUnidadOrganica');
@@ -51,6 +50,7 @@
     }
 
     function $btnNuevoUsuario_click() {
+        $titleModalUsuario.html("Nuevo Usuario");
         $modalUsuario.modal();
         Global.Usuario_Id = null;
         $txtModalNombre.val("");

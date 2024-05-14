@@ -70,5 +70,18 @@ namespace CP.BusinessLogic
             }
         }
 
+        public Response<IEnumerable<Usuario>> GetUsuario()
+        {
+            try
+            {
+                var result = repository.GetUsuario();
+                return new Response<IEnumerable<Usuario>>(result);
+            }
+            catch (Exception ex)
+            {
+                return new Response<IEnumerable<Usuario>>(ex);
+            }
+        }
+
     }
 }

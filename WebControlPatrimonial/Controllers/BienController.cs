@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
@@ -54,10 +56,14 @@ namespace WebControlPatrimonial.Controllers
         public JsonResult InsertUpdateBien(Bien obj)
         {
             var bussingLogic = new CP.BusinessLogic.BLBien();
+            var Identity = ((ClaimsIdentity)Thread.CurrentPrincipal.Identity);
+            var Usuario_Id = Identity.Claims.Where(x => x.Type == ClaimTypes.UserData).FirstOrDefault().ValueType;
             obj.Auditoria = new Auditoria
             {
-                UsuarioCreacion = User.Identity.Name,
+                Usuario_Id = Convert.ToInt32(Usuario_Id),
+                UsuarioCreacion = User.Identity.Name
             };
+
             var response = bussingLogic.InsertUpdateBien(obj);
 
             return Json(response);

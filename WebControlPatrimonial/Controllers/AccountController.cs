@@ -99,7 +99,7 @@ namespace WebControlPatrimonial.Controllers
 
             identity.AddClaim(new Claim("Username", user.Id ?? ""));
             identity.AddClaim(new Claim("NombreUsuario", user.UserName ?? ""));
-            identity.AddClaim(new Claim("Usuario_Id", user.Usuario_Id ?? ""));
+            identity.AddClaim(new Claim(ClaimTypes.UserData,"Usuario_Id", user.Usuario_Id ?? ""));
 
             var authenticationProperties = new AuthenticationProperties();
             authenticationProperties.IsPersistent = isPersistent;

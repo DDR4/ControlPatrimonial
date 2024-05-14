@@ -80,6 +80,7 @@ namespace CP.DataAccess
                 parm.Add("@TipoBien_Id", obj.TipoBien.TipoBien_Id);
                 parm.Add("@Estado_Id", obj.Estado.Estado_Id);
                 parm.Add("@Usuario_Creacion", obj.Auditoria.UsuarioCreacion);
+                parm.Add("@Usuario_Id", obj.Auditoria.Usuario_Id);
                 var result = connection.Execute(
                     sql: "sp_Insertar_Bien",
                     param: parm,

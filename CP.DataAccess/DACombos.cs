@@ -96,5 +96,26 @@ namespace CP.DataAccess
             }
         }
 
+        public IEnumerable<Usuario> GetUsuario()
+        {
+            using (var connection = Factory.ConnectionFactory())
+            {
+                connection.Open();
+                var parm = new DynamicParameters();
+                var result = connection.Query(
+                     sql: "sp_Obtener_Usuario",
+                     param: parm,
+                     commandType: CommandType.StoredProcedure)
+                     .Select(m => m as IDictionary<string, object>)
+                     .Select(n => new Usuario
+                     {
+                         Usuario_Id = n.Single(d => d.Key.Equals("Usuario_Id")).Value.Parse<int>(),
+                         Nombres = n.Single(d => d.Key.Equals("Descripcion")).Value.Parse<string>()
+                     });
+
+                return result;
+            }
+        }
+
     }
 }

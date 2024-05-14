@@ -44,5 +44,13 @@ namespace WebControlPatrimonial.Controllers
             return Json(response);
         }
 
+        public JsonResult GetUsuario()
+        {
+            var bussingLogic = new CP.BusinessLogic.BLCombos();
+            var response = bussingLogic.GetUsuario();
+
+            return Json(response);
+        }
+
     }
 }

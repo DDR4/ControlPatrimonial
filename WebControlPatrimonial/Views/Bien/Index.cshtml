@@ -93,14 +93,12 @@
                                 <table id="tblListadoBienes" class="table table-bordered table-striped table-hover table-condensed" style="width:100%;">
                                     <thead>
                                         <tr>
-                                            <th width="10%;">Orden Compra</th>
-                                            <th width="10%;">Proveedor</th>
+                                            <th width="10%;">Código</th>
+                                            <th width="10%;">Tipo Bien</th>
                                             <th width="10%;">Marca</th>
                                             <th width="10%;">Modelo</th>
                                             <th width="10%;">Serie</th>
                                             <th width="15%;">Fecha Vencimento Garantia</th>
-                                            <th width="10%;">Componentes</th>
-                                            <th width="10%;">Tipo Bien</th>
                                             <th width="8%;">Estado</th>
                                             <th width="10%;"></th>
                                         </tr>
@@ -128,57 +126,60 @@
                 <form id="formModal" class="small" onkeypress="return event.keyCode != 13;">
                     <div class="row">
                         <div class="col-md-1"></div>
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                <label for="txtModalOrdenCompra">Orden Compra</label>
-                                <input class="form-control input-sm" type="text" id="txtModalOrdenCompra" maxlength="255" />
-                            </div>
-                        </div>
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                <label for="txtModalProveedor">Proveedor</label>
-                                <input class="form-control input-sm" type="text" id="txtModalProveedor" maxlength="255" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-1"></div>
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                <label for="txtModalMarca">Marca</label>
-                                <input class="form-control input-sm" type="text" id="txtModalMarca" maxlength="255" />
-                            </div>
-                        </div>
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                <label for="txtModalModelo">Modelo</label>
-                                <input class="form-control input-sm" type="text" id="txtModalModelo" maxlength="255" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-1"></div>
-                        <div class="form-group col-md-5">
-                            <label for="txtModalSerie">Serie</label>
-                            <input class="form-control input-sm" type="text" id="txtModalSerie" maxlength="255" />
-                        </div>
-                        <div class="form-group col-md-5">
-                            <label for="txtModalFechaVenGarantia">Fecha Vencimiento Garantia</label>
-                            <input class="form-control input-sm" id="txtModalFechaVenGarantia" readonly />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-1"></div>
-                        <div class="form-group col-md-5">
-                            <label for="txtModalComponentes">Componentes</label>
-                            <input class="form-control input-sm" type="text" id="txtModalComponentes" maxlength="500" />
-                        </div>
                         <div class="form-group col-md-5">
                             <label for="cboModalTipoBien">Tipo Bien</label>
                             <select class="form-control input-sm" id="cboModalTipoBien">
                                 <option value="0" selected>Todos</option>
                             </select>
                         </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="txtModalOrdenCompra">Orden Compra</label>
+                                <input class="form-control input-sm" type="text" id="txtModalOrdenCompra" maxlength="255" />
+                            </div>
+                        </div>
+                  
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="txtModalProveedor">Proveedor</label>
+                                <input class="form-control input-sm" type="text" id="txtModalProveedor" maxlength="255" />
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="txtModalMarca">Marca</label>
+                                <input class="form-control input-sm" type="text" id="txtModalMarca" maxlength="255" />
+                            </div>
+                        </div>                        
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="txtModalModelo">Modelo</label>
+                                <input class="form-control input-sm" type="text" id="txtModalModelo" maxlength="255" />
+                            </div>
+                        </div>
+                        <div class="form-group col-md-5">
+                            <label for="txtModalSerie">Serie</label>
+                            <input class="form-control input-sm" type="text" id="txtModalSerie" maxlength="255" />
+                        </div>
+                       
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="form-group col-md-5">
+                            <label for="txtModalFechaVenGarantia">Fecha Vencimiento Garantia</label>
+                            <input class="form-control input-sm" id="txtModalFechaVenGarantia" readonly />
+                        </div>
+                        <div class="form-group col-md-5">
+                            <label for="txtModalComponentes">Componentes</label>
+                            <input class="form-control input-sm" type="text" id="txtModalComponentes" maxlength="500" />
+                        </div>
+
                     </div>
                     <div class="row">
                         <div class="col-md-1"></div>

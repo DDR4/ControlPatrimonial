@@ -53,6 +53,7 @@
     }
 
     function $btnNuevoBien_click() {
+        $titleModal.html("Nuevo Bien");
         $modalBien.modal();
         Global.Bien_Id = null;
         $txtModalOrdenCompra.val("");
@@ -141,21 +142,19 @@
         var url = "Bien/GetBien";
 
         var columns = [
-            { data: "OrdenCompra" },
-            { data: "Proveedor" },
+            { data: "Bien_Id" },
+            { data: "TipoBien.Descripcion" },
             { data: "Marca" },
             { data: "Modelo" },
             { data: "Serie" },
-            { data: "FechaVenGarantia" },
-            { data: "Componentes" },
-            { data: "TipoBien.Descripcion" },
+            { data: "FechaVenGarantia" },            
             { data: "Estado.Descripcion" },
             { data: "Auditoria.TipoUsuario" }
 
         ];
         var columnDefs = [
             {
-                "targets": [9],
+                "targets": [7],
                 "visible": true,
                 "orderable": false,
                 "className": "text-center",
@@ -182,7 +181,7 @@
 
     function EditarBien(row) {
         var data = app.GetValueRowCellOfDataTable($tblListadoBienes, row);
-        $titleModal.html("Editar Usuario");
+        $titleModal.html("Editar Bien");
 
         $modalBien.modal();
         Global.Bien_Id = data.Bien_Id;

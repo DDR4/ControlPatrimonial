@@ -45,11 +45,13 @@
     <Compile Include="Bien.cs" />
     <Compile Include="Estado.cs" />
     <Compile Include="Operacion.cs" />
+    <Compile Include="DetalleProceso.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rol.cs" />
     <Compile Include="Sede.cs" />
     <Compile Include="TipoBien.cs" />
     <Compile Include="UnidadOrganica.cs" />
+    <Compile Include="Proceso.cs" />
     <Compile Include="Usuario.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

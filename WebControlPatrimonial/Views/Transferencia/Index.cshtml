@@ -17,7 +17,7 @@
                     <div class="box-tools pull-right">
                         @if (User.Identity.GetUserId().Equals("1"))
                         {
-                            <button class="btn btn-success btn-sm-max" id="btnNuevoUsuario"><span class="fa fa-plus-square"></span> Nuevo @ViewBag.Title</button>
+                            <button class="btn btn-success btn-sm-max" id="btnNuevo"><span class="fa fa-plus-square"></span> Nuevo @ViewBag.Title</button>
                         }
 
                         <button type="button" class="btn btn-box-tool" data-widget="collapse">
@@ -32,22 +32,8 @@
                                 <label for="cboTipoBusqueda">Tipo b&uacute;squeda</label>
                                 <select class="form-control input-sm" style="width:100%;" id="cboTipoBusqueda">
                                     <option value="0">Todos</option>
-                                    <option value="1">Dni</option>
-                                    <option value="2">Nombre</option>
-                                    <option value="3">Estado</option>
+                                    <option value="1">Estado</option>
                                 </select>
-                            </div>
-                            <div id="tipoDni" style="display:none;">
-                                <div class="form-group col-md-3">
-                                    <label for="txtDni">Dni</label>
-                                    <input type="text" class="form-control input-sm" id="txtDni">
-                                </div>
-                            </div>
-                            <div id="tipoNombre" style="display:none;">
-                                <div class="form-group col-md-3">
-                                    <label for="txtNombre">Nombre</label>
-                                    <input type="text" class="form-control input-sm" id="txtNombre">
-                                </div>
                             </div>
                             <div id="tipoEstado" style="display:none;">
                                 <div class="form-group col-md-3">
@@ -88,15 +74,13 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="table-responsive">
-                                <table id="tblListadoUsuarios" class="table table-bordered table-striped table-hover table-condensed" style="width:100%;">
+                                <table id="tblListadoTransferencias" class="table table-bordered table-striped table-hover table-condensed" style="width:100%;">
                                     <thead>
                                         <tr>
-                                            <th width="12%;">Nombres</th>
-                                            <th width="10%;">Apellidos</th>
-                                            <th width="10%;">Dni</th>
-                                            <th width="10%;">Rol</th>
-                                            <th width="15%;">Unidad Org&aacute;nica</th>
-                                            <th width="10%;">Sede</th>
+                                            <th width="12%;">Fecha Ingreso</th>
+                                            <th width="10%;">Fecha Eliminacion</th>
+                                            <th width="10%;">Usuario Inicial</th>
+                                            <th width="10%;">Usuario Final</th>
                                             <th width="10%;">Estado</th>
                                             <th width="8%;"></th>
                                         </tr>
@@ -113,69 +97,58 @@
 </section>
 
 
-<div class="modal fade" id="modalUsuario" tabindex="-1" role="dialog" aria-labelledby="titleModal" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<div class="modal fade" id="modalTransferencia" tabindex="-1" role="dialog" aria-labelledby="titleModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" aria-label="Close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="titleModalUsuario">Agregar @ViewBag.Title</h4>
+                <h4 class="modal-title" id="titleModal">Agregar @ViewBag.Title</h4>
             </div>
             <div class="modal-body">
                 <form id="formModal" class="small" onkeypress="return event.keyCode != 13;">
                     <div class="row">
                         <div class="col-md-1"></div>
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                <label for="txtModalDni">Dni</label>
-                                <input class="form-control input-sm" type="text" id="txtModalDni" maxlength="8" />
-                            </div>
+                        <div class="col-md-3">
+                            <label>Usuario Inicial</label>
+                            <select id="cboModaUsuarioInicial">
+                                <option value="0" selected>Seleccionar Usuario Inicial&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                            </select>
                         </div>
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                <label for="txtModalNombre">Nombres</label>
-                                <input class="form-control input-sm" type="text" id="txtModalNombre" maxlength="255" />
+                        <div class="col-md-3">
+                            <label>Usuario Final</label>
+                            <select id="cboModaUsuarioFinal">
+                                <option value="0" selected>Seleccionar Usuario Final&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                            <button  type="button" class="btn btn-success btn-sm" id="btnAgregarBien"><span class="fa fa-plus-square"></span>&nbsp;&nbsp;Agregar Bien</button>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-sm-10">
+                            <div class="table-responsive">
+                                <table id="tblListadoBienesSeleccionados" class="table table-bordered table-striped table-hover table-condensed" style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <th width="10%;">Código</th>
+                                            <th width="10%;">Tipo Bien</th>
+                                            <th width="10%;">Marca</th>
+                                            <th width="10%;">Modelo</th>
+                                            <th width="10%;">Serie</th>
+                                            <th width="15%;">Fecha Vencimento Garantia</th>
+                                            <th width="8%;"></th>
+                                        </tr>
+                                    </thead>
+                                </table>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-1"></div>
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                <label for="txtModalApellido">Apellido</label>
-                                <input class="form-control input-sm" type="text" id="txtModalApellido" maxlength="255" />
-                            </div>
-                        </div>
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                <label for="txtModalClave">Contraseña</label>
-                                <input class="form-control input-sm" type="password" id="txtModalClave" maxlength="255" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-1"></div>
-                        <div class="form-group col-md-5">
-                            <label for="cboModalUnidadOrganica">Unidad Org&aacute;nica</label>
-                            <select class="form-control input-sm" id="cboModalUnidadOrganica">
-                                <option value="0" selected>Todos</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-5">
-                            <label for="cboModalSede">Sede</label>
-                            <select class="form-control input-sm" id="cboModalSede">
-                                <option value="0" selected>Todos</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-1"></div>
-                        <div class="form-group col-md-5">
-                            <label for="cboModalRol">Rol</label>
-                            <select class="form-control input-sm" id="cboModalRol">
-                                <option value="0" selected>Todos</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-5">
+                        <div class="form-group col-md-3">
                             <label for="cboModalEstado">Estado</label>
                             <select class="form-control input-sm" id="cboModalEstado">
                                 <option value="0" selected>Todos</option>
@@ -184,7 +157,6 @@
                             </select>
                         </div>
                     </div>
-
                 </form>
             </div>
             <div class="modal-footer">
@@ -195,7 +167,85 @@
     </div>
 </div>
 
+<div class="modal fade" id="modalBien" tabindex="-1" role="dialog" aria-labelledby="titleModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" aria-label="Close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Agregar Bien</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
 
-@*@section scripts{
-    <script src="~/Content/js/Usuario/usuario.js"></script>
-}*@
+                    <div class="form-group col-md-3">
+                        <label for="cboModalTipoBusqueda">Tipo b&uacute;squeda</label>
+                        <select class="form-control input-sm" style="width:100%;" id="cboModalTipoBusqueda">
+                            <option value="0">Todos</option>
+                            <option value="1">Tipo Bien</option>
+                            <option value="2">Orden Compra</option>
+                        </select>
+                    </div>
+                    <div id="tipoModalTipoBien" style="display:none;">
+                        <div class="form-group col-md-3">
+                            <label for="cboModalTipoBien">Tipo de Bien</label>
+                            <select class="form-control input-sm" id="cboModalTipoBien">
+                                <option value="0" selected>Todos</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="tipoModalOrdenCompra" style="display:none;">
+                        <div class="form-group col-md-3">
+                            <label for="txtModalOrdenCompra">Orden de Compra</label>
+                            <input type="text" class="form-control input-sm" id="txtModalOrdenCompra">
+                        </div>
+                    </div>
+                    <div style="display:none;">
+                        <div class="form-group col-md-3">
+                            <label for="cboModalEstadoBien">Estado</label>
+                            <select class="form-control input-sm" id="cboModalEstadoBien">
+                                <option value="0" selected>Todos</option>
+                                <option value="1">Activo</option>
+                                <option value="2">Inactivo</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-1">
+                        <label for="btnBuscarModal"><font color="white">_</font></label>
+                        <button type="button" class="btn btn-primary btn-sm" id="btnBuscarModal">
+                            <span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;Buscar
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table id="tblListadoBienes" class="table table-bordered table-striped table-hover table-condensed" style="width:100%;">
+                                <thead>
+                                    <tr>
+                                        <th width="10%;">Código</th>
+                                        <th width="10%;">Tipo Bien</th>
+                                        <th width="10%;">Marca</th>
+                                        <th width="10%;">Modelo</th>
+                                        <th width="10%;">Serie</th>
+                                        <th width="15%;">Fecha Vencimento Garantia</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger btn-sm" type="button" id="btnGuardarBien">Guardar</button>
+                <button class="btn btn-default btn-sm" type="button" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script src="~/Content/js/Transferencia/transferencia.js"></script>
+}
