@@ -111,5 +111,27 @@ namespace CP.DataAccess
                 return result;
             }
         }
+
+        public bool ValidarDni(Usuario obj)
+        {
+            using (var connection = Factory.ConnectionFactory())
+            {
+                connection.Open();
+                var parm = new DynamicParameters();
+                parm.Add("@Usuario_Id", obj.Usuario_Id);
+                parm.Add("@Dni", obj.Dni);
+                var result = connection.Query(
+                    sql: "sp_Validar_Dni",
+                    param: parm,
+                    commandType: CommandType.StoredProcedure)
+                    .Select(m => m as IDictionary<string, object>)
+                    .Select(n => new Usuario
+                    {
+                        DniExistente = n.Single(d => d.Key.Equals("ValidarDni")).Value.Parse<bool>()
+                    });
+
+                return result.FirstOrDefault().DniExistente;
+            }
+        }
     }
 }

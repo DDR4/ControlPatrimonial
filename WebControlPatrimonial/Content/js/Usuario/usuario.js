@@ -47,6 +47,8 @@
         GetRol();
         GetUnidadOrganica();
         GetSede();
+        app.Event.Number($txtDni);
+        app.Event.Number($txtModalDni);
     }
 
     function $btnNuevoUsuario_click() {
@@ -56,16 +58,19 @@
         $txtModalNombre.val("");
         $txtModalApellido.val("");
         $txtModalDni.val("");
-        $txtModalClave.val("");
+        $txtModalClave.val("Reniec01");
         $cboModalRol.val(0);
         $cboModalUnidadOrganica.val(0);
         $cboModalSede.val(0);
         $cboModalEstado.val(1);
         app.Event.Disabled($cboModalEstado);
+        app.Event.Disabled($txtModalClave);
     }
 
     function $btnGuardar_click() {
-        InsertUpdateUsuario();
+        if (ValidarGuardarUsuario()) {
+            InsertUpdateUsuario();
+        }
     }
 
     function InsertUpdateUsuario() {
@@ -95,9 +100,13 @@
         var url = "Usuario/InsertUpdateUsuario";
 
         var fnDoneCallback = function (data) {
-            app.Message.Success("Grabar", Message.GuardarSuccess, "Aceptar", null);
-            $modalUsuario.modal('hide');
-            GetUsuario();
+            if (data.Data) {
+                app.Message.Info("Aviso", "El Dni ingresado ya existe");
+            } else {
+                app.Message.Success("Grabar", Message.GuardarSuccess, "Aceptar", null);
+                $modalUsuario.modal('hide');
+                GetUsuario();
+            }
         };
         app.CallAjax(method, url, data, fnDoneCallback);
     }
@@ -178,13 +187,14 @@
     function EditarUsuario(row) {
         var data = app.GetValueRowCellOfDataTable($tblListadoUsuarios, row);
         $titleModalUsuario.html("Editar Usuario");
-
+        
         $modalUsuario.modal();
         Global.Usuario_Id = data.Usuario_Id;
         $txtModalNombre.val(data.Nombres);
         $txtModalApellido.val(data.Apellidos);
         $txtModalDni.val(data.Dni);
         $txtModalClave.val(data.Clave);
+        app.Event.Enable($txtModalClave);
         app.Event.Enable($cboModalEstado);
         $cboModalRol.val(data.Rol.Rol_Id).trigger('change');
         $cboModalUnidadOrganica.val(data.UnidadOrganica.UnidadOrganica_Id).trigger('change');
@@ -244,6 +254,38 @@
         app.CallAjax(method, url, null, fnDoneCallback, null, null, null);
     }
 
+    function ValidarGuardarUsuario() {
+        var validar = true;
+        var br = "<br>"
+        var msg = "";
+        var Dni = $txtModalDni.val();
+        var Nombre = $txtModalNombre.val();
+        var Apellido = $txtModalApellido.val();
+        var Clave = $txtModalClave.val();
+        var UnidadOrganica = parseInt($cboModalUnidadOrganica.val());
+        var Sede = parseInt($cboModalSede.val());
+        var Rol = parseInt($cboModalRol.val());
+
+        msg += app.ValidarCampo(Dni, "• El Dni.");
+        msg += app.ValidarCampo(Nombre, "• El Nombre.");
+        msg += app.ValidarCampo(Apellido, "• El Apellido.");
+        msg += app.ValidarCampo(Clave, "• La Contraseña.");
+        msg += app.ValidarCampo(UnidadOrganica, "• La Unidad Orgánica.");
+        msg += app.ValidarCampo(Sede, "• La Sede.");
+        msg += app.ValidarCampo(Rol, "• El Rol.");
+
+        if (msg != "") {
+            validar = false;
+            var msgTotal = "Por favor, Ingrese los siguientes campos del Usuario: " + br + msg;
+            app.Message.Info("Aviso", msgTotal);
+        }
+        else if (Dni.length < 8) {
+            validar = false;
+            app.Message.Info("Aviso", "El Dni debe tener minimo 8 dígitos");
+        }
+
+        return validar;
+    }
 
     return {
         EditarUsuario: EditarUsuario,

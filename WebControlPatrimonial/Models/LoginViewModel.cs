@@ -9,6 +9,7 @@ namespace WebControlPatrimonial.Models
     public class LoginViewModel
     {
         [Required]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "Solo ingresar números")]
         [Display(Name ="Dni")]
         public string Dni { get; set; }
         

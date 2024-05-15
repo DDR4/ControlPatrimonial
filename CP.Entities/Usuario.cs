@@ -19,6 +19,7 @@ namespace CP.Entities
         public Estado Estado { get; set; }
         public Auditoria Auditoria { get; set; }
         public Operacion Operacion { get; set; }
+        public bool DniExistente { get; set; }
 
     }
 }

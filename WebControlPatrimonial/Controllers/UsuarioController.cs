@@ -1,4 +1,5 @@
-﻿using CP.Entities;
+﻿using CP.Common;
+using CP.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,7 +60,12 @@ namespace WebControlPatrimonial.Controllers
             {
                 UsuarioCreacion = User.Identity.Name,
             };
-            var response = bussingLogic.InsertUpdateUsuario(obj);
+            var response = bussingLogic.ValidarDni(obj);
+
+            if (!response.Data)
+            {
+                bussingLogic.InsertUpdateUsuario(obj);
+            }
 
             return Json(response);
         }
@@ -72,6 +78,14 @@ namespace WebControlPatrimonial.Controllers
                 UsuarioCreacion = User.Identity.Name,
             };
             var response = bussingLogic.DeleteUsuario(obj);
+
+            return Json(response);
+        }
+
+        public JsonResult ValidarDni(Usuario obj)
+        {
+            var bussingLogic = new CP.BusinessLogic.BLUsuario();
+            var response = bussingLogic.ValidarDni(obj);
 
             return Json(response);
         }

@@ -1,4 +1,4 @@
-﻿var Transferencia = (function ($, win, doc) {
+﻿var Salida = (function ($, win, doc) {
 
     var $btnNuevo = $('#btnNuevo');
     var $btnGuardar = $('#btnGuardar');
@@ -12,12 +12,13 @@
     var $btnAgregarBien = $('#btnAgregarBien');     
 
     // Modal
-    var $modalTransferencia = $('#modalTransferencia');
+    var $modalSalida = $('#modalSalida');
     var $titleModal = $('#titleModal');
-    var $cboModaUsuarioInicial = $('#cboModaUsuarioInicial');
-    var $cboModaUsuarioFinal = $('#cboModaUsuarioFinal');
-    var $cboModalEstado = $('#cboModalEstado');
     var $tblListadoBienesSeleccionados = $('#tblListadoBienesSeleccionados');
+    var $txtModalAntecedentes = $('#txtModalAntecedentes');
+    var $txtModalAnalisis = $('#txtModalAnalisis');
+    var $txtModalConclusiones = $('#txtModalConclusiones');
+    var $txtModalRecomendaciones = $('#txtModalRecomendaciones');
 
     var $tblListadoBienes = $('#tblListadoBienes');
     var $modalBien = $('#modalBien');
@@ -46,43 +47,41 @@
 
     // Implementacion del constructor
     function Initialize() {
-        $cboTipoBusqueda.change($cboTipoBusqueda_change);
-        $btnBuscar.click($btnBuscar_click);
+        //$cboTipoBusqueda.change($cboTipoBusqueda_change);
+        //$btnBuscar.click($btnBuscar_click);
         $btnNuevo.click($btnNuevo_click);
-        $btnGuardar.click($btnGuardar_click);
-        GetTransferencia();
-        GetUsuario();
-        GetTipoBien();
-        $('#cboModaUsuarioInicial').select2({
-            dropdownParent: $('#modalTransferencia')
-        });
+        //$btnGuardar.click($btnGuardar_click);
+        //GetTransferencia();
+        //GetUsuario();
+        //GetTipoBien();
+        //$('#cboModaUsuarioInicial').select2({
+        //    dropdownParent: $('#modalTransferencia')
+        //});
 
-        $('#cboModaUsuarioFinal').select2({
-            dropdownParent: $('#modalTransferencia')
-        });
-        $btnAgregarBien.click($btnAgregarBien_click);
-        $cboModalTipoBusqueda.change($cboModalTipoBusqueda_change);
-        $btnBuscarModal.click($btnBuscarModal_click);
-        $btnGuardarBien.click($btnGuardarBien_click);
+        //$('#cboModaUsuarioFinal').select2({
+        //    dropdownParent: $('#modalTransferencia')
+        //});
+        //$btnAgregarBien.click($btnAgregarBien_click);
+        //$cboModalTipoBusqueda.change($cboModalTipoBusqueda_change);
+        //$btnBuscarModal.click($btnBuscarModal_click);
+        //$btnGuardarBien.click($btnGuardarBien_click);
     }
 
     function $btnNuevo_click() {
         $titleModal.html("Nuevo Transferencia");
-        $modalTransferencia.modal();
+        $modalSalida.modal();
         Global.Proceso_Id = null;
-        $cboModaUsuarioInicial.val(0).trigger('change');
-        $cboModaUsuarioFinal.val(0).trigger('change');
-        $cboModalEstado.val(1);
-        app.Event.Disabled($cboModalEstado);
-        DatosSeleccionados = [];
-        NuevosDatosSeleccionados = [];
-        LoadBienesSeleccionados(DatosSeleccionados);
+        //$cboModaUsuarioInicial.val(0).trigger('change');
+        //$cboModaUsuarioFinal.val(0).trigger('change');
+        //$cboModalEstado.val(1);
+        //app.Event.Disabled($cboModalEstado);
+        //DatosSeleccionados = [];
+        //NuevosDatosSeleccionados = [];
+        //LoadBienesSeleccionados(DatosSeleccionados);
     }
 
     function $btnGuardar_click() {
-        if (ValidarGuardarTransferencia()) {
-            InsertUpdateTransferencia();
-        }
+        InsertUpdateTransferencia();
     }
 
     function InsertUpdateTransferencia() {
@@ -273,8 +272,8 @@
         $tipoModalTipoBien.hide();
         $tipoModalOrdenCompra.hide();
 
-        $cboModalTipoBien.val(0);
-        $txtModalOrdenCompra.val("");
+        $tipoModalTipoBien.val("");
+        $tipoModalOrdenCompra.val("");
         $cboModalEstadoBien.val(1);
 
         if (codSelec === "1") {
@@ -384,30 +383,6 @@
             $modalTransferencia.modal();
         };
         app.CallAjax(method, url, data, fnDoneCallback, null, null, null);
-    }
-
-    function ValidarGuardarTransferencia() {
-        var validar = true;
-        var br = "<br>"
-        var msg = "";
-        var UsuarioInicial = parseInt($cboModaUsuarioInicial.val());
-        var UsuarioFinal = parseInt($cboModaUsuarioFinal.val());
-        var Estado = parseInt($cboModalEstado.val());
-
-        msg += app.ValidarCampo(UsuarioInicial, "• El Usuario Inicial.");
-        msg += app.ValidarCampo(UsuarioFinal, "• El Usuario Final.");
-        msg += app.ValidarCampo(Estado, "• El Estado.");
-        if (NuevosDatosSeleccionados.length == 0) {
-            msg += "• Los Bienes.";
-        }
-
-        if (msg != "") {
-            validar = false;
-            var msgTotal = "Por favor, Ingrese los siguientes campos del Transferencia: " + br + msg;
-            app.Message.Info("Aviso", msgTotal);
-        }
-
-        return validar;
     }
 
     return {

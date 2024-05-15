@@ -41,7 +41,7 @@
                     <span class="input-group-addon">
                         <i class="fa fa-user" aria-hidden="true"></i>
                     </span>
-                    @Html.TextBoxFor(m => m.Dni, new { @class = "form-control", placeholder = "Ingresar Dni" })
+                    @Html.TextBoxFor(m => m.Dni, new { @class = "form-control", placeholder = "Ingresar Dni", @maxlength = 8 })
                 </div>
                 @Html.ValidationMessageFor(m => m.Dni, "", new { @class = "text-danger" })
             </div>
@@ -51,7 +51,7 @@
                     <span class="input-group-addon">
                         <i class="fa fa-lock" aria-hidden="true"></i>
                     </span>
-                    @Html.PasswordFor(m => m.Clave, new { @class = "form-control", placeholder = "Ingresar Contraseña" })
+                    @Html.PasswordFor(m => m.Clave, new { @class = "form-control", placeholder = "Ingresar Contraseña", @maxlength = 10 })
                 </div>
                 @Html.ValidationMessageFor(m => m.Clave, "", new { @class = "text-danger" })
             </div>

@@ -170,6 +170,7 @@
     <Content Include="Content\img\ReniecGif.gif" />
     <Content Include="Content\img\user-256.png" />
     <Content Include="Content\js\app.js" />
+    <Content Include="Content\js\Salida\salida.js" />
     <Content Include="Content\js\Transferencia\transferencia.js" />
     <Content Include="Content\js\Bien\bien.js" />
     <Content Include="Content\js\Usuario\usuario.js" />

@@ -69,7 +69,9 @@
     }
 
     function $btnGuardar_click() {
-        InsertUpdateBien();
+        if (ValidarGuardarBien()) {
+            InsertUpdateBien();
+        }
     }
 
     function InsertUpdateBien() {
@@ -109,8 +111,8 @@
         $tipoOrdenCompra.hide();
         $tipoEstado.hide();
 
-        $tipoTipoBien.val("");
-        $tipoOrdenCompra.val("");
+        $cboTipoBien.val(0);
+        $txtOrdenCompra.val("");
         $cboEstado.val(0);
 
         if (codSelec === "1") {
@@ -226,6 +228,39 @@
             }
         };
         app.CallAjax(method, url, null, fnDoneCallback, null, null, null);
+    }
+
+    function ValidarGuardarBien() {
+        var validar = true;
+        var br = "<br>"
+        var msg = "";
+        var TipoBien = parseInt($cboModalTipoBien.val());
+        var OrdenCompra = $txtModalOrdenCompra.val();
+        var Proveedor = $txtModalProveedor.val();
+        var Marca = $txtModalMarca.val();
+        var Modelo = $txtModalModelo.val();
+        var Serie = $txtModalSerie.val();
+        var FechaVenGarantia = $txtModalFechaVenGarantia.val();
+        var Componentes = $txtModalComponentes.val();
+        var Estado = parseInt($cboModalEstado.val());
+
+        msg += app.ValidarCampo(TipoBien, "• El Tipo de Bien.");
+        msg += app.ValidarCampo(OrdenCompra, "• El Orden de Compra.");
+        msg += app.ValidarCampo(Proveedor, "• El Proveedor.");
+        msg += app.ValidarCampo(Marca, "• La Marca.");
+        msg += app.ValidarCampo(Modelo, "• El Modelo.");
+        msg += app.ValidarCampo(Serie, "• La Serie.");
+        msg += app.ValidarCampo(FechaVenGarantia, "• La Fecha Vencimiento de Garantia.");
+        msg += app.ValidarCampo(Componentes, "• Los Componentes.");
+        msg += app.ValidarCampo(Estado, "• El Estado.");
+
+        if (msg != "") {
+            validar = false;
+            var msgTotal = "Por favor, Ingrese los siguientes campos del Bien: " + br + msg;
+            app.Message.Info("Aviso", msgTotal);
+        }
+
+        return validar;
     }
 
     return {

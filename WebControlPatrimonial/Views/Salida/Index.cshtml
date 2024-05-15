@@ -17,7 +17,7 @@
                     <div class="box-tools pull-right">
                         @if (User.Identity.GetUserId().Equals("1"))
                         {
-                            <button class="btn btn-success btn-sm-max" id="btnNuevoUsuario"><span class="fa fa-plus-square"></span> Nuevo @ViewBag.Title</button>
+                            <button class="btn btn-success btn-sm-max" id="btnNuevo"><span class="fa fa-plus-square"></span> Nuevo @ViewBag.Title</button>
                         }
 
                         <button type="button" class="btn btn-box-tool" data-widget="collapse">
@@ -113,8 +113,8 @@
 </section>
 
 
-<div class="modal fade" id="modalUsuario" tabindex="-1" role="dialog" aria-labelledby="titleModal" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<div class="modal fade" id="modalSalida" tabindex="-1" role="dialog" aria-labelledby="titleModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" aria-label="Close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
@@ -124,67 +124,73 @@
                 <form id="formModal" class="small" onkeypress="return event.keyCode != 13;">
                     <div class="row">
                         <div class="col-md-1"></div>
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                <label for="txtModalDni">Dni</label>
-                                <input class="form-control input-sm" type="text" id="txtModalDni" maxlength="8" />
-                            </div>
+                        <div class="form-group col-md-3">
+                            <label for="cboModalAsunto">Asunto</label>
+                            <select class="form-control input-sm" id="cboModalAsunto">
+                                <option value="0" selected>Todos</option>
+                            </select>
                         </div>
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                <label for="txtModalNombre">Nombres</label>
-                                <input class="form-control input-sm" type="text" id="txtModalNombre" maxlength="255" />
+                        <div class="form-group col-md-2">
+                            <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                            <button type="button" class="btn btn-success btn-sm" id="btnAgregarBien"><span class="fa fa-plus-square"></span>&nbsp;&nbsp;Agregar Bien</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-sm-10">
+                            <div class="table-responsive">
+                                <table id="tblListadoBienesSeleccionados" class="table table-bordered table-striped table-hover table-condensed" style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <th width="10%;">Código</th>
+                                            <th width="10%;">Tipo Bien</th>
+                                            <th width="10%;">Marca</th>
+                                            <th width="10%;">Modelo</th>
+                                            <th width="10%;">Serie</th>
+                                            <th width="15%;">Fecha Vencimento Garantia</th>
+                                            <th width="8%;"></th>
+                                        </tr>
+                                    </thead>
+                                </table>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-1"></div>
-                        <div class="col-md-5">
+                        <div class="col-md-10">
                             <div class="form-group">
-                                <label for="txtModalApellido">Apellido</label>
-                                <input class="form-control input-sm" type="text" id="txtModalApellido" maxlength="255" />
-                            </div>
-                        </div>
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                <label for="txtModalClave">Contraseña</label>
-                                <input class="form-control input-sm" type="password" id="txtModalClave" maxlength="255" />
+                                <label for="txtModalAntecedentes">Antecedentes</label>
+                                <textarea id="txtModalAntecedentes" rows="3" cols="130" minlength="10" maxlength="255"></textarea>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-1"></div>
-                        <div class="form-group col-md-5">
-                            <label for="cboModalUnidadOrganica">Unidad Org&aacute;nica</label>
-                            <select class="form-control input-sm" id="cboModalUnidadOrganica">
-                                <option value="0" selected>Todos</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-5">
-                            <label for="cboModalSede">Sede</label>
-                            <select class="form-control input-sm" id="cboModalSede">
-                                <option value="0" selected>Todos</option>
-                            </select>
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                <label for="txtModalAnalisis">Analisis</label>
+                                <textarea id="txtModalAnalisis" rows="3" cols="130" minlength="10" maxlength="255"></textarea>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-1"></div>
-                        <div class="form-group col-md-5">
-                            <label for="cboModalRol">Rol</label>
-                            <select class="form-control input-sm" id="cboModalRol">
-                                <option value="0" selected>Todos</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-5">
-                            <label for="cboModalEstado">Estado</label>
-                            <select class="form-control input-sm" id="cboModalEstado">
-                                <option value="0" selected>Todos</option>
-                                <option value="1">Activo</option>
-                                <option value="2">Inactivo</option>
-                            </select>
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                <label for="txtModalConclusiones">Conclusiones</label>
+                                <textarea id="txtModalConclusiones" rows="3" cols="130" minlength="10" maxlength="255"></textarea>
+                            </div>
                         </div>
                     </div>
-
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                <label for="txtModalRecomendaciones">Recomendaciones</label>
+                                <textarea id="txtModalRecomendaciones" rows="3" cols="130" minlength="10" maxlength="255"></textarea>
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -196,6 +202,6 @@
 </div>
 
 
-@*@section scripts{
-    <script src="~/Content/js/Usuario/usuario.js"></script>
-}*@
+@section scripts{
+    <script src="~/Content/js/Salida/salida.js"></script>
+}

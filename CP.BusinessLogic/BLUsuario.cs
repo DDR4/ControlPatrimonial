@@ -57,5 +57,18 @@ namespace CP.BusinessLogic
             }
         }
 
+        public Response<bool> ValidarDni(Usuario obj)
+        {
+            try
+            {
+                var result = repository.ValidarDni(obj);
+                return new Response<bool>(result);
+            }
+            catch (Exception ex)
+            {
+                return new Response<bool>(ex);
+            }
+        }
+
     }
 }
