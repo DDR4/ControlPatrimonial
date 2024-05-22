@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAAuthorization.cs" />
+    <Compile Include="DASalida.cs" />
     <Compile Include="DATransferencia.cs" />
     <Compile Include="DACombos.cs" />
     <Compile Include="DABien.cs" />

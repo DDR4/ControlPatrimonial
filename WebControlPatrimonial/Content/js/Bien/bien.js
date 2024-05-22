@@ -8,10 +8,10 @@
     var $cboTipoBusqueda = $('#cboTipoBusqueda');
     var $tipoTipoBien = $('#tipoTipoBien');
     var $cboTipoBien = $('#cboTipoBien');
-    var $tipoOrdenCompra = $('#tipoOrdenCompra');
-    var $txtOrdenCompra = $('#txtOrdenCompra');
-    var $tipoEstado = $('#tipoEstado');
-    var $cboEstado = $('#cboEstado');
+    var $tipoCodigoBien = $('#tipoCodigoBien');
+    var $txtCodigoBien = $('#txtCodigoBien');
+    var $tipoDniUsuario = $('#tipoDniUsuario');
+    var $txtDniUsuario = $('#txtDniUsuario');
     var $btnBuscar = $('#btnBuscar');
 
     // Modal
@@ -108,19 +108,19 @@
     function $cboTipoBusqueda_change() {
         var codSelec = $(this).val();
         $tipoTipoBien.hide();
-        $tipoOrdenCompra.hide();
-        $tipoEstado.hide();
+        $tipoCodigoBien.hide();
+        $tipoDniUsuario.hide();
 
         $cboTipoBien.val(0);
-        $txtOrdenCompra.val("");
-        $cboEstado.val(0);
+        $txtCodigoBien.val("");
+        $txtDniUsuario.val("");
 
         if (codSelec === "1") {
             $tipoTipoBien.show();
         } else if (codSelec === "2") {
-            $tipoOrdenCompra.show();
+            $tipoCodigoBien.show();
         } else if (codSelec === "3") {
-            $tipoEstado.show();
+            $tipoDniUsuario.show();
         }
     }
 
@@ -134,11 +134,8 @@
             {
                 TipoBien_Id: $cboTipoBien.val()
             },
-            OrdenCompra: $txtOrdenCompra.val(),
-            Estado:
-            {
-                Estado_Id: $cboEstado.val()
-            }
+            Bien_Id: $txtCodigoBien.val(),
+            DniUsuario: $txtDniUsuario.val()
         };
 
         var url = "Bien/GetBien";

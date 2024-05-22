@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLAuthorization.cs" />
+    <Compile Include="BLSalida.cs" />
     <Compile Include="BLTransferencia.cs" />
     <Compile Include="BLCombos.cs" />
     <Compile Include="BLBien.cs" />

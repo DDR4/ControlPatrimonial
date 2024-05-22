@@ -10,39 +10,34 @@ using System.Threading.Tasks;
 
 namespace CP.DataAccess
 {
-    public class DABien
+    public class DASalida
     {
-        public IEnumerable<Bien> GetBien(Bien obj)
+        public IEnumerable<Proceso> GetSalida(Proceso obj)
         {
             using (var connection = Factory.ConnectionFactory())
             {
                 connection.Open();
                 var parm = new DynamicParameters();
-                parm.Add("@Bien_Id", obj.Bien_Id);
-                parm.Add("@TipoBien_Id", obj.TipoBien.TipoBien_Id);
-                parm.Add("@DniUsuario", obj.DniUsuario);
+                parm.Add("@Proceso_Id", obj.Proceso_Id);
                 parm.Add("@Estado", obj.Estado.Estado_Id);
                 parm.Add("@NumPagina", obj.Operacion.Inicio);
                 parm.Add("@TamPagina", obj.Operacion.Fin);
                 var result = connection.Query(
-                     sql: "sp_Buscar_Bien",
+                     sql: "sp_Buscar_Salida",
                      param: parm,
                      commandType: CommandType.StoredProcedure)
                      .Select(m => m as IDictionary<string, object>)
-                     .Select(n => new Bien
+                     .Select(n => new Proceso
                      {
-                         Bien_Id = n.Single(d => d.Key.Equals("Bien_Id")).Value.Parse<int>(),
-                         OrdenCompra = n.Single(d => d.Key.Equals("Bien_OrdenCompra")).Value.Parse<string>(),
-                         Proveedor = n.Single(d => d.Key.Equals("Bien_Proveedor")).Value.Parse<string>(),
-                         Marca = n.Single(d => d.Key.Equals("Bien_Marca")).Value.Parse<string>(),
-                         Modelo = n.Single(d => d.Key.Equals("Bien_Modelo")).Value.Parse<string>(),
-                         Serie = n.Single(d => d.Key.Equals("Bien_Serie")).Value.Parse<string>(),
-                         FechaVenGarantia = n.Single(d => d.Key.Equals("Bien_FechaVenGarantia")).Value.Parse<string>(),
-                         Componentes = n.Single(d => d.Key.Equals("Bien_Componentes")).Value.Parse<string>(),
-                         TipoBien = new TipoBien
+                         Proceso_Id = n.Single(d => d.Key.Equals("Proceso_Id")).Value.Parse<int>(),
+                         FechaIngreso = n.Single(d => d.Key.Equals("Proceso_FechaIngreso")).Value.Parse<string>(),
+                         FechaEliminacion = n.Single(d => d.Key.Equals("Proceso_FechaEliminacion")).Value.Parse<string>(),
+                         DetalleProceso = new DetalleProceso 
                          {
-                             TipoBien_Id = n.Single(d => d.Key.Equals("TipoBien_Id")).Value.Parse<int>(),
-                             Descripcion = n.Single(d => d.Key.Equals("TipoBien_Descripcion")).Value.Parse<string>(),
+                             Usuario_Inicial = n.Single(d => d.Key.Equals("Usuario_Inicial")).Value.Parse<int>(),
+                             Usuario_Inicial_Descripcion = n.Single(d => d.Key.Equals("NombresUsuario_Inicial")).Value.Parse<string>(),
+                             Usuario_Final = n.Single(d => d.Key.Equals("Usuario_Final")).Value.Parse<int>(),
+                             Usuario_Final_Descripcion = n.Single(d => d.Key.Equals("NombresUsuario_Final")).Value.Parse<string>(),
                          },
                          Estado = new Estado
                          {
@@ -63,26 +58,20 @@ namespace CP.DataAccess
             }
         }
 
-        public int InsertUpdateBien(Bien obj)
+        public int InsertUpdateSalida(Proceso obj)
         {
             using (var connection = Factory.ConnectionFactory())
             {
                 connection.Open();
                 var parm = new DynamicParameters();
-                parm.Add("@Bien_Id", obj.Bien_Id);
-                parm.Add("@OrdenCompra", obj.OrdenCompra);
-                parm.Add("@Proveedor", obj.Proveedor);
-                parm.Add("@Marca", obj.Marca);
-                parm.Add("@Modelo", obj.Modelo);
-                parm.Add("@Serie", obj.Serie);
-                parm.Add("@FechaVenGarantia", obj.FechaVenGarantia);
-                parm.Add("@Componentes", obj.Componentes);
-                parm.Add("@TipoBien_Id", obj.TipoBien.TipoBien_Id);
+                parm.Add("@Proceso_Id", obj.Proceso_Id);
+                parm.Add("@Usuario_Inicial", obj.DetalleProceso.Usuario_Inicial);
+                parm.Add("@Usuario_Final", obj.DetalleProceso.Usuario_Final);
+                parm.Add("@BienesXML", obj.BienesXML);
                 parm.Add("@Estado_Id", obj.Estado.Estado_Id);
-                parm.Add("@Usuario_Creacion", obj.Auditoria.UsuarioCreacion);
                 parm.Add("@Usuario_Id", obj.Auditoria.Usuario_Id);
                 var result = connection.Execute(
-                    sql: "sp_Insertar_Bien",
+                    sql: "sp_Insertar_Transferencia",
                     param: parm,
                     commandType: CommandType.StoredProcedure);
 
@@ -90,16 +79,15 @@ namespace CP.DataAccess
             }
         }
 
-        public int DeleteBien(Bien obj)
+        public int DeleteSalida(Proceso obj)
         {
             using (var connection = Factory.ConnectionFactory())
             {
                 connection.Open();
                 var parm = new DynamicParameters();
-                parm.Add("@Bien_Id", obj.Bien_Id);
-                parm.Add("@Usuario_Creacion", obj.Auditoria.UsuarioCreacion);
+                parm.Add("@Proceso_Id", obj.Proceso_Id);
                 var result = connection.Execute(
-                    sql: "sp_Eliminar_Bien",
+                    sql: "sp_Eliminar_Transferencia",
                     param: parm,
                     commandType: CommandType.StoredProcedure);
 

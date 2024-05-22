@@ -16,6 +16,7 @@ namespace CP.Entities
         public string Serie { get; set; }
         public string FechaVenGarantia { get; set; }
         public string Componentes { get; set; }
+        public string DniUsuario { get; set; }
         public TipoBien TipoBien { get; set; }
         public Estado Estado { get; set; }
         public Auditoria Auditoria { get; set; }
