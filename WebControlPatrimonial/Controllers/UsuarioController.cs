@@ -82,13 +82,5 @@ namespace WebControlPatrimonial.Controllers
             return Json(response);
         }
 
-        public JsonResult ValidarDni(Usuario obj)
-        {
-            var bussingLogic = new CP.BusinessLogic.BLUsuario();
-            var response = bussingLogic.ValidarDni(obj);
-
-            return Json(response);
-        }
-
     }
 }

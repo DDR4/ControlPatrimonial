@@ -106,5 +106,27 @@ namespace CP.DataAccess
                 return result;
             }
         }
+
+        public bool ValidarSerie(Bien obj)
+        {
+            using (var connection = Factory.ConnectionFactory())
+            {
+                connection.Open();
+                var parm = new DynamicParameters();
+                parm.Add("@Bien_Id", obj.Bien_Id);
+                parm.Add("@Serie", obj.Serie);
+                var result = connection.Query(
+                    sql: "sp_Validar_Serie",
+                    param: parm,
+                    commandType: CommandType.StoredProcedure)
+                    .Select(m => m as IDictionary<string, object>)
+                    .Select(n => new Bien
+                    {
+                        BienExistente = n.Single(d => d.Key.Equals("ValidarSerie")).Value.Parse<bool>()
+                    });
+
+                return result.FirstOrDefault().BienExistente;
+            }
+        }
     }
 }

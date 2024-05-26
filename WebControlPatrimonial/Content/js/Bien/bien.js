@@ -98,9 +98,13 @@
         var url = "Bien/InsertUpdateBien";
 
         var fnDoneCallback = function (data) {
-            app.Message.Success("Grabar", Message.GuardarSuccess, "Aceptar", null);
-            $modalBien.modal('hide');
-            GetBien();
+            if (data.Data) {
+                app.Message.Info("Aviso", "La Serie ingresada ya existe");
+            } else {
+                app.Message.Success("Grabar", Message.GuardarSuccess, "Aceptar", null);
+                $modalBien.modal('hide');
+                GetBien();
+            }
         };
         app.CallAjax(method, url, data, fnDoneCallback);
     }
@@ -161,7 +165,7 @@
                     if (data === "1") {
                         return "<center>" +
                             '<a class="btn btn-default btn-xs" style= "margin-right:0.5em" title="Editar" href="javascript:Bien.EditarBien(' + meta.row + ');"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>' +
-                            '<a class="btn btn-default btn-xs" style= "margin-right:0.5em" title="Eliminar" href="javascript:Bien.EliminarBien(' + meta.row + ')"><i class="fa fa-trash" aria-hidden="true"></i></a>' +
+                            '<a class="btn btn-default btn-xs" style= "margin-right:0.5em" title="Descargar" href="javascript:Bien.DescargarBien(' + meta.row + ');"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>' +
                             "</center> ";
                     } else {
                         return "";
@@ -194,25 +198,6 @@
         $cboModalTipoBien.val(data.TipoBien.TipoBien_Id).trigger('change');
         app.Event.Enable($cboModalEstado);
         $cboModalEstado.val(data.Estado.Estado_Id).trigger('change');
-    }
-
-    function EliminarBien(row) {
-        var fnAceptarCallback = function () {
-            var data = app.GetValueRowCellOfDataTable($tblListadoBienes, row);
-
-            var obj = {
-                "Bien_Id": data.Bien_Id
-            };
-
-            var method = "POST";
-            var url = "Bien/DeleteBien";
-            var rsdata = obj;
-            var fnDoneCallback = function (data) {
-                GetBien();
-            };
-            app.CallAjax(method, url, rsdata, fnDoneCallback, null, null, null);
-        };
-        app.Message.Confirm("Aviso", "Esta seguro que desea desactivar el usuario?", "Aceptar", "Cancelar", fnAceptarCallback, null);
     }
 
     function GetTipoBien() {
@@ -260,9 +245,14 @@
         return validar;
     }
 
+    function DescargarBien(row) {
+        var data = app.GetValueRowCellOfDataTable($tblListadoBienes, row);
+        app.RedirectTo("Bien/DescargarBien?Bien_Id=" + data.Bien_Id);
+    }
+
     return {
         EditarBien: EditarBien,
-        EliminarBien: EliminarBien
+        DescargarBien: DescargarBien
     };
 
 
