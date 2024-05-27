@@ -76,13 +76,27 @@ namespace CP.BusinessLogic
         public Response<Bien> DescargarBien(Bien obj)
         {
             Bien bien = new Bien();
+            Bien detalleProceso = new Bien();
+            IEnumerable<Proceso> lstProceso = new List<Proceso>();
+            IEnumerable<DetalleProceso> lstDetalleProceso = new List<DetalleProceso>();
 
             bien = repository.GetBien(obj).FirstOrDefault();
+            detalleProceso = repository.GetDetalleBien(obj);
+            lstProceso = repository.GetIngresoSalida(obj);
+            lstDetalleProceso = repository.GetDetalle_Transferencia(obj);
             bien.Auditoria = new Auditoria()
             {
-                UsuarioCreacion = obj.Auditoria.UsuarioCreacion
+                UsuarioCreacion = obj.Auditoria.UsuarioCreacion,
+                FechaCreacion = detalleProceso.Auditoria.FechaCreacion
             };
-            byte[] arraybytes = CrearBoletaPago(bien);
+            bien.DetalleProceso = new DetalleProceso()
+            {
+                Usuario_Inicial_Descripcion = detalleProceso.DetalleProceso.Usuario_Inicial_Descripcion,
+                UnidadOrganica_Inicial_Descripcion = detalleProceso.DetalleProceso.UnidadOrganica_Inicial_Descripcion,
+                Sede_Inicial_Descripcion = detalleProceso.DetalleProceso.Sede_Inicial_Descripcion
+            };
+
+            byte[] arraybytes = CrearBoletaPago(bien,lstProceso.ToList(), lstDetalleProceso.ToList());
             string nombrearchivo = "DetalleBien" + DateTime.Now;
             bien.Arraybytes = arraybytes;
             bien.Nombrearchivo = nombrearchivo;
@@ -90,7 +104,7 @@ namespace CP.BusinessLogic
             return new Response<Bien>(bien);
         }
 
-        public byte[] CrearBoletaPago(Bien bien)
+        public byte[] CrearBoletaPago(Bien bien, List<Proceso> lstProceso, List<DetalleProceso> lstDetalleProceso)
         {
             Document doc = new Document(PageSize.LETTER);
             byte[] arraybytes = null;
@@ -154,9 +168,9 @@ namespace CP.BusinessLogic
 
                 string[] arrayElementos3 = 
                 { 
-                    "Fecha de Registro:", "", "", "Asignado a:", "",
-                    "Orden de Compra:", bien.OrdenCompra, "", "Unidad Orgánica:", "",
-                    "Proveedor:", bien.Proveedor, "", "Sede:", "",
+                    "Fecha de Registro:", bien.Auditoria.FechaCreacion, "", "Asignado a:", bien.DetalleProceso.Usuario_Inicial_Descripcion,
+                    "Orden de Compra:", bien.OrdenCompra, "", "Unidad Orgánica:", bien.DetalleProceso.UnidadOrganica_Inicial_Descripcion,
+                    "Proveedor:", bien.Proveedor, "", "Sede:", bien.DetalleProceso.Sede_Inicial_Descripcion,
                     "Marca:", bien.Marca, "", "", "",
                     "Modelo:", bien.Modelo, "", "", "",
                     "Marca:", bien.Marca, "", "", "",
@@ -180,113 +194,71 @@ namespace CP.BusinessLogic
                 Paragraph ingresoSalida = AddParagraph("MOVIMIENTOS DE INGRESOS Y SALIDAS", Element.ALIGN_LEFT, tituloFont2);
                 doc.Add(new Paragraph(ingresoSalida));
 
-                PdfPTable tblElementos4 = new PdfPTable(new float[] { 10, 10, 10, 20, 20, 20, 10 });
+                PdfPTable tblElementos4 = new PdfPTable(new float[] { 10, 10, 10, 20, 20, 20 });
                 tblElementos4.WidthPercentage = 100;
                 tblElementos4.SpacingBefore = 5;
                 tblElementos4.SpacingAfter = 10;
 
+                List<string> listIngresoSalida = new List<string>();
+
                 string[] arrayElementos4 = 
                 { 
-                    "Código", "Estado", "Fecha", "Nombre", "Sede", "Unidad Orgánica", "Motivo",
-                    " ", " ", " ", " ", " ", "", " ",
-                    " ", " ", " ", " ", " ", "", " ",
-                    " ", " ", " ", " ", " ", "", " ",
-                    " ", " ", " ", " ", " ", "", " ",
-                    " ", " ", " ", " ", " ", "", " ",
+                    "Código", "Estado", "Fecha", "Nombre", "Sede", "Unidad Orgánica",
                 };
 
-                for (int i = 0; i < arrayElementos4.Length; i++)
+                listIngresoSalida.AddRange(arrayElementos4);
+
+                for (int i = 0; i < lstProceso.Count(); i++)
                 {
-                    float width = 1;
-                    float widthbottom = 0;
-                    float widthtop = 0;
-                    BaseColor backgroundColor = BaseColor.WHITE;
-                    
-                    if (i == 0 || i < 7)
+                    Proceso proceso = new Proceso();
+                    proceso = lstProceso[i];
+                    string[] arrayIngresoSalida = 
                     {
-                        width = 1;
-                        widthbottom = 0;
-                        widthtop = 1;
-                        backgroundColor = BaseColor.GRAY;
-                    }
-                    else
-                    {
-                        if (i % 7 == 0)
-                        {
-                            fila++;
-                        }
-                    }
-
-                    if (fila > 0 && fila % 2 == 1)
-                    {
-                        backgroundColor = BaseColor.LIGHT_GRAY;
-                    }
-
-                    if (i > arrayElementos4.Length - 8)
-                    {
-                        widthbottom = 1;
-                    }
-
-                    PdfPCell pdfPCell = AddPdfPCell(arrayElementos4[i].ToString(), standardFont, width, widthbottom, widthtop, Element.ALIGN_LEFT, backgroundColor);
-                    tblElementos4.AddCell(pdfPCell);
+                        proceso.Proceso_Id.ToString(),
+                        proceso.Movimiento_Descripcion.ToString(),
+                        proceso.FechaIngreso,
+                        proceso.Nombres,
+                        proceso.DetalleProceso.Sede_Inicial_Descripcion,
+                        proceso.DetalleProceso.UnidadOrganica_Inicial_Descripcion
+                    };
+                    listIngresoSalida.AddRange(arrayIngresoSalida);
                 }
+
+                AgregarTabla(listIngresoSalida, 6, tblElementos4, standardFont);
 
                 doc.Add(tblElementos4);
 
-                Paragraph movimientos = AddParagraph("MOVITOS DE TRANSFERENCIA", Element.ALIGN_LEFT, tituloFont2);
+                Paragraph movimientos = AddParagraph("MOTIVOS DE TRANSFERENCIA", Element.ALIGN_LEFT, tituloFont2);
                 doc.Add(new Paragraph(movimientos));
 
                 PdfPTable tblElementos5 = new PdfPTable(new float[] { 20, 20, 20, 40 });
                 tblElementos5.WidthPercentage = 100;
                 tblElementos5.SpacingBefore = 5;
 
+                List<string> listTransferencia = new List<string>();
+
                 string[] arrayElementos5 =
                 {
-                    "Código", "Fecha", "Motivo", "Descripción",
-                    " ", " ", " ", " ",
-                    " ", " ", " ", " ",
-                    " ", " ", " ", " ",
-                    " ", " ", " ", " ",
-                    " ", " ", " ", " ",
+                    "Código", "Fecha", "Motivo", "Descripción"
                 };
 
-                fila = 0;
-                for (int i = 0; i < arrayElementos5.Length; i++)
+                listTransferencia.AddRange(arrayElementos5);
+
+                for (int i = 0; i < lstDetalleProceso.Count(); i++)
                 {
-                    float width = 1;
-                    float widthbottom = 0;
-                    float widthtop = 0;
-                    BaseColor backgroundColor = BaseColor.WHITE;
-
-                    if (i == 0 || i < 4)
+                    DetalleProceso detalleProceso = new DetalleProceso();
+                    detalleProceso = lstDetalleProceso[i];
+                    string[] arrayTransferencia =
                     {
-                        width = 1;
-                        widthbottom = 0;
-                        widthtop = 1;
-                        backgroundColor = BaseColor.GRAY;
-                    }
-                    else
-                    {
-                        if (i % 4 == 0)
-                        {
-                            fila++;
-                        }
-                    }
-
-                    if (fila > 0 && fila % 2 == 1)
-                    {
-                        backgroundColor = BaseColor.LIGHT_GRAY;
-                    }
-
-
-                    if (i > arrayElementos5.Length - 5)
-                    {
-                        widthbottom = 1;
-                    }
-
-                    PdfPCell pdfPCell = AddPdfPCell(arrayElementos5[i].ToString(), standardFont, width, widthbottom, widthtop, Element.ALIGN_LEFT, backgroundColor);
-                    tblElementos5.AddCell(pdfPCell);
+                        detalleProceso.Proceso.Proceso_Id.ToString(),
+                        detalleProceso.Proceso.FechaIngreso.ToString(),
+                        detalleProceso.DetalleTransferencia.Motivo,
+                        detalleProceso.DetalleTransferencia.Descripcion
+                    };
+                    listTransferencia.AddRange(arrayTransferencia);
                 }
+
+                AgregarTabla(listTransferencia, 4, tblElementos5, standardFont);
 
                 doc.Add(tblElementos5);
 
@@ -316,6 +288,48 @@ namespace CP.BusinessLogic
             pdfPCell.BackgroundColor = backgroundColor;
             return pdfPCell;
         }
+
+        public void AgregarTabla(List<string> listIngresoSalida, int columnas, PdfPTable tblElementos, Font font)
+        {
+            int fila = 0;
+            for (int i = 0; i < listIngresoSalida.Count; i++)
+            {
+                float width = 1;
+                float widthbottom = 0;
+                float widthtop = 0;
+                BaseColor backgroundColor = BaseColor.WHITE;
+
+                if (i == 0 || i < columnas)
+                {
+                    width = 1;
+                    widthbottom = 0;
+                    widthtop = 1;
+                    backgroundColor = BaseColor.GRAY;
+                }
+                else
+                {
+                    if (i % columnas == 0)
+                    {
+                        fila++;
+                    }
+                }
+
+                if (fila > 0 && fila % 2 == 1)
+                {
+                    backgroundColor = BaseColor.LIGHT_GRAY;
+                }
+
+                if (i > listIngresoSalida.Count - (columnas + 1))
+                {
+                    widthbottom = 1;
+                }
+
+                PdfPCell pdfPCell = AddPdfPCell(listIngresoSalida[i].ToString(), font, width, widthbottom, widthtop, Element.ALIGN_LEFT, backgroundColor);
+                tblElementos.AddCell(pdfPCell);
+            }
+
+        }
+
 
     }
 }

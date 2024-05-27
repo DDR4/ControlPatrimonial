@@ -14,6 +14,7 @@ namespace CP.Entities
         public string FechaIngreso { get; set; }
         public string FechaEliminacion { get; set; }
         public string Nombres { get; set; }
+        public string Movimiento_Descripcion { get; set; }
         public List<Bien> Bienes { get; set; }
         public XDocument BienesXML { get; set; }
         public Estado Estado { get; set; }

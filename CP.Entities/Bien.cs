@@ -24,6 +24,7 @@ namespace CP.Entities
         public bool BienExistente { get; set; }
         public byte[] Arraybytes { get; set; }
         public string Nombrearchivo { get; set; }
+        public DetalleProceso DetalleProceso { get; set; }
 
     }
 }

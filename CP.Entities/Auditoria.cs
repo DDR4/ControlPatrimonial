@@ -10,6 +10,7 @@ namespace CP.Entities
     {
         public int Usuario_Id { get; set; }
         public string UsuarioCreacion { get; set; }
+        public string FechaCreacion { get; set; }
         public string TipoUsuario { get; set; }
     }
 }
