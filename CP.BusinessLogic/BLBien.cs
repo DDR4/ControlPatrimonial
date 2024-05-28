@@ -96,7 +96,7 @@ namespace CP.BusinessLogic
                 Sede_Inicial_Descripcion = detalleProceso.DetalleProceso.Sede_Inicial_Descripcion
             };
 
-            byte[] arraybytes = CrearBoletaPago(bien,lstProceso.ToList(), lstDetalleProceso.ToList());
+            byte[] arraybytes = CrearDetalleBien(bien,lstProceso.ToList(), lstDetalleProceso.ToList());
             string nombrearchivo = "DetalleBien" + DateTime.Now;
             bien.Arraybytes = arraybytes;
             bien.Nombrearchivo = nombrearchivo;
@@ -104,7 +104,7 @@ namespace CP.BusinessLogic
             return new Response<Bien>(bien);
         }
 
-        public byte[] CrearBoletaPago(Bien bien, List<Proceso> lstProceso, List<DetalleProceso> lstDetalleProceso)
+        public byte[] CrearDetalleBien(Bien bien, List<Proceso> lstProceso, List<DetalleProceso> lstDetalleProceso)
         {
             Document doc = new Document(PageSize.LETTER);
             byte[] arraybytes = null;
@@ -173,7 +173,6 @@ namespace CP.BusinessLogic
                     "Proveedor:", bien.Proveedor, "", "Sede:", bien.DetalleProceso.Sede_Inicial_Descripcion,
                     "Marca:", bien.Marca, "", "", "",
                     "Modelo:", bien.Modelo, "", "", "",
-                    "Marca:", bien.Marca, "", "", "",
                     "Número de Serie:", bien.Serie, "", "", "",
                     "FV Garantía:", bien.FechaVenGarantia, "", "", "",
                     "Componentes:", bien.Componentes, "", "", "",
