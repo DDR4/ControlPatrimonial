@@ -66,7 +66,13 @@ namespace CP.DataAccess
                 var parm = new DynamicParameters();
                 parm.Add("@Proceso_Id", obj.Proceso_Id);
                 parm.Add("@Usuario_Inicial", obj.DetalleProceso.Usuario_Inicial);
+                parm.Add("@UnidadOrganica_Inicial", obj.DetalleProceso.UnidadOrganica_Inicial);
+                parm.Add("@Sede_Inicial", obj.DetalleProceso.Sede_Inicial);
                 parm.Add("@Usuario_Final", obj.DetalleProceso.Usuario_Final);
+                parm.Add("@UnidadOrganica_Final", obj.DetalleProceso.UnidadOrganica_Final);
+                parm.Add("@Sede_Final", obj.DetalleProceso.Sede_Final);
+                parm.Add("@Motivo", obj.DetalleProceso.DetalleTransferencia.Motivo);
+                parm.Add("@Descripcion", obj.DetalleProceso.DetalleTransferencia.Descripcion);
                 parm.Add("@BienesXML", obj.BienesXML);
                 parm.Add("@Estado_Id", obj.Estado.Estado_Id);
                 parm.Add("@Usuario_Id", obj.Auditoria.Usuario_Id);

@@ -16,18 +16,24 @@
     var $titleModal = $('#titleModal');
     var $cboModaUsuarioInicial = $('#cboModaUsuarioInicial');
     var $cboModaUsuarioFinal = $('#cboModaUsuarioFinal');
+    var $cboModalUnidadOrganicaInicial = $('#cboModalUnidadOrganicaInicial');
+    var $cboModalUnidadOrganicaFinal = $('#cboModalUnidadOrganicaFinal');
+    var $cboModalSedeInicial = $('#cboModalSedeInicial');
+    var $cboModalSedeFinal = $('#cboModalSedeFinal');
+    var $txtModalMotivo = $('#txtModalMotivo');
+    var $txtModalDescripcion = $('#txtModalDescripcion');
     var $cboModalEstado = $('#cboModalEstado');
     var $tblListadoBienesSeleccionados = $('#tblListadoBienesSeleccionados');
 
     var $tblListadoBienes = $('#tblListadoBienes');
     var $modalBien = $('#modalBien');
-    var $cboModalTipoBusqueda = $('#cboModalTipoBusqueda');
-    var $tipoModalTipoBien = $('#tipoModalTipoBien');
-    var $cboModalTipoBien = $('#cboModalTipoBien');
-    var $tipoModalOrdenCompra = $('#tipoModalOrdenCompra');
-    var $txtModalOrdenCompra = $('#txtModalOrdenCompra');
-    var $cboModalEstadoBien = $('#cboModalEstadoBien');
-    var $btnBuscarModal = $('#btnBuscarModal');
+    //var $cboModalTipoBusqueda = $('#cboModalTipoBusqueda');
+    //var $tipoModalTipoBien = $('#tipoModalTipoBien');
+    //var $cboModalTipoBien = $('#cboModalTipoBien');
+    //var $tipoModalOrdenCompra = $('#tipoModalOrdenCompra');
+    //var $txtModalOrdenCompra = $('#txtModalOrdenCompra');
+    //var $cboModalEstadoBien = $('#cboModalEstadoBien');
+    //var $btnBuscarModal = $('#btnBuscarModal');
     var $btnGuardarBien = $('#btnGuardarBien');     
 
     var Message = {
@@ -52,7 +58,7 @@
         $btnGuardar.click($btnGuardar_click);
         GetTransferencia();
         GetUsuario();
-        GetTipoBien();
+        //GetTipoBien();
         $('#cboModaUsuarioInicial').select2({
             dropdownParent: $('#modalTransferencia')
         });
@@ -61,9 +67,11 @@
             dropdownParent: $('#modalTransferencia')
         });
         $btnAgregarBien.click($btnAgregarBien_click);
-        $cboModalTipoBusqueda.change($cboModalTipoBusqueda_change);
-        $btnBuscarModal.click($btnBuscarModal_click);
+        //$cboModalTipoBusqueda.change($cboModalTipoBusqueda_change);
+        //$btnBuscarModal.click($btnBuscarModal_click);
         $btnGuardarBien.click($btnGuardarBien_click);
+        GetUnidadOrganica();
+        GetSede();
     }
 
     function $btnNuevo_click() {
@@ -92,7 +100,15 @@
             "DetalleProceso":
             {
                 "Usuario_Inicial": $cboModaUsuarioInicial.val(),
+                "UnidadOrganica_Inicial": $cboModalUnidadOrganicaInicial.val(),
+                "Sede_Inicial": $cboModalSedeInicial.val(),
                 "Usuario_Final": $cboModaUsuarioFinal.val(),
+                "UnidadOrganica_Final": $cboModalUnidadOrganicaFinal.val(),
+                "Sede_Final": $cboModalSedeFinal.val(),
+                "DetalleTransferencia": {
+                    "Motivo": $txtModalMotivo.val(),
+                    "Descripcion": $txtModalDescripcion.val(),
+                }
             },
             "Bienes": NuevosDatosSeleccionados,
             "Estado": {
@@ -158,6 +174,7 @@
                         return "<center>" +
                             '<a class="btn btn-default btn-xs" style= "margin-right:0.5em" title="Editar" href="javascript:Transferencia.EditarTransferencia(' + meta.row + ');"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>' +
                             '<a class="btn btn-default btn-xs" style= "margin-right:0.5em" title="Eliminar" href="javascript:Transferencia.EliminarTransferencia(' + meta.row + ')"><i class="fa fa-trash" aria-hidden="true"></i></a>' +
+                            '<a class="btn btn-default btn-xs" style= "margin-right:0.5em" title="Descargar" href="javascript:Transferencia.DescargarTransferencia(' + meta.row + ')"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>' +
                             "</center> ";
                     } else {
                         return "";
@@ -212,20 +229,20 @@
         app.CallAjax(method, url, null, fnDoneCallback, null, null, null);
     }
 
-    function GetTipoBien() {
-        var method = "POST";
-        var url = "Combos/GetTipoBien";
-        var fnDoneCallback = function (data) {
-            for (var i = 0; i < data.Data.length; i++) {
-                $cboModalTipoBien.append('<option value=' + data.Data[i].TipoBien_Id + '>' + data.Data[i].Descripcion + '</option>');
-            }
-        };
-        app.CallAjax(method, url, null, fnDoneCallback, null, null, null);
-    }
+    //function GetTipoBien() {
+    //    var method = "POST";
+    //    var url = "Combos/GetTipoBien";
+    //    var fnDoneCallback = function (data) {
+    //        for (var i = 0; i < data.Data.length; i++) {
+    //            $cboModalTipoBien.append('<option value=' + data.Data[i].TipoBien_Id + '>' + data.Data[i].Descripcion + '</option>');
+    //        }
+    //    };
+    //    app.CallAjax(method, url, null, fnDoneCallback, null, null, null);
+    //}
 
     function $btnAgregarBien_click() {
         $modalBien.modal();
-        $cboModalTipoBusqueda.val(0).change();
+        //$cboModalTipoBusqueda.val(0).change();
         DatosSeleccionados = [];
         $.each(NuevosDatosSeleccionados, function (key, value) {
             DatosSeleccionados.push(value);
@@ -236,14 +253,9 @@
 
     function GetBien() {
         var parms = {
-            TipoBien:
+            Auditoria:
             {
-                TipoBien_Id: $cboModalTipoBien.val()
-            },
-            OrdenCompra: $txtModalOrdenCompra.val(),
-            Estado:
-            {
-                Estado_Id: $cboModalEstadoBien.val()
+                Usuario_Id: $cboModaUsuarioInicial.val()
             }
         };
 
@@ -268,25 +280,25 @@
 
     }
 
-    function $cboModalTipoBusqueda_change() {
-        var codSelec = $(this).val();
-        $tipoModalTipoBien.hide();
-        $tipoModalOrdenCompra.hide();
+    //function $cboModalTipoBusqueda_change() {
+    //    var codSelec = $(this).val();
+    //    $tipoModalTipoBien.hide();
+    //    $tipoModalOrdenCompra.hide();
 
-        $cboModalTipoBien.val(0);
-        $txtModalOrdenCompra.val("");
-        $cboModalEstadoBien.val(1);
+    //    $cboModalTipoBien.val(0);
+    //    $txtModalOrdenCompra.val("");
+    //    $cboModalEstadoBien.val(1);
 
-        if (codSelec === "1") {
-            $tipoModalTipoBien.show();
-        } else if (codSelec === "2") {
-            $tipoModalOrdenCompra.show();
-        }
-    }
+    //    if (codSelec === "1") {
+    //        $tipoModalTipoBien.show();
+    //    } else if (codSelec === "2") {
+    //        $tipoModalOrdenCompra.show();
+    //    }
+    //}
 
-    function $btnBuscarModal_click() {
-        GetBien();
-    }
+    //function $btnBuscarModal_click() {
+    //    GetBien();
+    //}
 
     function LoadBienesSeleccionados(data) {
         $tblListadoBienesSeleccionados.DataTable({
@@ -391,11 +403,23 @@
         var br = "<br>"
         var msg = "";
         var UsuarioInicial = parseInt($cboModaUsuarioInicial.val());
+        var UnidadOrganica_Inicial = parseInt($cboModalUnidadOrganicaInicial.val());
+        var Sede_Inicial = parseInt($cboModalSedeInicial.val());
         var UsuarioFinal = parseInt($cboModaUsuarioFinal.val());
+        var UnidadOrganica_Final = parseInt($cboModalUnidadOrganicaFinal.val());
+        var Sede_Final = parseInt($cboModalSedeFinal.val());
+        var Motivo = $txtModalMotivo.val();
+        var Descripcion = $txtModalDescripcion.val();
         var Estado = parseInt($cboModalEstado.val());
 
         msg += app.ValidarCampo(UsuarioInicial, "• El Usuario Inicial.");
+        msg += app.ValidarCampo(UnidadOrganica_Inicial, "• La Unidad Orgánica Inicial.");
+        msg += app.ValidarCampo(Sede_Inicial, "• La Sede Inicial.");
         msg += app.ValidarCampo(UsuarioFinal, "• El Usuario Final.");
+        msg += app.ValidarCampo(UnidadOrganica_Final, "• La Unidad Orgánica Final.");
+        msg += app.ValidarCampo(Sede_Final, "• La Sede Final.");
+        msg += app.ValidarCampo(Motivo, "• El Motivo.");
+        msg += app.ValidarCampo(Descripcion, "• La Descripción.");
         msg += app.ValidarCampo(Estado, "• El Estado.");
         if (NuevosDatosSeleccionados.length == 0) {
             msg += "• Los Bienes.";
@@ -410,10 +434,40 @@
         return validar;
     }
 
+    function DescargarTransferencia(row) {
+        var data = app.GetValueRowCellOfDataTable($tblListadoTransferencias, row);
+        app.RedirectTo("Transferencia/DescargarTransferencia?Proceso_Id=" + data.Proceso_Id);
+    }
+
+    function GetUnidadOrganica() {
+        var method = "POST";
+        var url = "Combos/GetUnidadOrganica";
+        var fnDoneCallback = function (data) {
+            for (var i = 0; i < data.Data.length; i++) {
+                $cboModalUnidadOrganicaInicial.append('<option value=' + data.Data[i].UnidadOrganica_Id + '>' + data.Data[i].Descripcion + '</option>');
+                $cboModalUnidadOrganicaFinal.append('<option value=' + data.Data[i].UnidadOrganica_Id + '>' + data.Data[i].Descripcion + '</option>');
+            }
+        };
+        app.CallAjax(method, url, null, fnDoneCallback, null, null, null);
+    }
+
+    function GetSede() {
+        var method = "POST";
+        var url = "Combos/GetSede";
+        var fnDoneCallback = function (data) {
+            for (var i = 0; i < data.Data.length; i++) {
+                $cboModalSedeInicial.append('<option value=' + data.Data[i].Sede_Id + '>' + data.Data[i].Descripcion + '</option>');
+                $cboModalSedeFinal.append('<option value=' + data.Data[i].Sede_Id + '>' + data.Data[i].Descripcion + '</option>');
+            }
+        };
+        app.CallAjax(method, url, null, fnDoneCallback, null, null, null);
+    }
+
     return {
         EditarTransferencia: EditarTransferencia,
         EliminarTransferencia: EliminarTransferencia,
-        EliminarBien: EliminarBien
+        EliminarBien: EliminarBien,
+        DescargarTransferencia: DescargarTransferencia
     };
 
 

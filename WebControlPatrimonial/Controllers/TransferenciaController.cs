@@ -92,6 +92,7 @@ namespace WebControlPatrimonial.Controllers
             var tipoUsuario = ctx.Authentication.User.Claims.FirstOrDefault().Value;
             obj.Auditoria = new Auditoria
             {
+                Usuario_Id = obj.Auditoria.Usuario_Id,
                 TipoUsuario = tipoUsuario
             };
 
@@ -106,6 +107,8 @@ namespace WebControlPatrimonial.Controllers
             };
 
             var bussingLogic = new CP.BusinessLogic.BLBien();
+            obj.TipoBien = new TipoBien();
+            obj.Estado = new Estado();
             var response = bussingLogic.GetBien(obj);
 
             var Datos = response.Data;
@@ -129,6 +132,34 @@ namespace WebControlPatrimonial.Controllers
             var response = bussingLogic.GetBienTransferencia(obj);
 
             return Json(response);
+        }
+
+        public void DescargarTransferencia(int Proceso_Id)
+        {
+            //var bussingLogic = new CP.BusinessLogic.BLBien();
+            //Bien bien = new Bien()
+            //{
+            //    Bien_Id = Bien_Id,
+            //    TipoBien = new TipoBien(),
+            //    Estado = new Estado(),
+            //    Auditoria = new Auditoria()
+            //    {
+            //        TipoUsuario = HttpContext.GetOwinContext().Authentication.User.Claims.FirstOrDefault().Value,
+            //        UsuarioCreacion = User.Identity.Name
+            //    },
+            //    Operacion = new Operacion()
+            //    {
+            //        Inicio = 0,
+            //        Fin = 1
+            //    }
+            //};
+            //var response = bussingLogic.DescargarBien(bien);
+
+            //HttpContext.Response.AddHeader("content-disposition", "attachment; filename=" + response.Data.Nombrearchivo + ".pdf");
+            //Response.ContentType = "application/pdf";
+            //Response.ClearContent();
+            //Response.OutputStream.Write(response.Data.Arraybytes, 0, response.Data.Arraybytes.Length);
+            //Response.End();
         }
     }
 }

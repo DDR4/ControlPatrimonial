@@ -22,6 +22,7 @@ namespace CP.DataAccess
                 parm.Add("@TipoBien_Id", obj.TipoBien.TipoBien_Id);
                 parm.Add("@DniUsuario", obj.DniUsuario);
                 parm.Add("@Estado", obj.Estado.Estado_Id);
+                parm.Add("@Usuario_Id", obj.Auditoria.Usuario_Id);
                 parm.Add("@NumPagina", obj.Operacion.Inicio);
                 parm.Add("@TamPagina", obj.Operacion.Fin);
                 var result = connection.Query(
