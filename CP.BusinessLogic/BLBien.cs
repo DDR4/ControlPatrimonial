@@ -79,11 +79,12 @@ namespace CP.BusinessLogic
             Bien detalleProceso = new Bien();
             IEnumerable<Proceso> lstProceso = new List<Proceso>();
             IEnumerable<DetalleProceso> lstDetalleProceso = new List<DetalleProceso>();
+            Proceso proceso = new Proceso();
 
             bien = repository.GetBien(obj).FirstOrDefault();
             detalleProceso = repository.GetDetalleBien(obj);
             lstProceso = repository.GetIngresoSalida(obj);
-            lstDetalleProceso = repository.GetDetalle_Transferencia(obj);
+            lstDetalleProceso = repository.GetDetalle_Transferencia(obj, proceso);
             bien.Auditoria = new Auditoria()
             {
                 UsuarioCreacion = obj.Auditoria.UsuarioCreacion,
@@ -117,13 +118,12 @@ namespace CP.BusinessLogic
 
                 // Abrimos el archivo
                 doc.Open();
-                int fila = 0;
 
                 Font tituloFont = new Font(Font.FontFamily.HELVETICA, 5, Font.NORMAL, BaseColor.BLACK);
                 Font tituloFont2 = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD, BaseColor.BLACK);
                 Font standardFont = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL, BaseColor.BLACK);
 
-                Paragraph titulo = AddParagraph("Sistema Control Patrimonial", Element.ALIGN_CENTER, tituloFont);
+                Paragraph titulo = ExtendedMethodsReport.AddParagraph("Sistema Control Patrimonial", Element.ALIGN_CENTER, tituloFont);
                 doc.Add(new Paragraph(titulo));
 
                 PdfPTable tblElementos = new PdfPTable(new float[] { 75, 25 });
@@ -136,7 +136,7 @@ namespace CP.BusinessLogic
 
                 for (int i = 0; i < arrayElementos.Length; i++)
                 {
-                    PdfPCell pdfPCell = AddPdfPCell(arrayElementos[i].ToString(),standardFont, 0, 0, 0, Element.ALIGN_LEFT, BaseColor.WHITE);
+                    PdfPCell pdfPCell = ExtendedMethodsReport.AddPdfPCell(arrayElementos[i].ToString(),standardFont, 0, 0, 0, 0, Element.ALIGN_LEFT, BaseColor.WHITE);
                     tblElementos.AddCell(pdfPCell);
                 }
 
@@ -157,7 +157,7 @@ namespace CP.BusinessLogic
                         widthbottom = 0;
                     }
 
-                    PdfPCell pdfPCell = AddPdfPCell(arrayElementos2[i].ToString(), standardFont, 0, widthbottom, 0, Element.ALIGN_LEFT,BaseColor.WHITE);
+                    PdfPCell pdfPCell = ExtendedMethodsReport.AddPdfPCell(arrayElementos2[i].ToString(), standardFont, 0, 0, widthbottom, 0, Element.ALIGN_LEFT,BaseColor.WHITE);
                     tblElementos2.AddCell(pdfPCell);
                 }
 
@@ -181,16 +181,16 @@ namespace CP.BusinessLogic
 
                 for (int i = 0; i < arrayElementos3.Length; i++)
                 {
-                    PdfPCell pdfPCell = AddPdfPCell(arrayElementos3[i].ToString(), standardFont, 0, 0, 0, Element.ALIGN_LEFT, BaseColor.WHITE);
+                    PdfPCell pdfPCell = ExtendedMethodsReport.AddPdfPCell(arrayElementos3[i].ToString(), standardFont, 0, 0, 0, 0, Element.ALIGN_LEFT, BaseColor.WHITE);
                     tblElementos3.AddCell(pdfPCell);
                 }
 
                 doc.Add(tblElementos3);
 
-                Paragraph espacio = AddParagraph("________________________________________________________________________________", Element.ALIGN_LEFT, standardFont);
+                Paragraph espacio = ExtendedMethodsReport.AddParagraph("________________________________________________________________________________", Element.ALIGN_LEFT, standardFont);
                 doc.Add(new Paragraph(espacio));
 
-                Paragraph ingresoSalida = AddParagraph("MOVIMIENTOS DE INGRESOS Y SALIDAS", Element.ALIGN_LEFT, tituloFont2);
+                Paragraph ingresoSalida = ExtendedMethodsReport.AddParagraph("MOVIMIENTOS DE INGRESOS Y SALIDAS", Element.ALIGN_LEFT, tituloFont2);
                 doc.Add(new Paragraph(ingresoSalida));
 
                 PdfPTable tblElementos4 = new PdfPTable(new float[] { 10, 10, 10, 20, 20, 20 });
@@ -223,11 +223,11 @@ namespace CP.BusinessLogic
                     listIngresoSalida.AddRange(arrayIngresoSalida);
                 }
 
-                AgregarTabla(listIngresoSalida, 6, tblElementos4, standardFont);
+                ExtendedMethodsReport.AgregarTabla(listIngresoSalida, 6, tblElementos4, standardFont);
 
                 doc.Add(tblElementos4);
 
-                Paragraph movimientos = AddParagraph("MOTIVOS DE TRANSFERENCIA", Element.ALIGN_LEFT, tituloFont2);
+                Paragraph movimientos = ExtendedMethodsReport.AddParagraph("MOTIVOS DE TRANSFERENCIA", Element.ALIGN_LEFT, tituloFont2);
                 doc.Add(new Paragraph(movimientos));
 
                 PdfPTable tblElementos5 = new PdfPTable(new float[] { 20, 20, 20, 40 });
@@ -257,7 +257,7 @@ namespace CP.BusinessLogic
                     listTransferencia.AddRange(arrayTransferencia);
                 }
 
-                AgregarTabla(listTransferencia, 4, tblElementos5, standardFont);
+                ExtendedMethodsReport.AgregarTabla(listTransferencia, 4, tblElementos5, standardFont);
 
                 doc.Add(tblElementos5);
 
@@ -269,66 +269,17 @@ namespace CP.BusinessLogic
             return arraybytes;
         }
 
-        public Paragraph AddParagraph(string descripcion, int alineacion, Font font)
+        public Response<IEnumerable<DetalleProceso>> GetDetalle_Transferencia(Bien bien, Proceso proceso)
         {
-            Paragraph paragraph = new Paragraph(descripcion);
-            paragraph.Alignment = alineacion;
-            paragraph.Font = font;
-            return paragraph;
-        }
-
-        public PdfPCell AddPdfPCell(string descripcion, Font font, float width, float widthbottom, float widthtop, int alineacion, BaseColor backgroundColor)
-        {
-            PdfPCell pdfPCell = new PdfPCell(new Phrase(descripcion, font));
-            pdfPCell.BorderWidth = width;
-            pdfPCell.BorderWidthBottom = widthbottom;
-            pdfPCell.BorderWidthTop = widthtop;
-            pdfPCell.HorizontalAlignment = alineacion;
-            pdfPCell.BackgroundColor = backgroundColor;
-            return pdfPCell;
-        }
-
-        public void AgregarTabla(List<string> listIngresoSalida, int columnas, PdfPTable tblElementos, Font font)
-        {
-            int fila = 0;
-            for (int i = 0; i < listIngresoSalida.Count; i++)
+            try
             {
-                float width = 1;
-                float widthbottom = 0;
-                float widthtop = 0;
-                BaseColor backgroundColor = BaseColor.WHITE;
-
-                if (i == 0 || i < columnas)
-                {
-                    width = 1;
-                    widthbottom = 0;
-                    widthtop = 1;
-                    backgroundColor = BaseColor.GRAY;
-                }
-                else
-                {
-                    if (i % columnas == 0)
-                    {
-                        fila++;
-                    }
-                }
-
-                if (fila > 0 && fila % 2 == 1)
-                {
-                    backgroundColor = BaseColor.LIGHT_GRAY;
-                }
-
-                if (i > listIngresoSalida.Count - (columnas + 1))
-                {
-                    widthbottom = 1;
-                }
-
-                PdfPCell pdfPCell = AddPdfPCell(listIngresoSalida[i].ToString(), font, width, widthbottom, widthtop, Element.ALIGN_LEFT, backgroundColor);
-                tblElementos.AddCell(pdfPCell);
+                var result = repository.GetDetalle_Transferencia(bien, proceso);
+                return new Response<IEnumerable<DetalleProceso>>(result);
             }
-
+            catch (Exception ex)
+            {
+                return new Response<IEnumerable<DetalleProceso>>(ex);
+            }
         }
-
-
     }
 }

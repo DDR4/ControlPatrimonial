@@ -11,5 +11,7 @@ namespace CP.Entities
         public int? DetalleTransferencia_Id { get; set; }
         public string Motivo { get; set; }
         public string Descripcion { get; set; }
+        public byte[] Arraybytes { get; set; }
+        public string Nombrearchivo { get; set; }
     }
 }

@@ -27,13 +27,6 @@
 
     var $tblListadoBienes = $('#tblListadoBienes');
     var $modalBien = $('#modalBien');
-    //var $cboModalTipoBusqueda = $('#cboModalTipoBusqueda');
-    //var $tipoModalTipoBien = $('#tipoModalTipoBien');
-    //var $cboModalTipoBien = $('#cboModalTipoBien');
-    //var $tipoModalOrdenCompra = $('#tipoModalOrdenCompra');
-    //var $txtModalOrdenCompra = $('#txtModalOrdenCompra');
-    //var $cboModalEstadoBien = $('#cboModalEstadoBien');
-    //var $btnBuscarModal = $('#btnBuscarModal');
     var $btnGuardarBien = $('#btnGuardarBien');     
 
     var Message = {
@@ -58,7 +51,6 @@
         $btnGuardar.click($btnGuardar_click);
         GetTransferencia();
         GetUsuario();
-        //GetTipoBien();
         $('#cboModaUsuarioInicial').select2({
             dropdownParent: $('#modalTransferencia')
         });
@@ -67,8 +59,6 @@
             dropdownParent: $('#modalTransferencia')
         });
         $btnAgregarBien.click($btnAgregarBien_click);
-        //$cboModalTipoBusqueda.change($cboModalTipoBusqueda_change);
-        //$btnBuscarModal.click($btnBuscarModal_click);
         $btnGuardarBien.click($btnGuardarBien_click);
         GetUnidadOrganica();
         GetSede();
@@ -80,6 +70,12 @@
         Global.Proceso_Id = null;
         $cboModaUsuarioInicial.val(0).trigger('change');
         $cboModaUsuarioFinal.val(0).trigger('change');
+        $cboModalUnidadOrganicaInicial.val(0).trigger('change');
+        $cboModalUnidadOrganicaFinal.val(0).trigger('change');
+        $cboModalSedeInicial.val(0).trigger('change');
+        $cboModalSedeFinal.val(0).trigger('change');
+        $txtModalMotivo.val("");
+        $txtModalDescripcion.val("");
         $cboModalEstado.val(1);
         app.Event.Disabled($cboModalEstado);
         DatosSeleccionados = [];
@@ -110,7 +106,7 @@
                     "Descripcion": $txtModalDescripcion.val(),
                 }
             },
-            "Bienes": NuevosDatosSeleccionados,
+            "Bienes": DatosSeleccionados,
             "Estado": {
                 "Estado_Id": $cboModalEstado.val()
             }
@@ -158,14 +154,16 @@
             { data: "FechaIngreso" },
             { data: "FechaEliminacion" },
             { data: "DetalleProceso.Usuario_Inicial_Descripcion" },
+            { data: "DetalleProceso.UnidadOrganica_Inicial_Descripcion" },
             { data: "DetalleProceso.Usuario_Final_Descripcion" },
+            { data: "DetalleProceso.UnidadOrganica_Final_Descripcion" },
             { data: "Estado.Descripcion" },
             { data: "Auditoria.TipoUsuario" }
 
         ];
         var columnDefs = [
             {
-                "targets": [5],
+                "targets": [7],
                 "visible": true,
                 "orderable": false,
                 "className": "text-center",
@@ -194,7 +192,6 @@
         var datos = app.GetValueRowCellOfDataTable($tblListadoTransferencias, row);
         $titleModal.html("Editar Transferencia");
         Global.Proceso_Id = datos.Proceso_Id;
-
         GetBienTransferencia(datos);
     }
 
@@ -229,20 +226,8 @@
         app.CallAjax(method, url, null, fnDoneCallback, null, null, null);
     }
 
-    //function GetTipoBien() {
-    //    var method = "POST";
-    //    var url = "Combos/GetTipoBien";
-    //    var fnDoneCallback = function (data) {
-    //        for (var i = 0; i < data.Data.length; i++) {
-    //            $cboModalTipoBien.append('<option value=' + data.Data[i].TipoBien_Id + '>' + data.Data[i].Descripcion + '</option>');
-    //        }
-    //    };
-    //    app.CallAjax(method, url, null, fnDoneCallback, null, null, null);
-    //}
-
     function $btnAgregarBien_click() {
         $modalBien.modal();
-        //$cboModalTipoBusqueda.val(0).change();
         DatosSeleccionados = [];
         $.each(NuevosDatosSeleccionados, function (key, value) {
             DatosSeleccionados.push(value);
@@ -279,26 +264,6 @@
         app.FillDataTableAjaxPaging($tblListadoBienes, url, parms, columns, null, filters, null, null);
 
     }
-
-    //function $cboModalTipoBusqueda_change() {
-    //    var codSelec = $(this).val();
-    //    $tipoModalTipoBien.hide();
-    //    $tipoModalOrdenCompra.hide();
-
-    //    $cboModalTipoBien.val(0);
-    //    $txtModalOrdenCompra.val("");
-    //    $cboModalEstadoBien.val(1);
-
-    //    if (codSelec === "1") {
-    //        $tipoModalTipoBien.show();
-    //    } else if (codSelec === "2") {
-    //        $tipoModalOrdenCompra.show();
-    //    }
-    //}
-
-    //function $btnBuscarModal_click() {
-    //    GetBien();
-    //}
 
     function LoadBienesSeleccionados(data) {
         $tblListadoBienesSeleccionados.DataTable({
@@ -342,15 +307,15 @@
 
         NuevosDatosSeleccionados = $tblListadoBienes.DataTable().rows({ selected: true }).data().toArray();
 
-        $.each(DatosSeleccionados, function (key, value) {
-            NuevosDatosSeleccionados.push(value);
-        });
-
         var hash = {};
         NuevosDatosSeleccionados = NuevosDatosSeleccionados.filter(function (current) {
             var exists = !hash[current.Bien_Id];
             hash[current.Bien_Id] = true;
             return exists;
+        });
+
+        $.each(NuevosDatosSeleccionados, function (key, value) {
+            DatosSeleccionados.push(value);
         });
 
         $tblListadoBienesSeleccionados.DataTable().clear().draw();
@@ -362,19 +327,19 @@
         var data = app.GetValueRowCellOfDataTable($tblListadoBienesSeleccionados, row);
 
         var BienesSeleccionadas = [];
-        NuevosDatosSeleccionados.map(function (value) {
+        DatosSeleccionados.map(function (value) {
             BienesSeleccionadas.push(value);
         });
 
-        var index = $.inArray(data, NuevosDatosSeleccionados);
+        var index = $.inArray(data, DatosSeleccionados);
         BienesSeleccionadas.splice(index, 1);
 
-        NuevosDatosSeleccionados = [];
+        DatosSeleccionados = [];
         $.each(BienesSeleccionadas, function (index, value) {
-            NuevosDatosSeleccionados.push(value);
+            DatosSeleccionados.push(value);
         });
 
-        LoadBienesSeleccionados(NuevosDatosSeleccionados);
+        LoadBienesSeleccionados(DatosSeleccionados);
     }
 
     function GetBienTransferencia(datos) {
@@ -391,6 +356,12 @@
             LoadBienesSeleccionados(DatosSeleccionados);
             $cboModaUsuarioInicial.val(datos.DetalleProceso.Usuario_Inicial).trigger('change');
             $cboModaUsuarioFinal.val(datos.DetalleProceso.Usuario_Final).trigger('change');
+            $cboModalUnidadOrganicaInicial.val(datos.DetalleProceso.UnidadOrganica_Inicial).trigger('change');
+            $cboModalUnidadOrganicaFinal.val(datos.DetalleProceso.UnidadOrganica_Final).trigger('change');
+            $cboModalSedeInicial.val(datos.DetalleProceso.Sede_Inicial).trigger('change');
+            $cboModalSedeFinal.val(datos.DetalleProceso.Sede_Final).trigger('change');
+            $txtModalMotivo.val(datos.DetalleProceso.DetalleTransferencia.Motivo);
+            $txtModalDescripcion.val(datos.DetalleProceso.DetalleTransferencia.Descripcion);
             $cboModalEstado.val(datos.Estado.Estado_Id).trigger('change');
             app.Event.Enable($cboModalEstado);
             $modalTransferencia.modal();
@@ -421,7 +392,7 @@
         msg += app.ValidarCampo(Motivo, "• El Motivo.");
         msg += app.ValidarCampo(Descripcion, "• La Descripción.");
         msg += app.ValidarCampo(Estado, "• El Estado.");
-        if (NuevosDatosSeleccionados.length == 0) {
+        if (DatosSeleccionados.length == 0) {
             msg += "• Los Bienes.";
         }
 

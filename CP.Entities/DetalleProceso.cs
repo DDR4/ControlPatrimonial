@@ -18,7 +18,9 @@ namespace CP.Entities
         public int? Usuario_Final { get; set; }
         public string Usuario_Final_Descripcion { get; set; }
         public int? UnidadOrganica_Final { get; set; }
+        public string UnidadOrganica_Final_Descripcion { get; set; }
         public int? Sede_Final { get; set; }
+        public string Sede_Final_Descripcion { get; set; }
         public Funcionario Funcionario { get; set; }
         public Bien Bien { get; set; }
         public Proceso Proceso { get; set; }

@@ -36,8 +36,21 @@ namespace CP.DataAccess
                          {
                              Usuario_Inicial = n.Single(d => d.Key.Equals("Usuario_Inicial")).Value.Parse<int>(),
                              Usuario_Inicial_Descripcion = n.Single(d => d.Key.Equals("NombresUsuario_Inicial")).Value.Parse<string>(),
+                             UnidadOrganica_Inicial = n.Single(d => d.Key.Equals("UnidadOrganica_Inicial")).Value.Parse<int>(),
+                             UnidadOrganica_Inicial_Descripcion = n.Single(d => d.Key.Equals("UnidadOrganica_Descripcion_Inicial")).Value.Parse<string>(),
+                             Sede_Inicial = n.Single(d => d.Key.Equals("Sede_Inicial")).Value.Parse<int>(),
+                             Sede_Inicial_Descripcion = n.Single(d => d.Key.Equals("Sede_Descripcion_Inicial")).Value.Parse<string>(),
                              Usuario_Final = n.Single(d => d.Key.Equals("Usuario_Final")).Value.Parse<int>(),
                              Usuario_Final_Descripcion = n.Single(d => d.Key.Equals("NombresUsuario_Final")).Value.Parse<string>(),
+                             UnidadOrganica_Final = n.Single(d => d.Key.Equals("UnidadOrganica_Final")).Value.Parse<int>(),
+                             UnidadOrganica_Final_Descripcion = n.Single(d => d.Key.Equals("UnidadOrganica_Descripcion_Final")).Value.Parse<string>(),
+                             Sede_Final = n.Single(d => d.Key.Equals("Sede_Final")).Value.Parse<int>(),
+                             Sede_Final_Descripcion = n.Single(d => d.Key.Equals("Sede_Descripcion_Final")).Value.Parse<string>(),
+                             DetalleTransferencia = new DetalleTransferencia 
+                             {
+                                 Motivo = n.Single(d => d.Key.Equals("DetalleTransferencia_Motivo")).Value.Parse<string>(),
+                                 Descripcion = n.Single(d => d.Key.Equals("DetalleTransferencia_Descripcion")).Value.Parse<string>(),
+                             }
                          },
                          Estado = new Estado
                          {
@@ -76,12 +89,15 @@ namespace CP.DataAccess
                 parm.Add("@BienesXML", obj.BienesXML);
                 parm.Add("@Estado_Id", obj.Estado.Estado_Id);
                 parm.Add("@Usuario_Id", obj.Auditoria.Usuario_Id);
+                parm.Add("@Proceso_Id_Out", null, dbType: DbType.Int32, direction: ParameterDirection.Output);
                 var result = connection.Execute(
                     sql: "sp_Insertar_Transferencia",
                     param: parm,
                     commandType: CommandType.StoredProcedure);
 
-                return result;
+                int Proceso_Id = parm.Get<int>("@Proceso_Id_Out");
+
+                return Proceso_Id;
             }
         }
 
@@ -138,6 +154,24 @@ namespace CP.DataAccess
                              TotalRows = n.Single(d => d.Key.Equals("TotalRows")).Value.Parse<int>(),
                          }
                      });
+
+                return result;
+            }
+        }
+
+        public int RegistrarArchivoTransferencia(Proceso obj)
+        {
+            using (var connection = Factory.ConnectionFactory())
+            {
+                connection.Open();
+                var parm = new DynamicParameters();
+                parm.Add("@Proceso_Id", obj.Proceso_Id);
+                parm.Add("@BinarioArchivo", obj.Arraybytes);
+                parm.Add("@NombreArchivo", obj.Nombrearchivo);
+                var result = connection.Execute(
+                    sql: "sp_Insertar_Archivo_Transferencia",
+                    param: parm,
+                    commandType: CommandType.StoredProcedure);
 
                 return result;
             }

@@ -21,6 +21,8 @@ namespace CP.Entities
         public DetalleProceso DetalleProceso { get; set; }
         public Auditoria Auditoria { get; set; }
         public Operacion Operacion { get; set; }
+        public byte[] Arraybytes { get; set; }
+        public string Nombrearchivo { get; set; }
 
     }
 }

@@ -190,13 +190,14 @@ namespace CP.DataAccess
             }
         }
 
-        public IEnumerable<DetalleProceso> GetDetalle_Transferencia(Bien obj)
+        public IEnumerable<DetalleProceso> GetDetalle_Transferencia(Bien bien,Proceso proceso)
         {
             using (var connection = Factory.ConnectionFactory())
             {
                 connection.Open();
                 var parm = new DynamicParameters();
-                parm.Add("@Bien_Id", obj.Bien_Id);
+                parm.Add("@Bien_Id", bien.Bien_Id);
+                parm.Add("@Proceso_Id", proceso.Proceso_Id);
                 var result = connection.Query(
                      sql: "sp_Obtener_Detalle_Transferencia",
                      param: parm,
@@ -204,15 +205,23 @@ namespace CP.DataAccess
                      .Select(m => m as IDictionary<string, object>)
                      .Select(n => new DetalleProceso
                      {
-                         Proceso = new Proceso 
-                         { 
-                            Proceso_Id = n.Single(d => d.Key.Equals("Proceso_Id")).Value.Parse<int>(),
-                            FechaIngreso = n.Single(d => d.Key.Equals("Proceso_FechaIngreso")).Value.Parse<string>(),
+                         Proceso = new Proceso
+                         {
+                             Proceso_Id = n.Single(d => d.Key.Equals("Proceso_Id")).Value.Parse<int>(),
+                             FechaIngreso = n.Single(d => d.Key.Equals("Proceso_FechaIngreso")).Value.Parse<string>(),
+                         },
+                         Bien = new Bien 
+                         {
+                             Marca = n.Single(d => d.Key.Equals("Bien_Marca")).Value.Parse<string>(),
+                             Modelo = n.Single(d => d.Key.Equals("Bien_Modelo")).Value.Parse<string>(),
+                             Serie = n.Single(d => d.Key.Equals("Bien_Serie")).Value.Parse<string>(),
                          },
                          DetalleTransferencia = new DetalleTransferencia
                          {
                              Motivo = n.Single(d => d.Key.Equals("DetalleTransferencia_Motivo")).Value.Parse<string>(),
                              Descripcion = n.Single(d => d.Key.Equals("DetalleTransferencia_Descripcion")).Value.Parse<string>(),
+                             Arraybytes = n.Single(d => d.Key.Equals("DetalleTransferencia_BinarioArchivo")).Value.Parse<byte[]>(),
+                             Nombrearchivo = n.Single(d => d.Key.Equals("DetalleTransferencia_NombreArchivo")).Value.Parse<string>(),
                          }
                      });
 

@@ -57,12 +57,15 @@ namespace WebControlPatrimonial.Controllers
         public JsonResult InsertUpdateTransferencia(Proceso obj)
         {
             var bussingLogic = new CP.BusinessLogic.BLTransferencia();
+            var ctx = HttpContext.GetOwinContext();
+            var tipoUsuario = ctx.Authentication.User.Claims.FirstOrDefault().Value;
             var Identity = ((ClaimsIdentity)Thread.CurrentPrincipal.Identity);
             var Usuario_Id = Identity.Claims.Where(x => x.Type == ClaimTypes.UserData).FirstOrDefault().ValueType;
             obj.Auditoria = new Auditoria
             {
                 Usuario_Id = Convert.ToInt32(Usuario_Id),
-                UsuarioCreacion = User.Identity.Name
+                UsuarioCreacion = User.Identity.Name,
+                TipoUsuario = tipoUsuario
             };
 
            var Bienesxml = obj.Bienes.Select(i => new XElement("Bien",
@@ -136,30 +139,19 @@ namespace WebControlPatrimonial.Controllers
 
         public void DescargarTransferencia(int Proceso_Id)
         {
-            //var bussingLogic = new CP.BusinessLogic.BLBien();
-            //Bien bien = new Bien()
-            //{
-            //    Bien_Id = Bien_Id,
-            //    TipoBien = new TipoBien(),
-            //    Estado = new Estado(),
-            //    Auditoria = new Auditoria()
-            //    {
-            //        TipoUsuario = HttpContext.GetOwinContext().Authentication.User.Claims.FirstOrDefault().Value,
-            //        UsuarioCreacion = User.Identity.Name
-            //    },
-            //    Operacion = new Operacion()
-            //    {
-            //        Inicio = 0,
-            //        Fin = 1
-            //    }
-            //};
-            //var response = bussingLogic.DescargarBien(bien);
+            var bussingLogic = new CP.BusinessLogic.BLBien();
+            Bien bien = new Bien();
+            Proceso proceso = new Proceso()
+            {
+                Proceso_Id = Proceso_Id
+            };
+            var response = bussingLogic.GetDetalle_Transferencia(bien,proceso).Data.FirstOrDefault().DetalleTransferencia;
 
-            //HttpContext.Response.AddHeader("content-disposition", "attachment; filename=" + response.Data.Nombrearchivo + ".pdf");
-            //Response.ContentType = "application/pdf";
-            //Response.ClearContent();
-            //Response.OutputStream.Write(response.Data.Arraybytes, 0, response.Data.Arraybytes.Length);
-            //Response.End();
+            HttpContext.Response.AddHeader("content-disposition", "attachment; filename=" + response.Nombrearchivo + ".pdf");
+            Response.ContentType = "application/pdf";
+            Response.ClearContent();
+            Response.OutputStream.Write(response.Arraybytes, 0, response.Arraybytes.Length);
+            Response.End();
         }
     }
 }
