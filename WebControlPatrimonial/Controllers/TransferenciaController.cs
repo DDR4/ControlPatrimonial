@@ -139,13 +139,12 @@ namespace WebControlPatrimonial.Controllers
 
         public void DescargarTransferencia(int Proceso_Id)
         {
-            var bussingLogic = new CP.BusinessLogic.BLBien();
-            Bien bien = new Bien();
+            var bussingLogic = new CP.BusinessLogic.BLTransferencia();
             Proceso proceso = new Proceso()
             {
                 Proceso_Id = Proceso_Id
             };
-            var response = bussingLogic.GetDetalle_Transferencia(bien,proceso).Data.FirstOrDefault().DetalleTransferencia;
+            var response = bussingLogic.GetDetalleTransferenciaArchivo(proceso).Data;
 
             HttpContext.Response.AddHeader("content-disposition", "attachment; filename=" + response.Nombrearchivo + ".pdf");
             Response.ContentType = "application/pdf";

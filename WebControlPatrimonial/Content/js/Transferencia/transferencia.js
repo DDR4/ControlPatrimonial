@@ -228,10 +228,6 @@
 
     function $btnAgregarBien_click() {
         $modalBien.modal();
-        DatosSeleccionados = [];
-        $.each(NuevosDatosSeleccionados, function (key, value) {
-            DatosSeleccionados.push(value);
-        });
         NuevosDatosSeleccionados = [];
         GetBien();
     }
@@ -307,19 +303,21 @@
 
         NuevosDatosSeleccionados = $tblListadoBienes.DataTable().rows({ selected: true }).data().toArray();
 
+        $.each(NuevosDatosSeleccionados, function (key, value) {
+            DatosSeleccionados.push(value);
+        });
+
         var hash = {};
-        NuevosDatosSeleccionados = NuevosDatosSeleccionados.filter(function (current) {
+        DatosSeleccionados = DatosSeleccionados.filter(function (current) {
             var exists = !hash[current.Bien_Id];
             hash[current.Bien_Id] = true;
             return exists;
         });
 
-        $.each(NuevosDatosSeleccionados, function (key, value) {
-            DatosSeleccionados.push(value);
-        });
+        DatosSeleccionados.sort((a, b) => b.Bien_Id - a.Bien_Id);
 
         $tblListadoBienesSeleccionados.DataTable().clear().draw();
-        LoadBienesSeleccionados(NuevosDatosSeleccionados);
+        LoadBienesSeleccionados(DatosSeleccionados);
         $modalBien.modal('hide');
     }
 
@@ -352,7 +350,6 @@
         var url = "Transferencia/GetBienTransferencia";
         var fnDoneCallback = function (data) {
             DatosSeleccionados = data.Data;
-            NuevosDatosSeleccionados = data.Data;
             LoadBienesSeleccionados(DatosSeleccionados);
             $cboModaUsuarioInicial.val(datos.DetalleProceso.Usuario_Inicial).trigger('change');
             $cboModaUsuarioFinal.val(datos.DetalleProceso.Usuario_Final).trigger('change');

@@ -268,18 +268,5 @@ namespace CP.BusinessLogic
 
             return arraybytes;
         }
-
-        public Response<IEnumerable<DetalleProceso>> GetDetalle_Transferencia(Bien bien, Proceso proceso)
-        {
-            try
-            {
-                var result = repository.GetDetalle_Transferencia(bien, proceso);
-                return new Response<IEnumerable<DetalleProceso>>(result);
-            }
-            catch (Exception ex)
-            {
-                return new Response<IEnumerable<DetalleProceso>>(ex);
-            }
-        }
     }
 }

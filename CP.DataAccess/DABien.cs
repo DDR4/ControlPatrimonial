@@ -219,9 +219,7 @@ namespace CP.DataAccess
                          DetalleTransferencia = new DetalleTransferencia
                          {
                              Motivo = n.Single(d => d.Key.Equals("DetalleTransferencia_Motivo")).Value.Parse<string>(),
-                             Descripcion = n.Single(d => d.Key.Equals("DetalleTransferencia_Descripcion")).Value.Parse<string>(),
-                             Arraybytes = n.Single(d => d.Key.Equals("DetalleTransferencia_BinarioArchivo")).Value.Parse<byte[]>(),
-                             Nombrearchivo = n.Single(d => d.Key.Equals("DetalleTransferencia_NombreArchivo")).Value.Parse<string>(),
+                             Descripcion = n.Single(d => d.Key.Equals("DetalleTransferencia_Descripcion")).Value.Parse<string>()
                          }
                      });
 

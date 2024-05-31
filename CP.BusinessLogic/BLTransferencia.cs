@@ -49,6 +49,7 @@ namespace CP.BusinessLogic
                         Estado = new Estado(),
                         Auditoria = new Auditoria 
                         { 
+                            UsuarioCreacion = obj.Auditoria.UsuarioCreacion,
                             TipoUsuario = obj.Auditoria.TipoUsuario
                         },
                         Operacion = new Operacion()
@@ -141,7 +142,7 @@ namespace CP.BusinessLogic
 
                 string[] arrayElementos = { 
                     "","Fecha Emi: " + DateTime.Now.ToString("dd/MM/yyyy"),
-                    "","Hora: " + DateTime.Now.ToString("hh:mm"),
+                    "","Hora: " + DateTime.Now.ToString("HH:mm"),
                     "","Usuario: " + proceso.Auditoria.UsuarioCreacion 
                 };
 
@@ -230,6 +231,19 @@ namespace CP.BusinessLogic
             }
 
             return arraybytes;
+        }
+
+        public Response<DetalleTransferencia> GetDetalleTransferenciaArchivo(Proceso proceso)
+        {
+            try
+            {
+                var result = repository.GetDetalleTransferenciaArchivo(proceso);
+                return new Response<DetalleTransferencia>(result);
+            }
+            catch (Exception ex)
+            {
+                return new Response<DetalleTransferencia>(ex);
+            }
         }
 
     }

@@ -176,5 +176,27 @@ namespace CP.DataAccess
                 return result;
             }
         }
+
+        public DetalleTransferencia GetDetalleTransferenciaArchivo(Proceso proceso)
+        {
+            using (var connection = Factory.ConnectionFactory())
+            {
+                connection.Open();
+                var parm = new DynamicParameters();
+                parm.Add("@Proceso_Id", proceso.Proceso_Id);
+                var result = connection.Query(
+                     sql: "sp_Obtener_Detalle_Transferencia_Archivo",
+                     param: parm,
+                     commandType: CommandType.StoredProcedure)
+                     .Select(m => m as IDictionary<string, object>)
+                     .Select(n => new DetalleTransferencia
+                     {
+                         Arraybytes = n.Single(d => d.Key.Equals("DetalleTransferencia_BinarioArchivo")).Value.Parse<byte[]>(),
+                         Nombrearchivo = n.Single(d => d.Key.Equals("DetalleTransferencia_NombreArchivo")).Value.Parse<string>()
+                     });
+
+                return result.FirstOrDefault();
+            }
+        }
     }
 }
