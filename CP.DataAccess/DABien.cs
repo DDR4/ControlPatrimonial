@@ -212,9 +212,15 @@ namespace CP.DataAccess
                          },
                          Bien = new Bien 
                          {
+                             TipoBien = new TipoBien 
+                             {
+                                 Descripcion = n.Single(d => d.Key.Equals("TipoBien_Descripcion")).Value.Parse<string>(),
+                             },
+                             Bien_Id = n.Single(d => d.Key.Equals("Bien_Id")).Value.Parse<int>(),
                              Marca = n.Single(d => d.Key.Equals("Bien_Marca")).Value.Parse<string>(),
                              Modelo = n.Single(d => d.Key.Equals("Bien_Modelo")).Value.Parse<string>(),
                              Serie = n.Single(d => d.Key.Equals("Bien_Serie")).Value.Parse<string>(),
+                             FechaVenGarantia = n.Single(d => d.Key.Equals("Bien_FechaVenGarantia")).Value.Parse<string>(),
                          },
                          DetalleTransferencia = new DetalleTransferencia
                          {

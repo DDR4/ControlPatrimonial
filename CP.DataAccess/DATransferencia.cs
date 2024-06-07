@@ -191,6 +191,7 @@ namespace CP.DataAccess
                      .Select(m => m as IDictionary<string, object>)
                      .Select(n => new DetalleTransferencia
                      {
+                         //Base64 = n.Single(d => d.Key.Equals("DetalleTransferencia_Base64Archivo")).Value.Parse<string>(),
                          Arraybytes = n.Single(d => d.Key.Equals("DetalleTransferencia_BinarioArchivo")).Value.Parse<byte[]>(),
                          Nombrearchivo = n.Single(d => d.Key.Equals("DetalleTransferencia_NombreArchivo")).Value.Parse<string>()
                      });

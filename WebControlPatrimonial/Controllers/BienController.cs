@@ -36,7 +36,8 @@ namespace WebControlPatrimonial.Controllers
             };
 
             var bussingLogic = new CP.BusinessLogic.BLBien();
-            obj.Estado = new Estado { Estado_Id = 0 };  
+            obj.TipoBien = new TipoBien();
+            obj.Estado = new Estado();
             var response = bussingLogic.GetBien(obj);
 
             var Datos = response.Data;

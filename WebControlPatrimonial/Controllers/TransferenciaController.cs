@@ -89,46 +89,6 @@ namespace WebControlPatrimonial.Controllers
             return Json(response);
         }
 
-        public JsonResult GetBien(Bien obj)
-        {
-            var ctx = HttpContext.GetOwinContext();
-            var tipoUsuario = ctx.Authentication.User.Claims.FirstOrDefault().Value;
-            obj.Auditoria = new Auditoria
-            {
-                Usuario_Id = obj.Auditoria.Usuario_Id,
-                TipoUsuario = tipoUsuario
-            };
-
-            string draw = Request.Form.GetValues("draw")[0];
-            int inicio = Convert.ToInt32(Request.Form.GetValues("start").FirstOrDefault());
-            int fin = Convert.ToInt32(Request.Form.GetValues("length").FirstOrDefault());
-
-            obj.Operacion = new Operacion
-            {
-                Inicio = (inicio / fin),
-                Fin = fin
-            };
-
-            var bussingLogic = new CP.BusinessLogic.BLBien();
-            obj.TipoBien = new TipoBien();
-            obj.Estado = new Estado();
-            var response = bussingLogic.GetBien(obj);
-
-            var Datos = response.Data;
-            int totalRecords = Datos.Any() ? Datos.FirstOrDefault().Operacion.TotalRows : 0;
-            int recFilter = totalRecords;
-
-            var result = (new
-            {
-                draw = Convert.ToInt32(draw),
-                recordsTotal = totalRecords,
-                recordsFiltered = recFilter,
-                data = Datos
-            });
-
-            return Json(result);
-        }
-
         public JsonResult GetBienTransferencia(Proceso obj)
         {
             var bussingLogic = new CP.BusinessLogic.BLTransferencia();
@@ -145,6 +105,8 @@ namespace WebControlPatrimonial.Controllers
                 Proceso_Id = Proceso_Id
             };
             var response = bussingLogic.GetDetalleTransferenciaArchivo(proceso).Data;
+
+            var Base64 = Convert.ToBase64String(response.Arraybytes);
 
             HttpContext.Response.AddHeader("content-disposition", "attachment; filename=" + response.Nombrearchivo + ".pdf");
             Response.ContentType = "application/pdf";

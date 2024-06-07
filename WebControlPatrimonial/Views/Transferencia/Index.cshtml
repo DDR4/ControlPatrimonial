@@ -107,7 +107,7 @@
                 <h4 class="modal-title" id="titleModal">Agregar @ViewBag.Title</h4>
             </div>
             <div class="modal-body">
-                <form id="formModal" class="small" onkeypress="return event.keyCode != 13;">
+                <form id="formModal" class="small" onkeypress="return event.keyCode != 13;" enctype="multipart/form-data">
                     <div class="row">
                         <div class="col-md-1"></div>
                         <div class="col-md-4">
@@ -207,13 +207,17 @@
                     </div>
                     <div class="row">
                         <div class="col-md-1"></div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-3" id="divModalEstado">
                             <label for="cboModalEstado">Estado</label>
                             <select class="form-control input-sm" id="cboModalEstado">
                                 <option value="0" selected>Todos</option>
                                 <option value="1">Activo</option>
                                 <option value="2">Inactivo</option>
                             </select>
+                        </div>
+                        <div class="form-group col-md-5" id="divModalArchivo">
+                            <label for="txtModalArchivo">Documento</label>
+                            <input type="file" id="txtModalArchivo">
                         </div>
                     </div>
                 </form>

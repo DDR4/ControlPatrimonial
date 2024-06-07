@@ -30,14 +30,19 @@ namespace CP.DataAccess
                      .Select(n => new Proceso
                      {
                          Proceso_Id = n.Single(d => d.Key.Equals("Proceso_Id")).Value.Parse<int>(),
-                         FechaIngreso = n.Single(d => d.Key.Equals("Proceso_FechaIngreso")).Value.Parse<string>(),
-                         FechaEliminacion = n.Single(d => d.Key.Equals("Proceso_FechaEliminacion")).Value.Parse<string>(),
                          DetalleProceso = new DetalleProceso 
                          {
-                             Usuario_Inicial = n.Single(d => d.Key.Equals("Usuario_Inicial")).Value.Parse<int>(),
-                             Usuario_Inicial_Descripcion = n.Single(d => d.Key.Equals("NombresUsuario_Inicial")).Value.Parse<string>(),
-                             Usuario_Final = n.Single(d => d.Key.Equals("Usuario_Final")).Value.Parse<int>(),
-                             Usuario_Final_Descripcion = n.Single(d => d.Key.Equals("NombresUsuario_Final")).Value.Parse<string>(),
+                             DetalleSalida = new DetalleSalida 
+                             {
+                                 Asunto = new Asunto 
+                                 {
+                                     Descripcion = n.Single(d => d.Key.Equals("Asunto_Nombre")).Value.Parse<string>(),
+                                 },
+                                 Antecedentes = n.Single(d => d.Key.Equals("DetalleSalida_Antecedentes")).Value.Parse<string>(),
+                                 Analisis = n.Single(d => d.Key.Equals("DetalleSalida_Analisis")).Value.Parse<string>(),
+                                 Conclusiones = n.Single(d => d.Key.Equals("DetalleSalida_Conclusiones")).Value.Parse<string>(),
+                                 Recomendaciones = n.Single(d => d.Key.Equals("DetalleSalida_Recomendaciones")).Value.Parse<string>(),
+                             },
                          },
                          Estado = new Estado
                          {

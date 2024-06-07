@@ -52,5 +52,12 @@ namespace WebControlPatrimonial.Controllers
             return Json(response);
         }
 
+        public JsonResult GetAsunto()
+        {
+            var bussingLogic = new CP.BusinessLogic.BLCombos();
+            var response = bussingLogic.GetAsunto();
+
+            return Json(response);
+        }
     }
 }

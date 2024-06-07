@@ -22,6 +22,7 @@ namespace CP.Entities
         public Auditoria Auditoria { get; set; }
         public Operacion Operacion { get; set; }
         public byte[] Arraybytes { get; set; }
+        public string Base64 { get; set; }
         public string Nombrearchivo { get; set; }
 
     }

@@ -180,6 +180,7 @@
     <Content Include="Content\lib\bootstrap-datepicker\css\bootstrap-datepicker.min.css" />
     <Content Include="Content\lib\bootstrap-datepicker\js\bootstrap-datepicker.es.min.js" />
     <Content Include="Content\lib\bootstrap-datepicker\js\bootstrap-datepicker.min.js" />
+    <Content Include="Content\lib\bootstrap-filestyle\bootstrap-filestyle.min.js" />
     <Content Include="Content\lib\bootstrap-timepicker\css\bootstrap-timepicker.min.css" />
     <Content Include="Content\lib\bootstrap-timepicker\js\bootstrap-timepicker.min.js" />
     <Content Include="Content\lib\bootstrap\css\bootstrap.min.css" />

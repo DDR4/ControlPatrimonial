@@ -12,6 +12,7 @@ namespace CP.Entities
         public string Motivo { get; set; }
         public string Descripcion { get; set; }
         public byte[] Arraybytes { get; set; }
+        public string Base64 { get; set; }
         public string Nombrearchivo { get; set; }
     }
 }

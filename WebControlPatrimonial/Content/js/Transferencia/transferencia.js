@@ -22,7 +22,10 @@
     var $cboModalSedeFinal = $('#cboModalSedeFinal');
     var $txtModalMotivo = $('#txtModalMotivo');
     var $txtModalDescripcion = $('#txtModalDescripcion');
+    var $divModalEstado = $('#divModalEstado');
     var $cboModalEstado = $('#cboModalEstado');
+    var $divModalArchivo = $('#divModalArchivo');
+    var $txtModalArchivo = $('#txtModalArchivo');
     var $tblListadoBienesSeleccionados = $('#tblListadoBienesSeleccionados');
 
     var $tblListadoBienes = $('#tblListadoBienes');
@@ -34,7 +37,8 @@
     };
 
     var Global = {
-        Proceso_Id: null
+        Proceso_Id: null,
+        StringArraybytes: null
     };
 
     var NuevosDatosSeleccionados = [];
@@ -62,6 +66,55 @@
         $btnGuardarBien.click($btnGuardarBien_click);
         GetUnidadOrganica();
         GetSede();
+        $txtModalArchivo.filestyle({
+            buttonText: ''
+        });
+
+        //document.querySelector('#txtModalArchivo').addEventListener('change', function () {
+        //    uploadFile3();
+        //}, false);
+
+        document.querySelector('#txtModalArchivo').addEventListener('change', (e) => {
+
+            // get a reference to the file
+            var file = e.target.files[0];
+
+            // encode the file using the FileReader API
+            var reader = new FileReader();
+            reader.onloadend = () => {
+
+                // use a regex to remove data url part
+                var base64String = reader.result
+                    .replace('data:', '')
+                    .replace(/^.+,/, '')
+                    ;
+
+                // log to console
+                // logs wL2dvYWwgbW9yZ...
+                Global.StringArraybytes = base64String;
+                //console.log(base64String);
+                console.log(Global.StringArraybytes);
+            };
+            reader.readAsDataURL(file);
+
+            //var reader = new FileReader();
+
+            //reader.onload = function (event) {
+            //    document.getElementById("myAudioElement").src = event.target.result;
+            //};
+
+            //reader.readAsDataURL(document.getElementById("myUploadInput").files[0]);
+        //    mostrarArchivo(this);
+        });
+
+        //var file = document.getElementById("#txtModalArchivo");
+        //$txtModalArchivo.onchange = function () {
+            
+        //};
+
+        //document.querySelector('#txtModalArchivo').addEventListener('change', function () {
+        //    mostrarArchivo(this);
+        //}, false);
     }
 
     function $btnNuevo_click() {
@@ -76,7 +129,8 @@
         $cboModalSedeFinal.val(0).trigger('change');
         $txtModalMotivo.val("");
         $txtModalDescripcion.val("");
-        $cboModalEstado.val(1);
+        $divModalEstado.hide();
+        $divModalArchivo.hide();
         app.Event.Disabled($cboModalEstado);
         DatosSeleccionados = [];
         NuevosDatosSeleccionados = [];
@@ -93,6 +147,8 @@
 
         var obj = {
             "Proceso_Id": Global.Proceso_Id,
+            "Nombrearchivo": $txtModalArchivo.val(),
+            "Base64": Global.StringArraybytes,
             "DetalleProceso":
             {
                 "Usuario_Inicial": $cboModaUsuarioInicial.val(),
@@ -192,6 +248,8 @@
         var datos = app.GetValueRowCellOfDataTable($tblListadoTransferencias, row);
         $titleModal.html("Editar Transferencia");
         Global.Proceso_Id = datos.Proceso_Id;
+        $divModalEstado.show();
+        $divModalArchivo.show();
         GetBienTransferencia(datos);
     }
 
@@ -240,7 +298,7 @@
             }
         };
 
-        var url = "Transferencia/GetBien";
+        var url = "Bien/GetBien";
 
         var columns = [
             { data: "Bien_Id" },
@@ -430,6 +488,21 @@
         };
         app.CallAjax(method, url, null, fnDoneCallback, null, null, null);
     }
+
+    //function mostrarArchivo(input) {
+    //    if (input.files && input.files[0]) {
+    //        var reader = new FileReader();
+
+    //        reader.onload = function (e) {
+    //            //var txt = document.getElementById("txtModalArchivo");
+    //            //txt.value =
+    //            //console.log(e.target.result);
+    //            Global.Arraybytes = e.target.result;
+    //        }
+
+    //        reader.readAsText(input.files[0]);
+    //    }
+    //}
 
     return {
         EditarTransferencia: EditarTransferencia,

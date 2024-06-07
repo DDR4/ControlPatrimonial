@@ -83,5 +83,17 @@ namespace CP.BusinessLogic
             }
         }
 
+        public Response<IEnumerable<Asunto>> GetAsunto()
+        {
+            try
+            {
+                var result = repository.GetAsunto();
+                return new Response<IEnumerable<Asunto>>(result);
+            }
+            catch (Exception ex)
+            {
+                return new Response<IEnumerable<Asunto>>(ex);
+            }
+        }
     }
 }

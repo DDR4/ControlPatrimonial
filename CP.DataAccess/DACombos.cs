@@ -117,5 +117,26 @@ namespace CP.DataAccess
             }
         }
 
+        public IEnumerable<Asunto> GetAsunto()
+        {
+            using (var connection = Factory.ConnectionFactory())
+            {
+                connection.Open();
+                var parm = new DynamicParameters();
+                var result = connection.Query(
+                     sql: "sp_Obtener_Asunto",
+                     param: parm,
+                     commandType: CommandType.StoredProcedure)
+                     .Select(m => m as IDictionary<string, object>)
+                     .Select(n => new Asunto
+                     {
+                         Asunto_Id = n.Single(d => d.Key.Equals("Asunto_Id")).Value.Parse<int>(),
+                         Descripcion = n.Single(d => d.Key.Equals("Asunto_Nombre")).Value.Parse<string>()
+                     });
+
+                return result;
+            }
+        }
+
     }
 }

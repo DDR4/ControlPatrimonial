@@ -32,22 +32,8 @@
                                 <label for="cboTipoBusqueda">Tipo b&uacute;squeda</label>
                                 <select class="form-control input-sm" style="width:100%;" id="cboTipoBusqueda">
                                     <option value="0">Todos</option>
-                                    <option value="1">Dni</option>
-                                    <option value="2">Nombre</option>
-                                    <option value="3">Estado</option>
+                                    <option value="1">Estado</option>
                                 </select>
-                            </div>
-                            <div id="tipoDni" style="display:none;">
-                                <div class="form-group col-md-3">
-                                    <label for="txtDni">Dni</label>
-                                    <input type="text" class="form-control input-sm" id="txtDni">
-                                </div>
-                            </div>
-                            <div id="tipoNombre" style="display:none;">
-                                <div class="form-group col-md-3">
-                                    <label for="txtNombre">Nombre</label>
-                                    <input type="text" class="form-control input-sm" id="txtNombre">
-                                </div>
                             </div>
                             <div id="tipoEstado" style="display:none;">
                                 <div class="form-group col-md-3">
@@ -88,15 +74,14 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="table-responsive">
-                                <table id="tblListadoUsuarios" class="table table-bordered table-striped table-hover table-condensed" style="width:100%;">
+                                <table id="tblListadoSalidas" class="table table-bordered table-striped table-hover table-condensed" style="width:100%;">
                                     <thead>
                                         <tr>
-                                            <th width="12%;">Nombres</th>
-                                            <th width="10%;">Apellidos</th>
-                                            <th width="10%;">Dni</th>
-                                            <th width="10%;">Rol</th>
-                                            <th width="15%;">Unidad Org&aacute;nica</th>
-                                            <th width="10%;">Sede</th>
+                                            <th width="12%;">Asunto</th>
+                                            <th width="10%;">Antecedentes</th>
+                                            <th width="10%;">Analisis</th>
+                                            <th width="10%;">Conclusiones</th>
+                                            <th width="15%;">Recomendaciones</th>
                                             <th width="10%;">Estado</th>
                                             <th width="8%;"></th>
                                         </tr>
@@ -201,6 +186,41 @@
     </div>
 </div>
 
+<div class="modal fade" id="modalBien" tabindex="-1" role="dialog" aria-labelledby="titleModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" aria-label="Close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Agregar Bien</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table id="tblListadoBienes" class="table table-bordered table-striped table-hover table-condensed" style="width:100%;">
+                                <thead>
+                                    <tr>
+                                        <th width="10%;">Código</th>
+                                        <th width="10%;">Tipo Bien</th>
+                                        <th width="10%;">Marca</th>
+                                        <th width="10%;">Modelo</th>
+                                        <th width="10%;">Serie</th>
+                                        <th width="15%;">Fecha Vencimento Garantia</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger btn-sm" type="button" id="btnGuardarBien">Guardar</button>
+                <button class="btn btn-default btn-sm" type="button" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section scripts{
     <script src="~/Content/js/Salida/salida.js"></script>
