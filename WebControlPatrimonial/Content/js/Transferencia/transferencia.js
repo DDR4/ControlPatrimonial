@@ -70,51 +70,20 @@
             buttonText: ''
         });
 
-        //document.querySelector('#txtModalArchivo').addEventListener('change', function () {
-        //    uploadFile3();
-        //}, false);
-
         document.querySelector('#txtModalArchivo').addEventListener('change', (e) => {
 
-            // get a reference to the file
             var file = e.target.files[0];
 
-            // encode the file using the FileReader API
-            var reader = new FileReader();
-            reader.onloadend = () => {
+            if (ValidarDocumento(file)) {
+                var reader = new FileReader();
+                reader.onloadend = () => {
 
-                // use a regex to remove data url part
-                var base64String = reader.result
-                    .replace('data:', '')
-                    .replace(/^.+,/, '')
-                    ;
-
-                // log to console
-                // logs wL2dvYWwgbW9yZ...
-                Global.StringArraybytes = base64String;
-                //console.log(base64String);
-                console.log(Global.StringArraybytes);
-            };
-            reader.readAsDataURL(file);
-
-            //var reader = new FileReader();
-
-            //reader.onload = function (event) {
-            //    document.getElementById("myAudioElement").src = event.target.result;
-            //};
-
-            //reader.readAsDataURL(document.getElementById("myUploadInput").files[0]);
-        //    mostrarArchivo(this);
+                    var base64String = reader.result.replace('data:', '').replace(/^.+,/, '');
+                    Global.StringArraybytes = base64String;
+                };
+                reader.readAsDataURL(file);
+            }
         });
-
-        //var file = document.getElementById("#txtModalArchivo");
-        //$txtModalArchivo.onchange = function () {
-            
-        //};
-
-        //document.querySelector('#txtModalArchivo').addEventListener('change', function () {
-        //    mostrarArchivo(this);
-        //}, false);
     }
 
     function $btnNuevo_click() {
@@ -250,6 +219,7 @@
         Global.Proceso_Id = datos.Proceso_Id;
         $divModalEstado.show();
         $divModalArchivo.show();
+        $txtModalArchivo.filestyle('clear');
         GetBienTransferencia(datos);
     }
 
@@ -489,20 +459,19 @@
         app.CallAjax(method, url, null, fnDoneCallback, null, null, null);
     }
 
-    //function mostrarArchivo(input) {
-    //    if (input.files && input.files[0]) {
-    //        var reader = new FileReader();
-
-    //        reader.onload = function (e) {
-    //            //var txt = document.getElementById("txtModalArchivo");
-    //            //txt.value =
-    //            //console.log(e.target.result);
-    //            Global.Arraybytes = e.target.result;
-    //        }
-
-    //        reader.readAsText(input.files[0]);
-    //    }
-    //}
+    function ValidarDocumento(file) {
+        var val = true;
+        if (file.type !== "application/pdf") {
+            val = false;
+            app.Message.Info("Aviso", "Solo se pueden adjuntar documentos pdf.");
+            $txtModalArchivo.filestyle('clear');
+        } else if (file.size > 2097152) {
+            val = false;
+            app.Message.Info("Aviso", "El documento pdf no puede ser mayor a 2MB.");
+            $txtModalArchivo.filestyle('clear');
+        }
+        return val;
+    }
 
     return {
         EditarTransferencia: EditarTransferencia,

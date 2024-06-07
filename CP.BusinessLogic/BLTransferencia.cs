@@ -65,7 +65,6 @@ namespace CP.BusinessLogic
                     {
                         FileInfo file = new FileInfo(obj.Nombrearchivo);
                         proceso.Nombrearchivo = Path.GetFileNameWithoutExtension(file.Name);
-                        //proceso.Arraybytes = Convert.FromBase64String(obj.Base64);
                         proceso.Arraybytes = Convert.FromBase64String(obj.Base64);
                     }
                     repository.RegistrarArchivoTransferencia(proceso);
@@ -251,27 +250,6 @@ namespace CP.BusinessLogic
             {
                 return new Response<DetalleTransferencia>(ex);
             }
-        }
-
-        public byte[] CerrarDetalleTransferencia(Proceso proceso)
-        {
-
-            //var pdf = "JVBERi0xLjQKMSAwIG9iago8PAovVGl0bGUgKP7/K";// base64 pdf file.
-            //byte[] pdfBytes = Convert.FromBase64String(pdf);
-            //var doc = new Document(new MemoryStream(pdfBytes));
-
-
-            Document doc = new Document(PageSize.LETTER);
-            byte[] arraybytes = null;
-            using (MemoryStream memoryStream = new MemoryStream())
-            {
-                PdfWriter writer = PdfWriter.GetInstance(doc, memoryStream);
-
-                arraybytes = memoryStream.ToArray();
-                memoryStream.Close();
-            }
-
-            return arraybytes;
         }
     }
 }

@@ -106,8 +106,6 @@ namespace WebControlPatrimonial.Controllers
             };
             var response = bussingLogic.GetDetalleTransferenciaArchivo(proceso).Data;
 
-            var Base64 = Convert.ToBase64String(response.Arraybytes);
-
             HttpContext.Response.AddHeader("content-disposition", "attachment; filename=" + response.Nombrearchivo + ".pdf");
             Response.ContentType = "application/pdf";
             Response.ClearContent();
