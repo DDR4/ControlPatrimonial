@@ -84,7 +84,11 @@ namespace WebControlPatrimonial.Controllers
             {
                 UsuarioCreacion = User.Identity.Name,
             };
-            var response = bussingLogic.DeleteTransferencia(obj);
+            obj.Estado = new Estado
+            {
+                Estado_Id = 2
+            };
+            var response = bussingLogic.ModificarTransferencia(obj);
 
             return Json(response);
         }

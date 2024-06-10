@@ -66,6 +66,11 @@ namespace CP.BusinessLogic
                         FileInfo file = new FileInfo(obj.Nombrearchivo);
                         proceso.Nombrearchivo = Path.GetFileNameWithoutExtension(file.Name);
                         proceso.Arraybytes = Convert.FromBase64String(obj.Base64);
+                        proceso.Estado = new Estado()
+                        {
+                            Estado_Id = 3
+                        };
+                        ModificarTransferencia(proceso);
                     }
                     repository.RegistrarArchivoTransferencia(proceso);
                 }
@@ -77,11 +82,11 @@ namespace CP.BusinessLogic
             }
         }
 
-        public Response<int> DeleteTransferencia(Proceso obj)
+        public Response<int> ModificarTransferencia(Proceso obj)
         {
             try
             {
-                var result = repository.DeleteTransferencia(obj);
+                var result = repository.ModificarTransferencia(obj);
                 return new Response<int>(result);
             }
             catch (Exception ex)

@@ -101,15 +101,16 @@ namespace CP.DataAccess
             }
         }
 
-        public int DeleteTransferencia(Proceso obj)
+        public int ModificarTransferencia(Proceso obj)
         {
             using (var connection = Factory.ConnectionFactory())
             {
                 connection.Open();
                 var parm = new DynamicParameters();
                 parm.Add("@Proceso_Id", obj.Proceso_Id);
+                parm.Add("@Estado_Id", obj.Estado.Estado_Id);
                 var result = connection.Execute(
-                    sql: "sp_Eliminar_Transferencia",
+                    sql: "sp_Modificar_Transferencia",
                     param: parm,
                     commandType: CommandType.StoredProcedure);
 

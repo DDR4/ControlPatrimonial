@@ -193,7 +193,7 @@ namespace CP.BusinessLogic
                 Paragraph ingresoSalida = ExtendedMethodsReport.AddParagraph("MOVIMIENTOS DE INGRESOS Y SALIDAS", Element.ALIGN_LEFT, tituloFont2);
                 doc.Add(new Paragraph(ingresoSalida));
 
-                PdfPTable tblElementos4 = new PdfPTable(new float[] { 10, 10, 10, 20, 20, 20 });
+                PdfPTable tblElementos4 = new PdfPTable(new float[] { 8, 12, 10, 20, 20, 20 });
                 tblElementos4.WidthPercentage = 100;
                 tblElementos4.SpacingBefore = 5;
                 tblElementos4.SpacingAfter = 10;

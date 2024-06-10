@@ -99,8 +99,8 @@
         $txtModalMotivo.val("");
         $txtModalDescripcion.val("");
         $divModalEstado.hide();
+        $cboModalEstado.val(1);
         $divModalArchivo.hide();
-        app.Event.Disabled($cboModalEstado);
         DatosSeleccionados = [];
         NuevosDatosSeleccionados = [];
         LoadBienesSeleccionados(DatosSeleccionados);
@@ -194,11 +194,19 @@
                 "className": "text-center",
                 'render': function (data, type, full, meta) {
                     if (data === "1") {
-                        return "<center>" +
-                            '<a class="btn btn-default btn-xs" style= "margin-right:0.5em" title="Editar" href="javascript:Transferencia.EditarTransferencia(' + meta.row + ');"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>' +
-                            '<a class="btn btn-default btn-xs" style= "margin-right:0.5em" title="Eliminar" href="javascript:Transferencia.EliminarTransferencia(' + meta.row + ')"><i class="fa fa-trash" aria-hidden="true"></i></a>' +
-                            '<a class="btn btn-default btn-xs" style= "margin-right:0.5em" title="Descargar" href="javascript:Transferencia.DescargarTransferencia(' + meta.row + ')"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>' +
-                            "</center> ";
+                        if (full.Estado.Estado_Id === 3) {
+                            return "<center>" +
+                                '<a class="btn btn-default btn-xs disabled" style= "margin-right: 0.5em"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>' +
+                                '<a class="btn btn-default btn-xs disabled" style= "margin-right:0.5em"><i class="fa fa-trash" aria-hidden="true"></i></a>' +
+                                '<a class="btn btn-default btn-xs" style= "margin-right:0.5em" title="Descargar" href="javascript:Transferencia.DescargarTransferencia(' + meta.row + ')"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>' +
+                                "</center> ";
+                        } else {
+                            return "<center>" +
+                                '<a class="btn btn-default btn-xs" style= "margin-right: 0.5em" title="Editar" href="javascript: Transferencia.EditarTransferencia(' + meta.row + '); "><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>' +
+                                '<a class="btn btn-default btn-xs" style= "margin-right:0.5em" title="Eliminar" href="javascript:Transferencia.EliminarTransferencia(' + meta.row + ')"><i class="fa fa-trash" aria-hidden="true"></i></a>' +
+                                '<a class="btn btn-default btn-xs" style= "margin-right:0.5em" title="Descargar" href="javascript:Transferencia.DescargarTransferencia(' + meta.row + ')"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>' +
+                                "</center> ";
+                        }
                     } else {
                         return "";
                     }
@@ -214,6 +222,7 @@
     }
 
     function EditarTransferencia(row) {
+
         var datos = app.GetValueRowCellOfDataTable($tblListadoTransferencias, row);
         $titleModal.html("Editar Transferencia");
         Global.Proceso_Id = datos.Proceso_Id;
