@@ -138,6 +138,10 @@
             {
                 TipoBien_Id: $cboTipoBien.val()
             },
+            Estado:
+            {
+                Estado_Id: 0
+            },
             Bien_Id: $txtCodigoBien.val(),
             DniUsuario: $txtDniUsuario.val()
         };

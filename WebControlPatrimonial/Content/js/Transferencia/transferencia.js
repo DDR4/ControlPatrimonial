@@ -271,6 +271,14 @@
 
     function GetBien() {
         var parms = {
+            TipoBien:
+            {
+                TipoBien_Id: 0
+            },
+            Estado:
+            {
+                Estado_Id: 1
+            },
             Auditoria:
             {
                 Usuario_Id: $cboModaUsuarioInicial.val()
