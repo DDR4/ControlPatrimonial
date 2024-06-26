@@ -171,7 +171,7 @@ namespace CP.BusinessLogic
 
                 string[] arrayElementos2 = {
                     "Fecha Transferencia:"  , proceso.FechaIngreso, "N° Doc: " + proceso.Proceso_Id.ToString(), "",
-                    "Funcionario Autoriza:", "", "Usuario Final:", proceso.DetalleProceso.Usuario_Final_Descripcion,
+                    "Funcionario Autoriza:", proceso.DetalleProceso.Funcionario.Nombre, "Usuario Final:", proceso.DetalleProceso.Usuario_Final_Descripcion,
                     "Usuario Inicial:", proceso.DetalleProceso.Usuario_Inicial_Descripcion,
                     "Unidad Orgánica:", proceso.DetalleProceso.UnidadOrganica_Final_Descripcion,
                     "Unidad Orgánica:", proceso.DetalleProceso.UnidadOrganica_Inicial_Descripcion,

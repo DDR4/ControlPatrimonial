@@ -46,6 +46,11 @@ namespace CP.DataAccess
                              UnidadOrganica_Final_Descripcion = n.Single(d => d.Key.Equals("UnidadOrganica_Descripcion_Final")).Value.Parse<string>(),
                              Sede_Final = n.Single(d => d.Key.Equals("Sede_Final")).Value.Parse<int>(),
                              Sede_Final_Descripcion = n.Single(d => d.Key.Equals("Sede_Descripcion_Final")).Value.Parse<string>(),
+                             Funcionario = new Funcionario 
+                             {
+                                 Funcionario_Id = n.Single(d => d.Key.Equals("Funcionario_Id")).Value.Parse<int>(),
+                                 Nombre = n.Single(d => d.Key.Equals("Funcionario_Nombre")).Value.Parse<string>(),
+                             },
                              DetalleTransferencia = new DetalleTransferencia 
                              {
                                  Motivo = n.Single(d => d.Key.Equals("DetalleTransferencia_Motivo")).Value.Parse<string>(),
@@ -192,7 +197,6 @@ namespace CP.DataAccess
                      .Select(m => m as IDictionary<string, object>)
                      .Select(n => new DetalleTransferencia
                      {
-                         //Base64 = n.Single(d => d.Key.Equals("DetalleTransferencia_Base64Archivo")).Value.Parse<string>(),
                          Arraybytes = n.Single(d => d.Key.Equals("DetalleTransferencia_BinarioArchivo")).Value.Parse<byte[]>(),
                          Nombrearchivo = n.Single(d => d.Key.Equals("DetalleTransferencia_NombreArchivo")).Value.Parse<string>()
                      });

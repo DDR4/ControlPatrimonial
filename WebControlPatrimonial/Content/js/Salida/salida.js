@@ -20,14 +20,14 @@
     var $txtModalAnalisis = $('#txtModalAnalisis');
     var $txtModalConclusiones = $('#txtModalConclusiones');
     var $txtModalRecomendaciones = $('#txtModalRecomendaciones');
+    var $divModalEstado = $('#divModalEstado');
+    var $cboModalEstado = $('#cboModalEstado');
 
     var $tblListadoBienes = $('#tblListadoBienes');
     var $modalBien = $('#modalBien');
     var $cboModalTipoBusqueda = $('#cboModalTipoBusqueda');
     var $tipoModalTipoBien = $('#tipoModalTipoBien');
-    var $cboModalTipoBien = $('#cboModalTipoBien');
     var $tipoModalOrdenCompra = $('#tipoModalOrdenCompra');
-    var $txtModalOrdenCompra = $('#txtModalOrdenCompra');
     var $cboModalEstadoBien = $('#cboModalEstadoBien');
     var $btnBuscarModal = $('#btnBuscarModal');
     var $btnGuardarBien = $('#btnGuardarBien');     
@@ -54,7 +54,6 @@
         $btnGuardar.click($btnGuardar_click);
         GetSalida();
         GetAsunto();
-        //GetTipoBien();
         $btnAgregarBien.click($btnAgregarBien_click);
         $cboModalTipoBusqueda.change($cboModalTipoBusqueda_change);
         $btnBuscarModal.click($btnBuscarModal_click);
@@ -62,16 +61,14 @@
     }
 
     function $btnNuevo_click() {
-        $titleModal.html("Nuevo Transferencia");
+        $titleModal.html("Nuevo Salida");
         $modalSalida.modal();
         Global.Proceso_Id = null;
-        //$cboModaUsuarioInicial.val(0).trigger('change');
-        //$cboModaUsuarioFinal.val(0).trigger('change');
-        //$cboModalEstado.val(1);
-        //app.Event.Disabled($cboModalEstado);
-        //DatosSeleccionados = [];
-        //NuevosDatosSeleccionados = [];
-        //LoadBienesSeleccionados(DatosSeleccionados);
+        $divModalEstado.hide();
+        $cboModalEstado.val(1);
+        DatosSeleccionados = [];
+        NuevosDatosSeleccionados = [];
+        LoadBienesSeleccionados(DatosSeleccionados);
     }
 
     function $btnGuardar_click() {
@@ -86,8 +83,16 @@
             "Proceso_Id": Global.Proceso_Id,
             "DetalleProceso":
             {
-                "Usuario_Inicial": $cboModaUsuarioInicial.val(),
-                "Usuario_Final": $cboModaUsuarioFinal.val(),
+                "DetalleSalida":
+                {
+                    "Asunto": {
+                        "Asunto_Id": $cboModalAsunto.val()
+                    },
+                    "Antecedentes": $txtModalAntecedentes.val(),
+                    "Analisis": $txtModalAnalisis.val(),
+                    "Conclusiones": $txtModalConclusiones.val(),
+                    "Recomendaciones": $txtModalRecomendaciones.val()
+                }
             },
             "Bienes": NuevosDatosSeleccionados,
             "Estado": {
@@ -97,12 +102,12 @@
 
         var method = "POST";
         var data = obj;
-        var url = "Transferencia/InsertUpdateTransferencia";
+        var url = "Salida/InsertUpdateSalida";
 
         var fnDoneCallback = function (data) {
             app.Message.Success("Grabar", Message.GuardarSuccess, "Aceptar", null);
-            $modalTransferencia.modal('hide');
-            GetTransferencia();
+            $modalSalida.modal('hide');
+            GetSalida();
         };
         app.CallAjax(method, url, data, fnDoneCallback);
     }
@@ -152,8 +157,8 @@
                 'render': function (data, type, full, meta) {
                     if (data === "1") {
                         return "<center>" +
-                            '<a class="btn btn-default btn-xs" style= "margin-right:0.5em" title="Editar" href="javascript:Transferencia.EditarTransferencia(' + meta.row + ');"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>' +
-                            '<a class="btn btn-default btn-xs" style= "margin-right:0.5em" title="Eliminar" href="javascript:Transferencia.EliminarTransferencia(' + meta.row + ')"><i class="fa fa-trash" aria-hidden="true"></i></a>' +
+                            '<a class="btn btn-default btn-xs" style= "margin-right:0.5em" title="Editar" href="javascript:Salida.EditarSalida(' + meta.row + ');"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>' +
+                            '<a class="btn btn-default btn-xs" style= "margin-right:0.5em" title="Eliminar" href="javascript:Salida.EliminarSalida(' + meta.row + ')"><i class="fa fa-trash" aria-hidden="true"></i></a>' +
                             "</center> ";
                     } else {
                         return "";
@@ -169,31 +174,29 @@
         app.FillDataTableAjaxPaging($tblListadoSalidas, url, parms, columns, columnDefs, filters, null, null);
     }
 
-    function EditarTransferencia(row) {
-        var datos = app.GetValueRowCellOfDataTable($tblListadoTransferencias, row);
-        $titleModal.html("Editar Transferencia");
+    function EditarSalida(row) {
+        var datos = app.GetValueRowCellOfDataTable($tblListadoSalidas, row);
+        $titleModal.html("Editar Salida");
         Global.Proceso_Id = datos.Proceso_Id;
-
-        GetBienTransferencia(datos);
     }
 
-    function EliminarTransferencia(row) {
+    function EliminarSalida(row) {
         var fnAceptarCallback = function () {
-            var data = app.GetValueRowCellOfDataTable($tblListadoTransferencias, row);
+            var data = app.GetValueRowCellOfDataTable($tblListadoSalidas, row);
 
             var obj = {
                 "Proceso_Id": data.Proceso_Id
             };
 
             var method = "POST";
-            var url = "Transferencia/DeleteTransferencia";
+            var url = "Salida/DeleteSalida";
             var rsdata = obj;
             var fnDoneCallback = function (data) {
-                GetTransferencia();
+                GetSalida();
             };
             app.CallAjax(method, url, rsdata, fnDoneCallback, null, null, null);
         };
-        app.Message.Confirm("Aviso", "Esta seguro que desea desactivar la transferencia?", "Aceptar", "Cancelar", fnAceptarCallback, null);
+        app.Message.Confirm("Aviso", "Esta seguro que desea desactivar la salida?", "Aceptar", "Cancelar", fnAceptarCallback, null);
     }
 
     function GetAsunto() {
@@ -215,17 +218,16 @@
     }
 
     function GetBien() {
-        //var parms = {
-        //    TipoBien:
-        //    {
-        //        TipoBien_Id: $cboModalTipoBien.val()
-        //    },
-        //    OrdenCompra: $txtModalOrdenCompra.val(),
-        //    Estado:
-        //    {
-        //        Estado_Id: $cboModalEstadoBien.val()
-        //    }
-        //};
+        var parms = {
+            TipoBien:
+            {
+                TipoBien_Id: 0
+            },
+            Estado:
+            {
+                Estado_Id: 1
+            }
+        };
 
         var url = "Bien/GetBien";
 
@@ -244,7 +246,7 @@
                 style: "multi"
             }
         };
-        app.FillDataTableAjaxPaging($tblListadoBienes, url, null, columns, null, filters, null, null);
+        app.FillDataTableAjaxPaging($tblListadoBienes, url, parms, columns, null, filters, null, null);
 
     }
 
@@ -347,32 +349,6 @@
         LoadBienesSeleccionados(DatosSeleccionados);
     }
 
-    function GetBienTransferencia(datos) {
-        var obj = {
-            "Proceso_Id": Global.Proceso_Id
-        };
-
-        var method = "POST";
-        var data = obj;
-        var url = "Transferencia/GetBienTransferencia";
-        var fnDoneCallback = function (data) {
-            DatosSeleccionados = data.Data;
-            LoadBienesSeleccionados(DatosSeleccionados);
-            $cboModaUsuarioInicial.val(datos.DetalleProceso.Usuario_Inicial).trigger('change');
-            $cboModaUsuarioFinal.val(datos.DetalleProceso.Usuario_Final).trigger('change');
-            $cboModalUnidadOrganicaInicial.val(datos.DetalleProceso.UnidadOrganica_Inicial).trigger('change');
-            $cboModalUnidadOrganicaFinal.val(datos.DetalleProceso.UnidadOrganica_Final).trigger('change');
-            $cboModalSedeInicial.val(datos.DetalleProceso.Sede_Inicial).trigger('change');
-            $cboModalSedeFinal.val(datos.DetalleProceso.Sede_Final).trigger('change');
-            $txtModalMotivo.val(datos.DetalleProceso.DetalleTransferencia.Motivo);
-            $txtModalDescripcion.val(datos.DetalleProceso.DetalleTransferencia.Descripcion);
-            $cboModalEstado.val(datos.Estado.Estado_Id).trigger('change');
-            app.Event.Enable($cboModalEstado);
-            $modalTransferencia.modal();
-        };
-        app.CallAjax(method, url, data, fnDoneCallback, null, null, null);
-    }
-
     function ValidarGuardarSalida() {
         var validar = true;
         var br = "<br>"
@@ -404,8 +380,8 @@
     }
 
     return {
-        EditarTransferencia: EditarTransferencia,
-        EliminarTransferencia: EliminarTransferencia,
+        EditarSalida: EditarSalida,
+        EliminarSalida: EliminarSalida,
         EliminarBien: EliminarBien
     };
 

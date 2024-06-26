@@ -2,8 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
+using System.Xml.Linq;
 
 namespace WebControlPatrimonial.Controllers
 {
@@ -51,25 +54,25 @@ namespace WebControlPatrimonial.Controllers
             return Json(result);
         }
 
-        //public JsonResult InsertUpdateSalida(Proceso obj)
-        //{
-        //    var bussingLogic = new CP.BusinessLogic.BLTransferencia();
-        //    var Identity = ((ClaimsIdentity)Thread.CurrentPrincipal.Identity);
-        //    var Usuario_Id = Identity.Claims.Where(x => x.Type == ClaimTypes.UserData).FirstOrDefault().ValueType;
-        //    obj.Auditoria = new Auditoria
-        //    {
-        //        Usuario_Id = Convert.ToInt32(Usuario_Id),
-        //        UsuarioCreacion = User.Identity.Name
-        //    };
+        public JsonResult InsertUpdateSalida(Proceso obj)
+        {
+            var bussingLogic = new CP.BusinessLogic.BLSalida();
+            var Identity = ((ClaimsIdentity)Thread.CurrentPrincipal.Identity);
+            var Usuario_Id = Identity.Claims.Where(x => x.Type == ClaimTypes.UserData).FirstOrDefault().ValueType;
+            obj.Auditoria = new Auditoria
+            {
+                Usuario_Id = Convert.ToInt32(Usuario_Id),
+                UsuarioCreacion = User.Identity.Name
+            };
 
-        //    var Bienesxml = obj.Bienes.Select(i => new XElement("Bien",
-        //    new XElement("BienId", i.Bien_Id)));
-        //    obj.BienesXML = new XDocument(new XDeclaration("1.0", "utf-8", "yes"), new XElement("Bienes", Bienesxml));
+            var Bienesxml = obj.Bienes.Select(i => new XElement("Bien",
+            new XElement("BienId", i.Bien_Id)));
+            obj.BienesXML = new XDocument(new XDeclaration("1.0", "utf-8", "yes"), new XElement("Bienes", Bienesxml));
 
-        //    var response = bussingLogic.InsertUpdateTransferencia(obj);
+            var response = bussingLogic.InsertUpdateSalida(obj);
 
-        //    return Json(response);
-        //}
+            return Json(response);
+        }
 
         public JsonResult DeleteSalida(Proceso obj)
         {

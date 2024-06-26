@@ -70,13 +70,16 @@ namespace CP.DataAccess
                 connection.Open();
                 var parm = new DynamicParameters();
                 parm.Add("@Proceso_Id", obj.Proceso_Id);
-                parm.Add("@Usuario_Inicial", obj.DetalleProceso.Usuario_Inicial);
-                parm.Add("@Usuario_Final", obj.DetalleProceso.Usuario_Final);
+                parm.Add("@Asunto_Id", obj.DetalleProceso.DetalleSalida.Asunto.Asunto_Id);
+                parm.Add("@Antecedentes", obj.DetalleProceso.DetalleSalida.Antecedentes);
+                parm.Add("@Analisis", obj.DetalleProceso.DetalleSalida.Analisis);
+                parm.Add("@Conclusiones", obj.DetalleProceso.DetalleSalida.Conclusiones);
+                parm.Add("@Recomendaciones", obj.DetalleProceso.DetalleSalida.Recomendaciones);
                 parm.Add("@BienesXML", obj.BienesXML);
                 parm.Add("@Estado_Id", obj.Estado.Estado_Id);
                 parm.Add("@Usuario_Id", obj.Auditoria.Usuario_Id);
                 var result = connection.Execute(
-                    sql: "sp_Insertar_Transferencia",
+                    sql: "sp_Insertar_Salida",
                     param: parm,
                     commandType: CommandType.StoredProcedure);
 
@@ -92,7 +95,7 @@ namespace CP.DataAccess
                 var parm = new DynamicParameters();
                 parm.Add("@Proceso_Id", obj.Proceso_Id);
                 var result = connection.Execute(
-                    sql: "sp_Eliminar_Transferencia",
+                    sql: "sp_Eliminar_Salida",
                     param: parm,
                     commandType: CommandType.StoredProcedure);
 
