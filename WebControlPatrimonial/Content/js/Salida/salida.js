@@ -94,7 +94,7 @@
                     "Recomendaciones": $txtModalRecomendaciones.val()
                 }
             },
-            "Bienes": NuevosDatosSeleccionados,
+            "Bienes": DatosSeleccionados,
             "Estado": {
                 "Estado_Id": $cboModalEstado.val()
             }
@@ -178,6 +178,7 @@
         var datos = app.GetValueRowCellOfDataTable($tblListadoSalidas, row);
         $titleModal.html("Editar Salida");
         Global.Proceso_Id = datos.Proceso_Id;
+        GetBienSalida(datos);
     }
 
     function EliminarSalida(row) {
@@ -197,6 +198,31 @@
             app.CallAjax(method, url, rsdata, fnDoneCallback, null, null, null);
         };
         app.Message.Confirm("Aviso", "Esta seguro que desea desactivar la salida?", "Aceptar", "Cancelar", fnAceptarCallback, null);
+    }
+
+    function GetBienSalida(datos) {
+        var obj = {
+            "Proceso_Id": Global.Proceso_Id
+        };
+
+        var method = "POST";
+        var data = obj;
+        var url = "Transferencia/GetBienTransferencia";
+        var fnDoneCallback = function (data) {
+            DatosSeleccionados = data.Data;
+            LoadBienesSeleccionados(DatosSeleccionados);
+            var detalleSalida = datos.DetalleProceso.DetalleSalida;
+            $cboModalAsunto.val(detalleSalida.Asunto.Asunto_Id).trigger('change');;
+            $txtModalAntecedentes.val(detalleSalida.Antecedentes);
+            $txtModalAnalisis.val(detalleSalida.Analisis);
+            $txtModalConclusiones.val(detalleSalida.Conclusiones);
+            $txtModalRecomendaciones.val(detalleSalida.Recomendaciones);
+            console.log(datos);
+            $cboModalEstado.val(datos.Estado.Estado_Id).trigger('change');
+            $divModalEstado.show();
+            $modalSalida.modal();
+        };
+        app.CallAjax(method, url, data, fnDoneCallback, null, null, null);
     }
 
     function GetAsunto() {

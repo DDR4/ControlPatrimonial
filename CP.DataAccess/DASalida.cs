@@ -36,6 +36,7 @@ namespace CP.DataAccess
                              {
                                  Asunto = new Asunto 
                                  {
+                                     Asunto_Id = n.Single(d => d.Key.Equals("Asunto_Id")).Value.Parse<int>(),
                                      Descripcion = n.Single(d => d.Key.Equals("Asunto_Nombre")).Value.Parse<string>(),
                                  },
                                  Antecedentes = n.Single(d => d.Key.Equals("DetalleSalida_Antecedentes")).Value.Parse<string>(),
