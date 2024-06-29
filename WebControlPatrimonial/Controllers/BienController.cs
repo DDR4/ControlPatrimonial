@@ -87,10 +87,10 @@ namespace WebControlPatrimonial.Controllers
         }
 
         public void DescargarBien(int Bien_Id)
-        {
+        {   
             var bussingLogic = new CP.BusinessLogic.BLBien();
-            Bien bien = new Bien() 
-            { 
+            Bien bien = new Bien()
+            {
                 Bien_Id = Bien_Id,
                 TipoBien = new TipoBien(),
                 Estado = new Estado(),

@@ -168,7 +168,7 @@ namespace CP.DataAccess
                 var parm = new DynamicParameters();
                 parm.Add("@Bien_Id", obj.Bien_Id);
                 var result = connection.Query(
-                     sql: "sp_Obtener_Ingresos_Salidad",
+                     sql: "sp_Obtener_Ingreso_Salida",
                      param: parm,
                      commandType: CommandType.StoredProcedure)
                      .Select(m => m as IDictionary<string, object>)
