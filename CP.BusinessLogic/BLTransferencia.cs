@@ -28,7 +28,20 @@ namespace CP.BusinessLogic
             try
             {
                 var result = repository.GetTransferencia(obj);
-                return new Response<IEnumerable<Proceso>>(result);
+                List<Proceso> lstProcesos = new List<Proceso>();
+                foreach (var item in result)
+                {
+                    var detalleProceso = item.DetalleProceso;
+                    item.DetalleProceso.UnidadOrganica_Inicial_Descripcion =
+                    string.Concat(detalleProceso.UnidadOrganica_Inicial_Descripcion, " - ",
+                    detalleProceso.Sede_Inicial_Descripcion);
+                    item.DetalleProceso.UnidadOrganica_Final_Descripcion =
+                    string.Concat(detalleProceso.UnidadOrganica_Final_Descripcion, " - ",
+                    detalleProceso.Sede_Final_Descripcion);
+                    lstProcesos.Add(item);
+                }
+
+                return new Response<IEnumerable<Proceso>>(lstProcesos.AsEnumerable());
             }
             catch (Exception ex)
             {

@@ -6,7 +6,9 @@
     var $tblListadoTransferencias = $('#tblListadoTransferencias');
 
     var $cboTipoBusqueda = $('#cboTipoBusqueda');
+    var $tipoCodigoTransferencia = $('#tipoCodigoTransferencia');
     var $tipoEstado = $('#tipoEstado');
+    var $txtCodigoTransferencia = $('#txtCodigoTransferencia');
     var $cboEstado = $('#cboEstado');
     var $btnBuscar = $('#btnBuscar');
     var $btnAgregarBien = $('#btnAgregarBien');     
@@ -151,11 +153,15 @@
 
     function $cboTipoBusqueda_change() {
         var codSelec = $(this).val();
+        $tipoCodigoTransferencia.hide();
         $tipoEstado.hide();
 
+        $txtCodigoTransferencia.val("");
         $cboEstado.val(0);
 
         if (codSelec === "1") {
+            $tipoCodigoTransferencia.show();
+        } else if (codSelec === "2") {
             $tipoEstado.show();
         }
     }
@@ -166,7 +172,7 @@
 
     function GetTransferencia() {
         var parms = {
-            //Proceso_Id: $txtOrdenCompra.val(),
+            Proceso_Id: $txtCodigoTransferencia.val(),
             Estado:
             {
                 Estado_Id: $cboEstado.val()
@@ -176,15 +182,14 @@
         var url = "Transferencia/GetTransferencia";
 
         var columns = [
-            { data: "FechaIngreso" },
-            { data: "FechaEliminacion" },
+            { data: "Proceso_Id" },
             { data: "DetalleProceso.Usuario_Inicial_Descripcion" },
-            { data: "DetalleProceso.UnidadOrganica_Inicial_Descripcion" },
             { data: "DetalleProceso.Usuario_Final_Descripcion" },
+            { data: "DetalleProceso.UnidadOrganica_Inicial_Descripcion" },
             { data: "DetalleProceso.UnidadOrganica_Final_Descripcion" },
+            { data: "DetalleProceso.DetalleTransferencia.Motivo" },
             { data: "Estado.Descripcion" },
             { data: "Auditoria.TipoUsuario" }
-
         ];
         var columnDefs = [
             {

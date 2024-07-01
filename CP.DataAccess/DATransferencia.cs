@@ -31,17 +31,16 @@ namespace CP.DataAccess
                      {
                          Proceso_Id = n.Single(d => d.Key.Equals("Proceso_Id")).Value.Parse<int>(),
                          FechaIngreso = n.Single(d => d.Key.Equals("Proceso_FechaIngreso")).Value.Parse<string>(),
-                         FechaEliminacion = n.Single(d => d.Key.Equals("Proceso_FechaEliminacion")).Value.Parse<string>(),
                          DetalleProceso = new DetalleProceso 
                          {
                              Usuario_Inicial = n.Single(d => d.Key.Equals("Usuario_Inicial")).Value.Parse<int>(),
                              Usuario_Inicial_Descripcion = n.Single(d => d.Key.Equals("NombresUsuario_Inicial")).Value.Parse<string>(),
+                             Usuario_Final = n.Single(d => d.Key.Equals("Usuario_Final")).Value.Parse<int>(),
+                             Usuario_Final_Descripcion = n.Single(d => d.Key.Equals("NombresUsuario_Final")).Value.Parse<string>(),
                              UnidadOrganica_Inicial = n.Single(d => d.Key.Equals("UnidadOrganica_Inicial")).Value.Parse<int>(),
                              UnidadOrganica_Inicial_Descripcion = n.Single(d => d.Key.Equals("UnidadOrganica_Descripcion_Inicial")).Value.Parse<string>(),
                              Sede_Inicial = n.Single(d => d.Key.Equals("Sede_Inicial")).Value.Parse<int>(),
                              Sede_Inicial_Descripcion = n.Single(d => d.Key.Equals("Sede_Descripcion_Inicial")).Value.Parse<string>(),
-                             Usuario_Final = n.Single(d => d.Key.Equals("Usuario_Final")).Value.Parse<int>(),
-                             Usuario_Final_Descripcion = n.Single(d => d.Key.Equals("NombresUsuario_Final")).Value.Parse<string>(),
                              UnidadOrganica_Final = n.Single(d => d.Key.Equals("UnidadOrganica_Final")).Value.Parse<int>(),
                              UnidadOrganica_Final_Descripcion = n.Single(d => d.Key.Equals("UnidadOrganica_Descripcion_Final")).Value.Parse<string>(),
                              Sede_Final = n.Single(d => d.Key.Equals("Sede_Final")).Value.Parse<int>(),

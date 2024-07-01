@@ -47,7 +47,6 @@
         GetBien();
         GetTipoBien();
         $txtModalFechaVenGarantia.datepicker({
-            endDate: "today",
             todayHighlight: true
         });
     }
