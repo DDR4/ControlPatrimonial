@@ -7,7 +7,9 @@
 
     var $cboTipoBusqueda = $('#cboTipoBusqueda');
     var $tipoEstado = $('#tipoEstado');
+    var $tipoCodigoSalida = $('#tipoCodigoSalida');
     var $cboEstado = $('#cboEstado');
+    var $txtCodigoSalida = $('#txtCodigoSalida');
     var $btnBuscar = $('#btnBuscar');
     var $btnAgregarBien = $('#btnAgregarBien');     
 
@@ -114,11 +116,15 @@
 
     function $cboTipoBusqueda_change() {
         var codSelec = $(this).val();
+        $tipoCodigoSalida.hide();
         $tipoEstado.hide();
-
+        
         $cboEstado.val(0);
+        $txtCodigoSalida.val("");
 
         if (codSelec === "1") {
+            $tipoCodigoSalida.show();
+        } else if (codSelec === "2") {
             $tipoEstado.show();
         }
     }
@@ -129,7 +135,7 @@
 
     function GetSalida() {
         var parms = {
-            //Proceso_Id: $txtOrdenCompra.val(),
+            Proceso_Id: $txtCodigoSalida.val(),
             Estado:
             {
                 Estado_Id: $cboEstado.val()
@@ -139,6 +145,7 @@
         var url = "Salida/GetSalida";
 
         var columns = [
+            { data: "Proceso_Id" },
             { data: "DetalleProceso.DetalleSalida.Asunto.Descripcion" },
             { data: "DetalleProceso.DetalleSalida.Antecedentes" },
             { data: "DetalleProceso.DetalleSalida.Analisis" },
@@ -150,7 +157,7 @@
         ];
         var columnDefs = [
             {
-                "targets": [6],
+                "targets": [7],
                 "visible": true,
                 "orderable": false,
                 "className": "text-center",

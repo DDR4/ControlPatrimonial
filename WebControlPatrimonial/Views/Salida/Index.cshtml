@@ -32,8 +32,15 @@
                                 <label for="cboTipoBusqueda">Tipo b&uacute;squeda</label>
                                 <select class="form-control input-sm" style="width:100%;" id="cboTipoBusqueda">
                                     <option value="0">Todos</option>
-                                    <option value="1">Estado</option>
+                                    <option value="1">Código de Salida</option>
+                                    <option value="2">Estado</option>
                                 </select>
+                            </div>
+                            <div id="tipoCodigoSalida" style="display:none;">
+                                <div class="form-group col-md-3">
+                                    <label for="txtCodigoSalida">Código de Salida</label>
+                                    <input type="text" class="form-control input-sm" id="txtCodigoSalida" maxlength="10">
+                                </div>
                             </div>
                             <div id="tipoEstado" style="display:none;">
                                 <div class="form-group col-md-3">
@@ -77,6 +84,7 @@
                                 <table id="tblListadoSalidas" class="table table-bordered table-striped table-hover table-condensed" style="width:100%;">
                                     <thead>
                                         <tr>
+                                            <th width="2%;">Código</th>
                                             <th width="12%;">Asunto</th>
                                             <th width="10%;">Antecedentes</th>
                                             <th width="10%;">Analisis</th>
