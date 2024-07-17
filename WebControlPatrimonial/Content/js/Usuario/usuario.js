@@ -49,6 +49,7 @@
         GetSede();
         app.Event.Number($txtDni);
         app.Event.Number($txtModalDni);
+        $txtModalDni.change(GetUsuarioDni_change);
     }
 
     function $btnNuevoUsuario_click() {
@@ -285,6 +286,23 @@
         }
 
         return validar;
+    }
+
+    function GetUsuarioDni_change() {
+        var obj = {
+            "Dni": $txtModalDni.val()
+        };
+        var method = "POST";
+        var data = obj;
+        var url = "Usuario/GetUsuarioDni";
+        var fnDoneCallback = function (data) {
+            var rs = data.Data;
+            if (rs !== null) {
+                $txtModalNombre.val(rs.Nombres);
+                $txtModalApellido.val(rs.Apellidos);
+            }                                 
+        };
+        app.CallAjax(method, url, data, fnDoneCallback, null, null, null);
     }
 
     return {

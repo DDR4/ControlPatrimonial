@@ -70,5 +70,18 @@ namespace CP.BusinessLogic
             }
         }
 
+        public Response<Usuario> GetUsuarioDni(Usuario obj)
+        {
+            try
+            {
+                var result = repository.GetUsuarioDni(obj);
+                return new Response<Usuario>(result);
+            }
+            catch (Exception ex)
+            {
+                return new Response<Usuario>(ex);
+            }
+        }
+
     }
 }

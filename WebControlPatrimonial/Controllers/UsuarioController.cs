@@ -82,5 +82,13 @@ namespace WebControlPatrimonial.Controllers
             return Json(response);
         }
 
+        public JsonResult GetUsuarioDni(Usuario obj)
+        {
+            var bussingLogic = new CP.BusinessLogic.BLUsuario();
+            var response = bussingLogic.GetUsuarioDni(obj);
+
+            return Json(response);
+        }
+
     }
 }
