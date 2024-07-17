@@ -22,6 +22,7 @@ namespace WebControlPatrimonial.Controllers
             var tipoUsuario = ctx.Authentication.User.Claims.FirstOrDefault().Value;
             obj.Auditoria = new Auditoria
             {
+                Usuario_Id = obj.Auditoria.Usuario_Id,
                 TipoUsuario = tipoUsuario
             };
 

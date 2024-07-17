@@ -261,8 +261,16 @@
         var url = "Combos/GetUsuario";
         var fnDoneCallback = function (data) {
             for (var i = 0; i < data.Data.length; i++) {
-                $cboModaUsuarioInicial.append('<option value=' + data.Data[i].Usuario_Id + '>' + data.Data[i].Nombres + '</option>');
-                $cboModaUsuarioFinal.append('<option value=' + data.Data[i].Usuario_Id + '>' + data.Data[i].Nombres + '</option>');
+                var nombre = data.Data[i].Nombres;
+                if (nombre.length < 40) {
+                    var espacios = "";
+                    for (var j = 0; j < (40 - nombre.length); j++) {
+                        espacios += "&nbsp;";
+                    }
+                    nombre = nombre + espacios;
+                }
+                $cboModaUsuarioInicial.append('<option value=' + data.Data[i].Usuario_Id + '>' + nombre + '</option>');
+                $cboModaUsuarioFinal.append('<option value=' + data.Data[i].Usuario_Id + '>' + nombre + '</option>');
             }
         };
         app.CallAjax(method, url, null, fnDoneCallback, null, null, null);
