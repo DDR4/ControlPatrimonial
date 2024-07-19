@@ -142,7 +142,11 @@
                 Estado_Id: 0
             },
             Bien_Id: $txtCodigoBien.val(),
-            DniUsuario: $txtDniUsuario.val()
+            DniUsuario: $txtDniUsuario.val(),
+            Auditoria:
+            {
+                Usuario_Id: 0
+            }
         };
 
         var url = "Bien/GetBien";

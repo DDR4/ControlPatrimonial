@@ -259,6 +259,10 @@
             Estado:
             {
                 Estado_Id: 1
+            },
+            Auditoria:
+            {
+                Usuario_Id: 0
             }
         };
 
